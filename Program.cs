@@ -1,5 +1,9 @@
 ﻿using AntColonyNamespace;
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 // Ant ant = new Ant(new AntColony());
 //Console.WriteLine(ant.getPheromonePathLength());
 // for (int i = 0; i < 20; ++i)
@@ -26,4 +30,14 @@ a.AddDirectedEdge(new Edge(0, 2, 1, 1));
 a.AddDirectedEdge(new Edge(3, 2, 1, 1));
 a.AddDirectedEdge(new Edge(1, 0, 1, 1));
 a.AddUndirectedEdge(new Edge(2, 1, 1, 1));
+Console.WriteLine(a.ToString());
+Console.WriteLine(a[0][0].Distance);
+
+int[] c = new int[] { 1, 2, 3 };
+var x = new ReadOnlyCollection<int>(new int[] { 1, 2, 3 });
+foreach (int e in x)
+{
+    Console.WriteLine(e.ToString() + ", ");
+}
+
 Console.WriteLine(a.ToString());

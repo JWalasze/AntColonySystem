@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
@@ -16,30 +18,24 @@ namespace AntColonyNamespace
             get { return this.GetNumberOfVertexes(); }
         }
 
-        // public Edge this[int columnIndex, int rowIndex]
-        // {
-        //     get
-        //     {
-        //         if (columnIndex < 0 || columnIndex >= this._AdjacencyListOfEdges.Count)
-        //         {
-        //             throw new ArgumentOutOfRangeException(
-        //                 nameof(columnIndex),
-        //                 "Column index is out of range!!!"
-        //             );
-        //         }
-        //         else if (rowIndex < 0 || rowIndex >= this._AdjacencyListOfEdges.Count)
-        //         {
-        //             throw new ArgumentOutOfRangeException(
-        //                 nameof(rowIndex),
-        //                 "Row index is out of range!!!"
-        //             );
-        //         }
-        //         else
-        //         {
-        //             return this._AdjacencyListOfEdges[columnIndex][rowIndex];
-        //         }
-        //     }
-        // }
+        //It makes that we can access vertexes and edges through [], but it returns new, readonly collection.
+        public ReadOnlyCollection<Edge> this[int vertexNumber]
+        {
+            get
+            {
+                if (vertexNumber < 0 || vertexNumber >= this._AdjacencyListOfEdges.Count)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(vertexNumber),
+                        "Column index is out of range!!!"
+                    );
+                }
+                else
+                {
+                    return new ReadOnlyCollection<Edge>(this._AdjacencyListOfEdges[vertexNumber]);
+                }
+            }
+        }
 
         public void AddDirectedEdge(Edge newDirectedEdge)
         {

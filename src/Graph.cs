@@ -4,77 +4,41 @@ namespace AntColonyNamespace
 {
     internal class Graph
     {
-        //Adjacency list
-        private List<LinkedList<Vertex>> adjacencyList;
+        private AdjacencyList _AdjacencyList;
+
+        public AdjacencyList AdjacencyList
+        {
+            get { return this._AdjacencyList; }
+        }
 
         public Graph(int numberOfVertexes)
         {
-            this.adjacencyList = new List<LinkedList<Vertex>>(numberOfVertexes);
-
-            for (int i = 0; i < numberOfVertexes; ++i)
-            {
-                this.adjacencyList.Add(new LinkedList<Vertex>());
-                // this.adjacencyList[i] = new LinkedList<Vertex>();
-            }
+            this._AdjacencyList = new AdjacencyList();
         }
 
         public void AddVertex()
         {
-            this.adjacencyList.Add(new LinkedList<Vertex>());
+            this._AdjacencyList.AddVertex();
         }
 
         public int GetNumberOfVertexes()
         {
-            return this.adjacencyList.Count;
+            return this._AdjacencyList.NumberOfVertexes;
         }
 
-        public void AddUndirectedEdge(int startVertex, int endVertex)
+        public void AddUndirectedEdge(Edge newEdge)
         {
-            if (this.adjacencyList[startVertex].Count == 0)
-            {
-                this.adjacencyList[startVertex].AddFirst(new Vertex());
-            }
-            else
-            {
-                this.adjacencyList[startVertex].AddLast(new Vertex());
-            }
-
-            if (this.adjacencyList[endVertex].Count == 0)
-            {
-                this.adjacencyList[endVertex].AddFirst(new Vertex());
-            }
-            else
-            {
-                this.adjacencyList[endVertex].AddLast(new Vertex());
-            }
+            this._AdjacencyList.AddUndirectedEdge(newEdge);
         }
 
-        public void AddDirectedEdge(int startVertex, int endVertex)
+        public void AddDirectedEdge(Edge newEdge)
         {
-            if (this.adjacencyList[startVertex].Count == 0)
-            {
-                this.adjacencyList[startVertex].AddFirst(new Vertex());
-            }
-            else
-            {
-                this.adjacencyList[startVertex].AddLast(new Vertex());
-            }
+            this._AdjacencyList.AddDirectedEdge(newEdge);
         }
 
         public override string ToString()
         {
-            string str = string.Empty;
-            int counterOfVertexes = 0;
-            foreach (LinkedList<Vertex> linkedListOfVertex in adjacencyList)
-            {
-                str += "Vertex " + counterOfVertexes++ + ": head";
-                foreach (Vertex vertex in linkedListOfVertex)
-                {
-                    str += " -> " + vertex.VertexIndex;
-                }
-                str += Environment.NewLine;
-            }
-            return str;
+            return this._AdjacencyList.ToString();
         }
     }
 }
