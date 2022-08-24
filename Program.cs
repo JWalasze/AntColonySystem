@@ -1,7 +1,4 @@
 ﻿using AntColonyNamespace;
-
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 // Ant ant = new Ant(new AntColony());
@@ -11,14 +8,14 @@ using System.Collections.ObjectModel;
 //     Console.WriteLine(new AntColony(1, 1, 1, 1).Ants[0].GetRandomNumberFrom0To1());
 // }
 
-Graph graph = new Graph(5);
-graph.AddDirectedEdge(0, 1);
-graph.AddUndirectedEdge(0, 2);
-graph.AddDirectedEdge(3, 1);
+// Graph graph = new Graph(5);
+// graph.AddDirectedEdge(0, 1);
+// graph.AddUndirectedEdge(0, 2);
+// graph.AddDirectedEdge(3, 1);
 
-graph.AddUndirectedEdge(2, 3);
-Console.WriteLine(graph.ToString());
-Console.WriteLine("Liczba wierzchołków: " + graph.GetNumberOfVertexes());
+// graph.AddUndirectedEdge(2, 3);
+// Console.WriteLine(graph.ToString());
+// Console.WriteLine("Liczba wierzchołków: " + graph.GetNumberOfVertexes());
 
 AdjacencyList a = new AdjacencyList();
 a.AddVertex();
