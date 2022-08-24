@@ -99,25 +99,15 @@ namespace AntColonyNamespace
         {
             string str = string.Empty;
             int counterOfVertexes = 0;
-            //Do poprawy...foreach do listy a nie tak samo XD
-            foreach (List<Edge> listOfVertexes in this._AdjacencyListOfEdges)
+            this._AdjacencyListOfEdges.ForEach(vertex =>
             {
                 str += counterOfVertexes++ + ":";
-                foreach (Edge edge in listOfVertexes)
+                vertex.ForEach(edge =>
                 {
-                    // if (this.IsEdgeBetweenVertexes(edge.StartVertex, edge.EndVertex))
-                    // {
-                    //     str += " 1";
-                    // }
-                    // else
-                    // {
-                    //     str += " 0";
-                    // }
                     str += " " + edge.EndVertex;
-                    //str += " " + edge.VertexIndex;
-                }
+                });
                 str += Environment.NewLine;
-            }
+            });
             return str;
         }
     }

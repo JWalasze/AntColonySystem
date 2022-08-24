@@ -25,4 +25,5 @@ a.AddDirectedEdge(new Edge(1, 2, 1, 1));
 a.AddDirectedEdge(new Edge(0, 2, 1, 1));
 a.AddDirectedEdge(new Edge(3, 2, 1, 1));
 a.AddDirectedEdge(new Edge(1, 0, 1, 1));
+a.AddUndirectedEdge(new Edge(2, 1, 1, 1));
 Console.WriteLine(a.ToString());

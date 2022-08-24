@@ -4,14 +4,13 @@ namespace AntColonyNamespace
 {
     internal class Edge
     {
-        //Po tym moze dziedziczyć zeby bylo wyrazniej
-        public double Distance { get; set; }
-
-        public double PheromoneLevel { get; set; }
-
         public int StartVertex { get; }
 
         public int EndVertex { get; }
+
+        public double Distance { get; set; }
+
+        public double PheromoneLevel { get; set; }
 
         public Edge(int startVertex, int endVertex, double distance, double pheromoneLevel)
         {
@@ -21,9 +20,22 @@ namespace AntColonyNamespace
             this.PheromoneLevel = pheromoneLevel;
         }
 
+        public Edge(int startVertex, int endVertex, double distance)
+        {
+            this.StartVertex = startVertex;
+            this.EndVertex = endVertex;
+            this.Distance = distance;
+            this.PheromoneLevel = 0;
+        }
+
         public void SetDistanceAndPheromoneLevel(double newDistance, double newPheromoneLevel)
         {
             this.Distance = newDistance;
+            this.PheromoneLevel = newPheromoneLevel;
+        }
+
+        public void UpdatePheromoneLevel(double newPheromoneLevel)
+        {
             this.PheromoneLevel = newPheromoneLevel;
         }
     }

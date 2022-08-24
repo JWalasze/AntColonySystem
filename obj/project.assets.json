@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "/home/kuba/.nuget/packages/": {}
+    "C:\\Users\\Kuba\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/.NET_App.csproj",
+      "projectUniqueName": "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\.NET_App.csproj",
       "projectName": ".NET_App",
-      "projectPath": "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/.NET_App.csproj",
-      "packagesPath": "/home/kuba/.nuget/packages/",
-      "outputPath": "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/obj/",
+      "projectPath": "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\.NET_App.csproj",
+      "packagesPath": "C:\\Users\\Kuba\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/kuba/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Kuba\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -49,7 +49,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -58,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.108/sdk/6.0.108/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
