@@ -41,28 +41,38 @@ namespace AntColonyNamespace
         //     }
         // }
 
-        public void AddDirectedEdge(Edge newDirectedEdge, int startVertex, int endVertex)
+        public void AddDirectedEdge(Edge newDirectedEdge)
         {
-            if (startVertex >= this.NumberOfVertexes || endVertex >= this.NumberOfVertexes)
+            if (
+                newDirectedEdge.StartVertex >= this.NumberOfVertexes
+                || newDirectedEdge.EndVertex >= this.NumberOfVertexes
+                || newDirectedEdge.StartVertex < 0
+                || newDirectedEdge.EndVertex < 0
+            )
             {
                 throw new Exception("Entered vertexes out of range!");
             }
             else
             {
-                this._AdjacencyListOfEdges[startVertex].Add(newDirectedEdge);
+                this._AdjacencyListOfEdges[newDirectedEdge.StartVertex].Add(newDirectedEdge);
             }
         }
 
-        public void AddUndirectedEdge(Edge newUndirectedEdge, int startVertex, int endVertex)
+        public void AddUndirectedEdge(Edge newUndirectedEdge)
         {
-            if (startVertex >= this.NumberOfVertexes || endVertex >= this.NumberOfVertexes)
+            if (
+                newUndirectedEdge.StartVertex >= this.NumberOfVertexes
+                || newUndirectedEdge.EndVertex >= this.NumberOfVertexes
+                || newUndirectedEdge.StartVertex < 0
+                || newUndirectedEdge.EndVertex < 0
+            )
             {
                 throw new Exception("Entered vertexes out of range!");
             }
             else
             {
-                this._AdjacencyListOfEdges[startVertex].Add(newUndirectedEdge);
-                this._AdjacencyListOfEdges[endVertex].Add(newUndirectedEdge);
+                this._AdjacencyListOfEdges[newUndirectedEdge.StartVertex].Add(newUndirectedEdge);
+                this._AdjacencyListOfEdges[newUndirectedEdge.EndVertex].Add(newUndirectedEdge);
             }
         }
 
@@ -76,8 +86,13 @@ namespace AntColonyNamespace
             return this._AdjacencyListOfEdges.Count;
         }
 
-        private bool IsEdgeBetweenVertexes(int firstVertex, int secondVertex) { 
-            this._AdjacencyListOfEdges[firstVertex].ForEach(n => )
+        private bool IsEdgeBetweenVertexes(int firstVertex, int secondVertex)
+        {
+            if (this._AdjacencyListOfEdges[firstVertex].Any(edge => edge.EndVertex == secondVertex))
+            {
+                return true;
+            }
+            return false;
         }
 
         public override string ToString()
@@ -90,7 +105,16 @@ namespace AntColonyNamespace
                 str += counterOfVertexes++ + ":";
                 foreach (Edge edge in listOfVertexes)
                 {
-                    str += " " + edge.VertexIndex;
+                    // if (this.IsEdgeBetweenVertexes(edge.StartVertex, edge.EndVertex))
+                    // {
+                    //     str += " 1";
+                    // }
+                    // else
+                    // {
+                    //     str += " 0";
+                    // }
+                    str += " " + edge.EndVertex;
+                    //str += " " + edge.VertexIndex;
                 }
                 str += Environment.NewLine;
             }

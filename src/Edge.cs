@@ -9,18 +9,14 @@ namespace AntColonyNamespace
 
         public double PheromoneLevel { get; set; }
 
-        // public int StartVertex { get; }
+        public int StartVertex { get; }
 
-        // public int EndVertex { get; }
+        public int EndVertex { get; }
 
-        // public Edge(int startVertex, int endVertex)
-        // {
-        //     this.StartVertex = startVertex;
-        //     this.EndVertex = endVertex;
-        // }
-
-        public Edge(double distance, double pheromoneLevel)
+        public Edge(int startVertex, int endVertex, double distance, double pheromoneLevel)
         {
+            this.StartVertex = startVertex;
+            this.EndVertex = endVertex;
             this.Distance = distance;
             this.PheromoneLevel = pheromoneLevel;
         }

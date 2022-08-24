@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9Fbh3fIhU0ffhno5idOADWTIegUTgShPgrUJzZCwyA9gUVHnFTcGq+6X7Rbf8dWtgDVSl7gTMbjryJECSm9sMA==",
+  "dgSpecHash": "36u1qjogydW/r67t7/o79sQLcKVM23HaA+KSMo++ZSX3EPwOq5VLzuh/mU0cVUtNt7QGQMCWGEWrNMsO+eYXYg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kuba\\Desktop\\.NET_App\\.NET_App.csproj",
+  "projectFilePath": "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/.NET_App.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -7,4 +7,4 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = _NET_App
-build_property.ProjectDir = c:\Users\Kuba Walaszek\Desktop\.NET_App\
+build_property.ProjectDir = /home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/
