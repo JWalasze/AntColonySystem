@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
@@ -18,7 +19,7 @@ namespace AntColonyNamespace
 
         public void AddVertex()
         {
-            this._AdjacencyList.AddVertex();
+            this._AdjacencyList.AddVertex(new Vertex());
         }
 
         public int GetNumberOfVertexes()
@@ -39,6 +40,12 @@ namespace AntColonyNamespace
         public override string ToString()
         {
             return this._AdjacencyList.ToString();
+        }
+
+        //Metoda zeby zwrocic Edge z konkretnego Vertexa
+        public ReadOnlyCollection<Edge> GetPossibleEdgesFromVertex(int vertexIndex)
+        {
+            return this._AdjacencyList[vertexIndex];
         }
     }
 }

@@ -28,12 +28,6 @@ namespace AntColonyNamespace
             this.PheromoneLevel = 0;
         }
 
-        public void SetDistanceAndPheromoneLevel(double newDistance, double newPheromoneLevel)
-        {
-            this.Distance = newDistance;
-            this.PheromoneLevel = newPheromoneLevel;
-        }
-
         public void UpdatePheromoneLevel(double newPheromoneLevel)
         {
             this.PheromoneLevel = newPheromoneLevel;

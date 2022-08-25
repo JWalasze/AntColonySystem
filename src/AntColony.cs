@@ -21,8 +21,11 @@ namespace AntColonyNamespace
         //List of every ant in a colony
         public List<Ant> Ants;
 
-        public AntColony(double _Q, double _ALFA, double _BETA, double _P)
+        private Graph Graph;
+
+        public AntColony(Graph _Graph, double _Q, double _ALFA, double _BETA, double _P)
         {
+            this.Graph = _Graph;
             this.Q = _Q;
             this.ALFA = _ALFA;
             this.BETA = _BETA;
@@ -40,7 +43,10 @@ namespace AntColonyNamespace
         public class Ant
         {
             private int AntIndex;
-            private List<int> CurrentPheromonePath;
+
+            private Vertex InitialVertex = new Vertex();
+
+            private List<Tuple<Vertex, Edge>> CurrentPheromonePath;
 
             private AntColony AntColonyReference;
 
@@ -49,20 +55,85 @@ namespace AntColonyNamespace
                 //Reference to the outer class
                 this.AntColonyReference = _antColonyReference;
 
-                this.CurrentPheromonePath = new List<int>();
+                this.CurrentPheromonePath = new List<Tuple<Vertex, Edge>>();
             }
 
-            public int GetPheromonePathLength()
+            // public int GetPheromonePathLength()
+            // {
+            //     return this.CurrentPheromonePath.Count;
+            // }
+
+            // public void AddVertexToPheromonePath(int vertex)
+            // {
+            //     this.CurrentPheromonePath.Add(vertex);
+            // }
+
+            //Liczymy prawdopodobienstwo wyboru konkretnej krawedzi
+            private double CountPossibility(Edge pickedEdge, double totalValueOfPossibleStates)
             {
-                return this.CurrentPheromonePath.Count;
+                if (this.IsAntVisitedEdge(pickedEdge))
+                {
+                    return 0;
+                }
+                else
+                {
+                    double possibility =
+                        Math.Pow(pickedEdge.PheromoneLevel, this.AntColonyReference.ALFA)
+                        * Math.Pow(1 / pickedEdge.Distance, this.AntColonyReference.BETA)
+                        / totalValueOfPossibleStates;
+
+                    return possibility;
+                }
             }
 
-            public void AddVertexToPheromonePath(int vertex)
+            //Liczymy mianownik wzoru
+            private double CountValueOfPossibleStates()
             {
-                this.CurrentPheromonePath.Add(vertex);
+                double totalValueOfPossibleStates = 0;
+                foreach (
+                    Edge edge in this.AntColonyReference.Graph.GetPossibleEdgesFromVertex(
+                        InitialVertex.VertexIndex
+                    )
+                )
+                {
+                    if (!this.IsAntVisitedEdge(edge))
+                    {
+                        totalValueOfPossibleStates +=
+                            Math.Pow(edge.PheromoneLevel, this.AntColonyReference.ALFA)
+                            * Math.Pow(1 / edge.Distance, this.AntColonyReference.BETA);
+                    }
+                }
+                return totalValueOfPossibleStates;
             }
 
-            public void CountPossibility() { }
+            //Wybieramy kolejn krawedz do przejscia dalej
+            public Edge SelectPath()
+            {
+                List<double> countedPossiblities = new List<double>();
+                double totalValueOfPossibleStates = this.CountValueOfPossibleStates();
+                foreach (
+                    Edge edge in this.AntColonyReference.Graph.GetPossibleEdgesFromVertex(
+                        InitialVertex.VertexIndex
+                    )
+                )
+                {
+                    countedPossiblities.Add(
+                        this.CountPossibility(edge, totalValueOfPossibleStates)
+                    );
+                }
+                return this.ChoosePath(countedPossiblities);
+            }
+
+            //Na podstawie prawdopodobienstw wybieramy sciezke
+            private Edge ChoosePath(List<double> countedPossibilities)
+            {
+                return null;
+            }
+
+            private bool IsAntVisitedEdge(Edge edge)
+            {
+                return true;
+            }
 
             public void MoveToTheNextEdge() { }
 

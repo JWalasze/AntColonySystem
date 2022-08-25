@@ -6,6 +6,7 @@ namespace AntColonyNamespace
 {
     internal class AdjacencyList
     {
+        //List of tulpes: vertex and list if edges
         private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyListOfEdges;
 
         public AdjacencyList()
@@ -42,39 +43,37 @@ namespace AntColonyNamespace
         public void AddDirectedEdge(Edge newDirectedEdge)
         {
             if (
-                newDirectedEdge.StartVertex.VertexIndex >= this.NumberOfVertexes
-                || newDirectedEdge.EndVertex.VertexIndex >= this.NumberOfVertexes
-                || newDirectedEdge.StartVertex.VertexIndex < 0
-                || newDirectedEdge.EndVertex.VertexIndex < 0
+                newDirectedEdge.StartVertex >= this.NumberOfVertexes
+                || newDirectedEdge.EndVertex >= this.NumberOfVertexes
+                || newDirectedEdge.StartVertex < 0
+                || newDirectedEdge.EndVertex < 0
             )
             {
                 throw new Exception("Entered vertexes out of range!");
             }
             else
             {
-                this._AdjacencyListOfEdges[newDirectedEdge.StartVertex.VertexIndex]._Edges.Add(
-                    newDirectedEdge
-                );
+                this._AdjacencyListOfEdges[newDirectedEdge.StartVertex]._Edges.Add(newDirectedEdge);
             }
         }
 
         public void AddUndirectedEdge(Edge newUndirectedEdge)
         {
             if (
-                newUndirectedEdge.StartVertex.VertexIndex >= this.NumberOfVertexes
-                || newUndirectedEdge.EndVertex.VertexIndex >= this.NumberOfVertexes
-                || newUndirectedEdge.StartVertex.VertexIndex < 0
-                || newUndirectedEdge.EndVertex.VertexIndex < 0
+                newUndirectedEdge.StartVertex >= this.NumberOfVertexes
+                || newUndirectedEdge.EndVertex >= this.NumberOfVertexes
+                || newUndirectedEdge.StartVertex < 0
+                || newUndirectedEdge.EndVertex < 0
             )
             {
                 throw new Exception("Entered vertexes out of range!");
             }
             else
             {
-                this._AdjacencyListOfEdges[newUndirectedEdge.StartVertex.VertexIndex]._Edges.Add(
+                this._AdjacencyListOfEdges[newUndirectedEdge.StartVertex]._Edges.Add(
                     newUndirectedEdge
                 );
-                this._AdjacencyListOfEdges[newUndirectedEdge.EndVertex.VertexIndex]._Edges.Add(
+                this._AdjacencyListOfEdges[newUndirectedEdge.EndVertex]._Edges.Add(
                     newUndirectedEdge
                 );
             }
@@ -90,11 +89,12 @@ namespace AntColonyNamespace
             return this._AdjacencyListOfEdges.Count;
         }
 
+        //Use of this method is disputed XD
         private bool IsEdgeBetweenVertexes(int firstVertex, int secondVertex)
         {
             if (
                 this._AdjacencyListOfEdges[firstVertex].Item2.Any(
-                    edge => edge.EndVertex.VertexIndex == secondVertex
+                    edge => edge.EndVertex == secondVertex
                 )
             )
             {
