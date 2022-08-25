@@ -10,7 +10,6 @@ namespace AntColonyNamespace
         public Vertex()
         {
             this.VertexIndex = VertexIndexCounter++;
-            Console.WriteLine(this.VertexIndex);
         }
     }
 }
