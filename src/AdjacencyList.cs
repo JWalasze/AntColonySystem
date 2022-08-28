@@ -90,6 +90,7 @@ namespace AntColonyNamespace
         }
 
         //Zwraca liste sasiedztwa jako string
+        //Zmienic z item2 na cos lepszego
         public override string ToString()
         {
             string str = string.Empty;

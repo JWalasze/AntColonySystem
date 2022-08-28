@@ -39,5 +39,26 @@ namespace AntColonyNamespace
         {
             this.PheromoneLevel = newPheromoneLevel;
         }
+
+        public override int GetHashCode()
+        {
+            return this.EndVertex;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj != null && this.GetType() == obj.GetType() && Object.ReferenceEquals(this, obj))
+            {
+                Edge checkingEdge = (Edge)obj;
+                return checkingEdge.StartVertex == this.StartVertex
+                    && checkingEdge.EndVertex == this.EndVertex
+                    && checkingEdge.PheromoneLevel == this.PheromoneLevel
+                    && checkingEdge.Distance == this.Distance;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
