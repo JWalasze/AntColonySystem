@@ -5,46 +5,59 @@ namespace AntColonyNamespace
 {
     internal class Graph
     {
+        //Lista sasiedztwa grafu
         private AdjacencyList _AdjacencyList;
 
+        //Zwraca liste sasiedztwa
         public AdjacencyList AdjacencyList
         {
             get { return this._AdjacencyList; }
         }
 
+        //Konstruktor
         public Graph(int numberOfVertexes)
         {
             this._AdjacencyList = new AdjacencyList();
         }
 
+        //Dodanie wierzcholka do grafu - nowy vertex ma zwiekszony o 1 index
         public void AddVertex()
         {
             this._AdjacencyList.AddVertex(new Vertex());
         }
 
+        //Zwraca ilosc wierzchokow w grafie
         public int GetNumberOfVertexes()
         {
             return this._AdjacencyList.NumberOfVertexes;
         }
 
+        //Dodaje nieskierowana krawedz do grafu - info o wierzcholkach w newEdge
         public void AddUndirectedEdge(Edge newEdge)
         {
             this._AdjacencyList.AddUndirectedEdge(newEdge);
         }
 
+        //Dodanie skierowana krawedz - info o wierzcholkach w newEdge
         public void AddDirectedEdge(Edge newEdge)
         {
             this._AdjacencyList.AddDirectedEdge(newEdge);
         }
 
+        //Zwraca graf w reprezentacji listy jako string
         public override string ToString()
         {
             return this._AdjacencyList.ToString();
         }
 
         //Metoda zeby zwrocic Edge z konkretnego Vertexa
-        public ReadOnlyCollection<Edge> GetPossibleEdgesFromVertex(int vertexIndex)
+        public List<Edge> GetPossibleEdgesFromVertex(int vertexIndex)
         {
+            List<(int, Edge)> possibleEdgesWithDestVertex = new List<(int, Edge)>();
+            this._AdjacencyList[vertexIndex].ForEach(edge =>
+            {
+                possibleEdgesWithDestVertex.Add((edge.EndVertex, edge));
+            });
             return this._AdjacencyList[vertexIndex];
         }
     }

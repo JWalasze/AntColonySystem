@@ -18,18 +18,22 @@ namespace AntColonyNamespace
         //P is the pheromone evaporation coefficient
         public readonly double P;
 
+        //q0 determins the importance of exploration versus exploitation
+        public readonly double q0;
+
         //List of every ant in a colony
         public List<Ant> Ants;
 
         private Graph Graph;
 
-        public AntColony(Graph _Graph, double _Q, double _ALFA, double _BETA, double _P)
+        public AntColony(Graph _Graph, double _Q, double _ALFA, double _BETA, double _P, double _q0)
         {
             this.Graph = _Graph;
             this.Q = _Q;
             this.ALFA = _ALFA;
             this.BETA = _BETA;
             this.P = _P;
+            this.q0 = _q0;
 
             this.Ants = new List<Ant>();
             this.AddAntToTheColony();
@@ -44,6 +48,15 @@ namespace AntColonyNamespace
         {
             private int AntIndex;
 
+            private double Denominator = 0;
+
+            private List<double> ListOfNominators = new List<double>();
+
+            private List<double> ListOfPossibilities = new List<double>();
+
+            private List<(Vertex vertex, Edge edge)> ListOfPossibileMoves = new List<(Vertex vertex, Edge edge)>();
+
+            //DO zmiany
             private Vertex InitialVertex = new Vertex();
 
             private List<Tuple<Vertex, Edge>> CurrentPheromonePath;
@@ -58,64 +71,40 @@ namespace AntColonyNamespace
                 this.CurrentPheromonePath = new List<Tuple<Vertex, Edge>>();
             }
 
-            // public int GetPheromonePathLength()
-            // {
-            //     return this.CurrentPheromonePath.Count;
-            // }
-
-            // public void AddVertexToPheromonePath(int vertex)
-            // {
-            //     this.CurrentPheromonePath.Add(vertex);
-            // }
-
-            //Liczymy prawdopodobienstwo wyboru konkretnej krawedzi
-            private double CountPossibility(Edge pickedEdge, double totalValueOfPossibleStates)
+            
+            //Liczymy mianownik wzoru i zliczamy liczniki
+            private void CountDenominatorAndNominators()
             {
-                if (this.IsAntVisitedEdge(pickedEdge))
-                {
-                    return 0;
-                }
-                else
-                {
-                    double possibility =
-                        Math.Pow(pickedEdge.PheromoneLevel, this.AntColonyReference.ALFA)
-                        * Math.Pow(1 / pickedEdge.Distance, this.AntColonyReference.BETA)
-                        / totalValueOfPossibleStates;
-
-                    return possibility;
-                }
-            }
-
-            //Liczymy mianownik wzoru
-            private double CountValueOfPossibleStates()
-            {
-                double totalValueOfPossibleStates = 0;
-                foreach (
-                    Edge edge in this.AntColonyReference.Graph.GetPossibleEdgesFromVertex(
-                        InitialVertex.VertexIndex
-                    )
-                )
-                {
-                    if (!this.IsAntVisitedEdge(edge))
+                this.AntColonyReference.Graph
+                    .GetPossibleEdgesFromVertex(this.InitialVertex.VertexIndex)
+                    .ForEach(edge =>
                     {
-                        totalValueOfPossibleStates +=
-                            Math.Pow(edge.PheromoneLevel, this.AntColonyReference.ALFA)
-                            * Math.Pow(1 / edge.Distance, this.AntColonyReference.BETA);
-                    }
-                }
-                return totalValueOfPossibleStates;
+                        {
+                            if (!this.IsAntVisitedVertex(new Vertex()))
+                            {
+                                double nominator = Math.Pow(edge.PheromoneLevel, this.AntColonyReference.ALFA)
+                        * Math.Pow(1 / edge.Distance, this.AntColonyReference.BETA);
+                            this.ListOfNominators.Add(nominator);
+                            this.Denominator += nominator;
+                            }
+                            else{
+                                this.ListOfNominators.Add(0);
+                                this.Denominator += 0;
+                            }
+                        }
+                    });
             }
 
             //Wybieramy kolejn krawedz do przejscia dalej
-            public Edge SelectPath()
+            public void CountPossibilities()
             {
-                List<double> countedPossiblities = new List<double>();
-                double totalValueOfPossibleStates = this.CountValueOfPossibleStates();
-                foreach (
-                    Edge edge in this.AntColonyReference.Graph.GetPossibleEdgesFromVertex(
-                        InitialVertex.VertexIndex
-                    )
-                )
+                this.CountDenominatorAndNominators();
+
+                this.AntColonyReference.Graph
+                    .GetPossibleEdgesFromVertex(this.InitialVertex.VertexIndex)
+                    .ForEach(edge => { 
+                        double possibility = 
+                    });
                 {
                     countedPossiblities.Add(
                         this.CountPossibility(edge, totalValueOfPossibleStates)
@@ -125,8 +114,14 @@ namespace AntColonyNamespace
             }
 
             //Na podstawie prawdopodobienstw wybieramy sciezke
-            private Edge ChoosePath(List<double> countedPossibilities)
+            private Edge ChoosePath(List<(double, double)> countedPossibilities)
             {
+                double randomNumberFrom0To1 = (new Random()).NextDouble();
+                if (randomNumberFrom0To1 <= this.AntColonyReference.q0) { }
+                else
+                {
+                    return null;
+                }
                 return null;
             }
 
@@ -135,13 +130,12 @@ namespace AntColonyNamespace
                 return true;
             }
 
-            public void MoveToTheNextEdge() { }
-
-            public double GetRandomNumberFrom0To1()
+            private bool IsAntVisitedVertex(Vertex vertex)
             {
-                Random random = new Random();
-                return random.NextDouble();
+                return false;
             }
+
+            public void MoveToTheNextEdge() { }
         }
     }
 }
