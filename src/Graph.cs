@@ -50,14 +50,9 @@ namespace AntColonyNamespace
             return this._AdjacencyList.ToString();
         }
 
-        //Metoda zeby zwrocic Edge z konkretnego Vertexa
-        public List<Edge> GetPossibleEdgesFromVertex(int vertexIndex)
+        //Metoda zeby zwrocic krawedzie z podanego wierzcholka
+        public ReadOnlyCollection<Edge> GetEdgesFromVertex(int vertexIndex)
         {
-            List<(int, Edge)> possibleEdgesWithDestVertex = new List<(int, Edge)>();
-            this._AdjacencyList[vertexIndex].ForEach(edge =>
-            {
-                possibleEdgesWithDestVertex.Add((edge.EndVertex, edge));
-            });
             return this._AdjacencyList[vertexIndex];
         }
     }
