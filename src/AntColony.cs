@@ -23,12 +23,23 @@ namespace AntColonyNamespace
         //q0 determins the importance of exploration versus exploitation
         public readonly double q0;
 
+        //ro defines evaporation
+        public readonly double ro;
+
         //List of every ant in a colony
         public List<Ant> Ants;
 
         private Graph Graph;
 
-        public AntColony(Graph _Graph, double _Q, double _ALFA, double _BETA, double _P, double _q0)
+        public AntColony(
+            Graph _Graph,
+            double _Q,
+            double _ALFA,
+            double _BETA,
+            double _P,
+            double _q0,
+            double _ro
+        )
         {
             this.Graph = _Graph;
             this.Q = _Q;
@@ -36,14 +47,14 @@ namespace AntColonyNamespace
             this.BETA = _BETA;
             this.P = _P;
             this.q0 = _q0;
+            this.ro = _ro;
 
             this.Ants = new List<Ant>();
-            this.AddAntToTheColony();
         }
 
         private void AddAntToTheColony()
         {
-            this.Ants.Add(new Ant(this));
+            this.Ants.Add(new Ant(this, 0));
         }
 
         public class Ant
@@ -51,38 +62,36 @@ namespace AntColonyNamespace
             //Index mrowki
             private int AntIndex;
 
+            //Obiekt do liczenia prawdopodobienstw wyboru krawedzi
             private Possibilities _Possibilities;
 
-            private ReadOnlyCollection<Edge> ListOfEdges;
+            //Wierzcholek z ktorego mrowka zaczyna podroz
+            private int InitialVertex;
 
-            //DO zmiany
-            private Vertex InitialVertex = new Vertex();
+            //Zapisany index obecnego wierzcholka
+            private int CurrentVertexIndex;
 
-            private List<Tuple<Vertex, Edge>> CurrentPheromonePath;
+            private List<(Edge _Edge, int _VertexIndex)> CurrentPheromonePath;
 
             private AntColony _AntColony;
 
-            public Ant(AntColony _antColony)
+            public Ant(AntColony _antColony, int initialVertexIndex)
             {
                 this._AntColony = _antColony;
                 this._Possibilities = new Possibilities(this._AntColony.ALFA, this._AntColony.BETA);
-                this.ListOfEdges = new ReadOnlyCollection<Edge>(
-                    this._AntColony.Graph.GetEdgesFromVertex(this.InitialVertex.VertexIndex)
-                );
+                this.InitialVertex = initialVertexIndex;
+                this.CurrentVertexIndex = this.InitialVertex;
 
-                this.CurrentPheromonePath = new List<Tuple<Vertex, Edge>>();
+                this.CurrentPheromonePath = new List<(Edge _Edge, int _VertexIndex)>();
             }
-
-            //Chyba niepotrzebne bo w zwracanych edgach bedzie info skad dokoad jest krawedz...UZYC ANY PRZY PATRZENIU CZY VERTEX JEST ODWIEDZONY
 
             public Edge ChoosePath()
             {
-                this.ListOfEdges = this._AntColony.Graph.GetEdgesFromVertex(
-                    this.InitialVertex.VertexIndex
-                );
-                foreach (var edge in this.ListOfEdges)
+                foreach (
+                    var edge in this._AntColony.Graph.GetEdgesFromVertex(this.CurrentVertexIndex)
+                )
                 {
-                    if (!this.IsAntVisitedVertex(edge.EndVertex))
+                    if (!this.DidAntVisitVertex(edge.EndVertex))
                     {
                         this._Possibilities.CountNominatorAndUpdateDenominator(edge);
                     }
@@ -102,25 +111,37 @@ namespace AntColonyNamespace
 
             private Edge ChoosePathBasedOnProb()
             {
-                //Tu trzeba dac losowanie na podstawie tych prawdopodobienstw...
-                return new Edge(1, 1, 1, 1);
+                double randomNumberFrom0To1 = new Random().NextDouble();
+                double lowerLimit = 0;
+                double upperLimit = 0;
+                foreach (var edge in this._Possibilities.GetProbabilities())
+                {
+                    upperLimit += edge.Value;
+                    if (randomNumberFrom0To1 < upperLimit && randomNumberFrom0To1 > lowerLimit)
+                    {
+                        return edge.Key;
+                    }
+                    lowerLimit += edge.Value;
+                }
+
+                return this._Possibilities.GetProbabilities().First().Key;
             }
 
-            private bool IsAntVisitedEdge(int edge)
+            private bool DidAntVisitVertex(int vertex)
             {
-                //Tez trzeba zrobic
-                return true;
-            }
-
-            private bool IsAntVisitedVertex(int vertex)
-            {
-                //Trzeba zrobic
-                return false;
+                return this.CurrentPheromonePath.Any(tuple => tuple._VertexIndex == vertex);
             }
 
             public void MoveToTheNextEdge()
             {
-                //Tu bedziemy wszystko aktualizowac ruszac i takie tam
+                var pickedEdge = this.ChoosePath();
+                this.CurrentPheromonePath.Add((pickedEdge, pickedEdge.EndVertex));
+                this.CurrentVertexIndex = pickedEdge.EndVertex;
+                this._Possibilities.RestartAllValues();
+
+                //Update feromony
+                double updatedPheromoneLevel = (1 - this._AntColony.ro) * pickedEdge.PheromoneLevel;
+                pickedEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
             }
         }
     }
