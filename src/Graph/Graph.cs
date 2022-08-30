@@ -18,6 +18,15 @@ namespace AntColonyNamespace
         public Graph(int numberOfVertexes)
         {
             this._AdjacencyList = new AdjacencyList();
+            for (int i = 0; i < numberOfVertexes; ++i)
+            {
+                this.AddVertex();
+            }
+        }
+
+        public Graph()
+        {
+            this._AdjacencyList = new AdjacencyList();
         }
 
         //Dodanie wierzcholka do grafu - nowy vertex ma zwiekszony o 1 index

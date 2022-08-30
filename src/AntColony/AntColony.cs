@@ -57,6 +57,8 @@ namespace AntColonyNamespace
             this.Ants.Add(new Ant(this, 0));
         }
 
+        public void StartLookingForPath() { }
+
         public class Ant
         {
             //Index mrowki
