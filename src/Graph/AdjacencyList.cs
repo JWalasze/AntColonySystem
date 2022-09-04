@@ -90,15 +90,13 @@ namespace AntColonyNamespace
         }
 
         //Zwraca liste sasiedztwa jako string
-        //Zmienic z item2 na cos lepszego
         public override string ToString()
         {
             string str = string.Empty;
-            int counterOfVertexes = 0;
-            this._AdjacencyList.ForEach(vertex =>
+            this._AdjacencyList.ForEach(item =>
             {
-                str += counterOfVertexes++ + ":";
-                vertex.Item2.ForEach(edge =>
+                str += item._Vertex.VertexIndex + ":";
+                item._Edges.ForEach(edge =>
                 {
                     str += " " + edge.EndVertex;
                 });
@@ -106,15 +104,5 @@ namespace AntColonyNamespace
             });
             return str;
         }
-
-        //Use of this method is disputed XD
-        // private bool IsEdgeBetweenVertexes(int firstVertex, int secondVertex)
-        // {
-        //     if (this._AdjacencyList[firstVertex].Item2.Any(edge => edge.EndVertex == secondVertex))
-        //     {
-        //         return true;
-        //     }
-        //     return false;
-        // }
     }
 }

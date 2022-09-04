@@ -6,48 +6,67 @@ namespace AntColonyNamespace
 {
     internal class Possibilities
     {
-        private double _Denominator;
-
-        private double _ALFA;
-
         private double _BETA;
+
+        private double _Denominator;
 
         private Dictionary<Edge, double> _Nominators;
 
         private Dictionary<Edge, double> _Probabilities;
 
-        public Possibilities(double ALFA, double BETA)
+        public Possibilities(double BETA)
         {
             this._Denominator = 0;
             this._Nominators = new Dictionary<Edge, double>();
             this._Probabilities = new Dictionary<Edge, double>();
-            this._ALFA = ALFA;
             this._BETA = BETA;
         }
 
-        public void CountNominatorAndUpdateDenominator(Edge edge)
+        public void CountNominatorAndUpdateDenominator(Edge pickedEdge)
         {
-            double value =
-                Math.Pow(edge.PheromoneLevel, this._ALFA) * Math.Pow(1 / edge.Distance, this._BETA);
-            this._Nominators.Add(edge, value);
-            this._Denominator += value;
+            double countedValue =
+                pickedEdge.PheromoneLevel * Math.Pow(1 / pickedEdge.Distance, this._BETA);
+            this._Nominators.Add(pickedEdge, countedValue);
+            this._Denominator += countedValue;
         }
 
         public void CountProbabilities()
         {
-            foreach (var edge in this._Nominators)
+            foreach (var nomiantor in this._Nominators)
             {
-                this._Probabilities.Add(edge.Key, this._Nominators[edge.Key] / this._Denominator);
+                this._Probabilities.Add(
+                    nomiantor.Key,
+                    this._Nominators[nomiantor.Key] / this._Denominator
+                );
             }
         }
 
         public KeyValuePair<Edge, double> GetMaxNominator()
         {
-            return this._Nominators.Max();
+            if (this._Nominators.Count == 0)
+            {
+                throw new Exception("Nominators are empty!!!");
+            }
+
+            var maxNominator = this._Nominators.First();
+            foreach (var nominator in this._Nominators)
+            {
+                if (nominator.Value > maxNominator.Value)
+                {
+                    maxNominator = nominator;
+                }
+            }
+
+            return maxNominator;
         }
 
         public ReadOnlyDictionary<Edge, double> GetProbabilities()
         {
+            if (this._Probabilities.Count == 0)
+            {
+                throw new Exception("Probabilities are empty!!!");
+            }
+
             return new ReadOnlyDictionary<Edge, double>(this._Probabilities);
         }
 

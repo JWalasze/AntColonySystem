@@ -17,24 +17,50 @@ using System.Collections.ObjectModel;
 // Console.WriteLine(graph.ToString());
 // Console.WriteLine("Liczba wierzchołków: " + graph.GetNumberOfVertexes());
 
-AdjacencyList a = new AdjacencyList();
-a.AddVertex();
-a.AddVertex();
-a.AddVertex();
-a.AddVertex();
-a.AddDirectedEdge(new Edge(1, 2, 1, 1));
-a.AddDirectedEdge(new Edge(0, 2, 1, 1));
-a.AddDirectedEdge(new Edge(3, 2, 1, 1));
-a.AddDirectedEdge(new Edge(1, 0, 1, 1));
-a.AddUndirectedEdge(new Edge(2, 1, 1, 1));
-Console.WriteLine(a.ToString());
-Console.WriteLine(a[0][0].Distance);
 
-int[] c = new int[] { 1, 2, 3 };
-var x = new ReadOnlyCollection<int>(new int[] { 1, 2, 3 });
-foreach (int e in x)
+Graph graph = new Graph();
+for (int i = 0; i < 6; ++i)
 {
-    Console.WriteLine(e.ToString() + ", ");
+    graph.AddVertex();
 }
+graph.AddDirectedEdge(new Edge(0, 1, 10, 5));
+graph.AddDirectedEdge(new Edge(1, 0, 10, 5));
+graph.AddDirectedEdge(new Edge(2, 1, 1, 2));
+graph.AddDirectedEdge(new Edge(1, 2, 9, 3));
+graph.AddDirectedEdge(new Edge(1, 3, 4, 6));
+graph.AddDirectedEdge(new Edge(3, 4, 4, 6));
+graph.AddDirectedEdge(new Edge(1, 5, 2, 3));
+graph.AddDirectedEdge(new Edge(2, 4, 12, 4));
+graph.AddDirectedEdge(new Edge(4, 2, 13, 7));
+graph.AddDirectedEdge(new Edge(4, 5, 13, 7));
+graph.AddDirectedEdge(new Edge(5, 1, 10, 1));
+Console.WriteLine(graph.ToString());
 
-Console.WriteLine(a.ToString());
+Possibilities possibilities = new Possibilities(2.3);
+possibilities.CountNominatorAndUpdateDenominator(new Edge(0, 1, 10, 3));
+possibilities.CountNominatorAndUpdateDenominator(new Edge(0, 2, 12, 5));
+possibilities.CountNominatorAndUpdateDenominator(new Edge(1, 2, 8, 7));
+possibilities.CountNominatorAndUpdateDenominator(new Edge(1, 3, 4, 2));
+possibilities.CountNominatorAndUpdateDenominator(new Edge(3, 0, 15, 4.5));
+possibilities.CountNominatorAndUpdateDenominator(new Edge(2, 3, 5, 13));
+possibilities.CountProbabilities();
+Console.WriteLine(
+    possibilities.GetMaxNominator().Key.StartVertex
+        + "--"
+        + +possibilities.GetMaxNominator().Key.EndVertex
+        + "--"
+        + +possibilities.GetMaxNominator().Value
+);
+foreach (var item in possibilities.GetProbabilities())
+{
+    Console.WriteLine(item.Value);
+}
+possibilities.RestartAllValues();
+
+Console.WriteLine("-------------------------");
+
+AntColony antColony = new AntColony(graph, 100, 0.1, 2.3, 100, 0.1, 100);
+antColony.AddAntToTheColony();
+antColony.AddAntToTheColony();
+antColony.AddAntToTheColony();
+antColony.StartLookingForPath();

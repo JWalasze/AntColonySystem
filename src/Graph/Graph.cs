@@ -15,10 +15,10 @@ namespace AntColonyNamespace
         }
 
         //Konstruktor
-        public Graph(int numberOfVertexes)
+        public Graph(int NumberOfVertexes)
         {
             this._AdjacencyList = new AdjacencyList();
-            for (int i = 0; i < numberOfVertexes; ++i)
+            for (int i = 0; i < NumberOfVertexes; ++i)
             {
                 this.AddVertex();
             }
