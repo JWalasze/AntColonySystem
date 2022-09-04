@@ -166,7 +166,7 @@ namespace AntColonyNamespace
                 }
                 this._Possibilities.RestartAllValues();
 
-                //Update feromony
+                //Update feromony --- TO POWINNO BYC PO ZROBIENIU CALEJ SCIEZKI, TRZEBA DODAC POJEMNOSC MROWKI
                 double updatedPheromoneLevel =
                     (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel; //+ ALFA * najlepsza ostatnia sciezka
                 choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
