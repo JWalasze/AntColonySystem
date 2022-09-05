@@ -64,3 +64,5 @@ antColony.AddAntToTheColony();
 antColony.AddAntToTheColony();
 antColony.AddAntToTheColony();
 antColony.StartLookingForPath();
+
+//https://www.sciencedirect.com/topics/computer-science/pheromone-matrix
