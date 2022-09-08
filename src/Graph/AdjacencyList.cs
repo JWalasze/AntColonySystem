@@ -6,37 +6,41 @@ namespace AntColonyNamespace
 {
     internal class AdjacencyList
     {
-        private List<List<Edge>> _AdjacencyListOfEdges;
+        //Lista krotki: Wierzcholek z lista krawedzi z niego
+        private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
 
+        //Konstruktor
         public AdjacencyList()
         {
-            this._AdjacencyListOfEdges = new List<List<Edge>>();
+            this._AdjacencyList = new List<(Vertex _Vertex, List<Edge> _Edges)>();
         }
 
+        //Zwraca ilosc wierzcholkow w grafie jako pole property
         public int NumberOfVertexes
         {
             get { return this.GetNumberOfVertexes(); }
         }
 
-        //It makes that we can access vertexes and edges through [], but it returns new, readonly collection.
+        //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
         public ReadOnlyCollection<Edge> this[int vertexNumber]
         {
             get
             {
-                if (vertexNumber < 0 || vertexNumber >= this._AdjacencyListOfEdges.Count)
+                if (vertexNumber < 0 || vertexNumber >= this.NumberOfVertexes)
                 {
                     throw new ArgumentOutOfRangeException(
                         nameof(vertexNumber),
-                        "Column index is out of range!!!"
+                        "Vertex index is out of range!!!"
                     );
                 }
                 else
                 {
-                    return new ReadOnlyCollection<Edge>(this._AdjacencyListOfEdges[vertexNumber]);
+                    return new ReadOnlyCollection<Edge>(this._AdjacencyList[vertexNumber]._Edges);
                 }
             }
         }
 
+        //Dodanie skierowanej krawedzi do listy sasiedztwa
         public void AddDirectedEdge(Edge newDirectedEdge)
         {
             if (
@@ -46,14 +50,15 @@ namespace AntColonyNamespace
                 || newDirectedEdge.EndVertex < 0
             )
             {
-                throw new Exception("Entered vertexes out of range!");
+                throw new Exception("Incorrect new edge!!!");
             }
             else
             {
-                this._AdjacencyListOfEdges[newDirectedEdge.StartVertex].Add(newDirectedEdge);
+                this._AdjacencyList[newDirectedEdge.StartVertex]._Edges.Add(newDirectedEdge);
             }
         }
 
+        //Dodanie nieskierowanej krawedzi do listy sasiedztwa
         public void AddUndirectedEdge(Edge newUndirectedEdge)
         {
             if (
@@ -63,42 +68,40 @@ namespace AntColonyNamespace
                 || newUndirectedEdge.EndVertex < 0
             )
             {
-                throw new Exception("Entered vertexes out of range!");
+                throw new Exception("Incorrect new edge!!!");
             }
             else
             {
-                this._AdjacencyListOfEdges[newUndirectedEdge.StartVertex].Add(newUndirectedEdge);
-                this._AdjacencyListOfEdges[newUndirectedEdge.EndVertex].Add(newUndirectedEdge);
+                this._AdjacencyList[newUndirectedEdge.StartVertex]._Edges.Add(newUndirectedEdge);
+                this._AdjacencyList[newUndirectedEdge.EndVertex]._Edges.Add(newUndirectedEdge);
             }
         }
 
-        public void AddVertex()
+        public Vertex GetVertex(int vertexIndex)
         {
-            this._AdjacencyListOfEdges.Add(new List<Edge>());
+            return this._AdjacencyList.Find(element => element._Vertex.VertexIndex == vertexIndex)._Vertex;
         }
 
+        //Dodanie nowego wierzcholka
+        public void AddVertex(Vertex newVertex)
+        {
+            this._AdjacencyList.Add((newVertex, new List<Edge>()));
+        }
+
+        //Zwraca ilosc wierzcholkow - uzyte w property NumberOfVertexes
         private int GetNumberOfVertexes()
         {
-            return this._AdjacencyListOfEdges.Count;
+            return this._AdjacencyList.Count;
         }
 
-        private bool IsEdgeBetweenVertexes(int firstVertex, int secondVertex)
-        {
-            if (this._AdjacencyListOfEdges[firstVertex].Any(edge => edge.EndVertex == secondVertex))
-            {
-                return true;
-            }
-            return false;
-        }
-
+        //Zwraca liste sasiedztwa jako string
         public override string ToString()
         {
             string str = string.Empty;
-            int counterOfVertexes = 0;
-            this._AdjacencyListOfEdges.ForEach(vertex =>
+            this._AdjacencyList.ForEach(item =>
             {
-                str += counterOfVertexes++ + ":";
-                vertex.ForEach(edge =>
+                str += item._Vertex.VertexIndex + ":";
+                item._Edges.ForEach(edge =>
                 {
                     str += " " + edge.EndVertex;
                 });
