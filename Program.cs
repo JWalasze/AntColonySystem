@@ -16,6 +16,9 @@ using System.Collections.ObjectModel;
 // graph.AddUndirectedEdge(2, 3);
 // Console.WriteLine(graph.ToString());
 // Console.WriteLine("Liczba wierzchołków: " + graph.GetNumberOfVertexes());
+for (int j = 0; j < 5; ++j)
+{
+
 
 
 Graph graph = new Graph();
@@ -59,10 +62,12 @@ possibilities.RestartAllValues();
 
 Console.WriteLine("-------------------------");
 
-AntColony antColony = new AntColony(graph, 100, 0.1, 2.3, 100, 0.1, 100);
+AntColony antColony = new AntColony(graph, 0.1, 2.3, 0.1, 3, 2);
 antColony.AddAntToTheColony();
 antColony.AddAntToTheColony();
 antColony.AddAntToTheColony();
 antColony.StartLookingForPath();
+
+}
 
 //https://www.sciencedirect.com/topics/computer-science/pheromone-matrix

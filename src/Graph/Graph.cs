@@ -41,6 +41,11 @@ namespace AntColonyNamespace
             return this._AdjacencyList.NumberOfVertexes;
         }
 
+        public Vertex GetVertex(int vertexIndex)
+        {
+            return this._AdjacencyList.GetVertex(vertexIndex);
+        }
+
         //Dodaje nieskierowana krawedz do grafu - info o wierzcholkach w newEdge
         public void AddUndirectedEdge(Edge newEdge)
         {
@@ -53,16 +58,16 @@ namespace AntColonyNamespace
             this._AdjacencyList.AddDirectedEdge(newEdge);
         }
 
-        //Zwraca graf w reprezentacji listy jako string
-        public override string ToString()
-        {
-            return this._AdjacencyList.ToString();
-        }
-
         //Metoda zeby zwrocic krawedzie z podanego wierzcholka
         public ReadOnlyCollection<Edge> GetEdgesFromVertex(int vertexIndex)
         {
             return this._AdjacencyList[vertexIndex];
+        }
+
+        //Zwraca graf w reprezentacji listy jako string
+        public override string ToString()
+        {
+            return this._AdjacencyList.ToString();
         }
     }
 }

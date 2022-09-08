@@ -6,25 +6,16 @@ namespace AntColonyNamespace
 {
     internal class AntColony
     {
-        //Coefficients
-
-        //Q is unknow???
-        public readonly double _Q;
-
         //ALFA controls influence of TAU
         public readonly double _ALFA;
 
         //BETA controls influence of ETA
         public readonly double _BETA;
 
-        //P is the pheromone evaporation coefficient
-        public readonly double _P;
-
         //q0 determins the importance of exploration versus exploitation
         public readonly double _q0;
 
-        //ro defines evaporation
-        public readonly double ro;
+        private readonly double _NumberOfIterations;
 
         //List of every ant in a colony
         public List<Ant> Ants;
@@ -33,23 +24,24 @@ namespace AntColonyNamespace
 
         public AntColony(
             Graph _Graph,
-            double Q,
             double ALFA,
-            double BETA,
-            double P,
+            double BETA,            
             double q0,
-            double ro
+            int NumberOfAnts,
+            int NumberOfIterations
         )
         {
             this.Graph = _Graph;
-            this._Q = Q;
             this._ALFA = ALFA;
             this._BETA = BETA;
-            this._P = P;
             this._q0 = q0;
-            this.ro = ro;
+            this._NumberOfIterations = NumberOfIterations;
 
             this.Ants = new List<Ant>();
+            for (int i = 0; i < NumberOfAnts; ++i)
+            {
+                this.AddAntToTheColony();
+            }
         }
 
         public void AddAntToTheColony()
@@ -59,13 +51,14 @@ namespace AntColonyNamespace
 
         public void StartLookingForPath()
         {
-            for (int i = 0; i < 2; ++i)
+            for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
             {
                 this.Ants.ForEach(ant =>
                 {
                     ant.MoveToTheNextEdge();
                 });
             }
+            
             this.Ants.ForEach(ant =>
             {
                 ant.PrintPath();
@@ -74,9 +67,8 @@ namespace AntColonyNamespace
 
         public class Ant
         {
-            private int AntIndex;
-
             private static int AntsGlobalIndex = 0;
+            private int AntIndex;
 
             //Obiekt do liczenia prawdopodobienstw wyboru krawedzi
             private Possibilities _Possibilities;

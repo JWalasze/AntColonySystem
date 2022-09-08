@@ -77,6 +77,11 @@ namespace AntColonyNamespace
             }
         }
 
+        public Vertex GetVertex(int vertexIndex)
+        {
+            return this._AdjacencyList.Find(element => element._Vertex.VertexIndex == vertexIndex)._Vertex;
+        }
+
         //Dodanie nowego wierzcholka
         public void AddVertex(Vertex newVertex)
         {
