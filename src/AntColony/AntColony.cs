@@ -165,6 +165,15 @@ namespace AntColonyNamespace
                 //I jeszcze trzeba bedzie globalnie gdzie indziej
             }
 
+            private double CalculateFindedPathDistance()
+            {
+                var distance = 0.0;
+                this._CurrentPheromonePath.ForEach(edge => {
+                    distance += edge.Distance;
+                });
+                return distance;
+            }
+
             public void PrintPath()
             {
                 Console.WriteLine(this.AntIndex);
