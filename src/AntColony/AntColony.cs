@@ -158,11 +158,16 @@ namespace AntColonyNamespace
                 }
                 this._Possibilities.RestartAllValues();
 
-                //Update feromony --- TO POWINNO BYC PO ZROBIENIU CALEJ SCIEZKI, TRZEBA DODAC POJEMNOSC MROWKI
+                //Lokalne aktualizowanie feromonów
                 double updatedPheromoneLevel =
-                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel; //+ ALFA * najlepsza ostatnia sciezka
+                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel + this._AntColony._ALFA * 0;
+                    //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
                 choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
-                //I jeszcze trzeba bedzie globalnie gdzie indziej
+                //I jeszcze trzeba bedzie globalnie gdzie indziej,
+                //ale globalne jeszcze trzeba dać gdzieś po skończonej iteracji,
+                //że wszystkie mrówki znajdą swoje własne rozwiązanie...
+                //Może dać klasę Solution, a wręcz napewno xD
+                //Moze tez do macierzy feromonow xD
             }
 
             private double CalculateFindedPathDistance()
@@ -171,6 +176,7 @@ namespace AntColonyNamespace
                 this._CurrentPheromonePath.ForEach(edge => {
                     distance += edge.Distance;
                 });
+
                 return distance;
             }
 
