@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
-    internal class AdjacencyList : IEnumerable<(Vertex _Vertex, List<Edge> _Edges)>
+    internal class AdjacencyList : IEnumerable
     {
         //Lista krotki: Wierzcholek z lista krawedzi z niego
         private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
@@ -21,14 +21,14 @@ namespace AntColonyNamespace
             get { return this.GetNumberOfVertexes(); }
         }
 
-        public IEnumerator<(Vertex _Vertex, List<Edge> _Edges)> IEnumerable<(Vertex _Vertex, List<Edge> _Edges)>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return (IEnumerator<(Vertex _Vertex, List<Edge> _Edges)>)GetEnumerator();
+            return (IEnumerator)GetEnumerator();
         }
 
-        public CompletedGraphEnum GetEnumerator()
+        IEnumerator GetEnumerator()
         {
-            return new CompletedGraphEnum(this.AdjacencyList);
+            return new AdjacencyListEnum(this._AdjacencyList);
         }
 
         //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
@@ -123,9 +123,11 @@ namespace AntColonyNamespace
         }
     }
 
-    internal class AdjacencyListEnum
+    internal class AdjacencyListEnum : IEnumerator
     {
         private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
+
+        private int position = -1;
 
         public AdjacencyListEnum(List<(Vertex _Vertex, List<Edge> _Edges)> AdjacencyList)
         {
@@ -134,27 +136,28 @@ namespace AntColonyNamespace
 
         public bool MoveNext()
         {
-            position++;
-            return (position < _people.Length);
+            ++this.position;
+            return this.position < this._AdjacencyList.Count;
         }
 
         public void Reset()
         {
-            position = -1;
+            this.position = -1;
         }
 
+        //EXPLICIT AND IMPLICIT
         object IEnumerator.Current
         {
             get { return Current; }
         }
 
-        public Person Current
+        public (Vertex _Vertex, List<Edge> _Edges) Current
         {
             get
             {
                 try
                 {
-                    return _people[position];
+                    return this._AdjacencyList[position];
                 }
                 catch (IndexOutOfRangeException)
                 {

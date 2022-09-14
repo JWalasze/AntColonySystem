@@ -16,7 +16,7 @@ using System.Collections.ObjectModel;
 // graph.AddUndirectedEdge(2, 3);
 // Console.WriteLine(graph.ToString());
 // Console.WriteLine("Liczba wierzchołków: " + graph.GetNumberOfVertexes());
-for (int j = 0; j < 5; ++j)
+for (int j = 0; j < 1; ++j)
 {
     Graph graph = new Graph();
     for (int i = 0; i < 6; ++i)
