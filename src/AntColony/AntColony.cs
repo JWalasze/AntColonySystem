@@ -25,7 +25,7 @@ namespace AntColonyNamespace
         public AntColony(
             Graph _Graph,
             double ALFA,
-            double BETA,            
+            double BETA,
             double q0,
             int NumberOfAnts,
             int NumberOfIterations
@@ -58,7 +58,7 @@ namespace AntColonyNamespace
                     ant.MoveToTheNextEdge();
                 });
             }
-            
+
             this.Ants.ForEach(ant =>
             {
                 ant.PrintPath();
@@ -160,8 +160,9 @@ namespace AntColonyNamespace
 
                 //Lokalne aktualizowanie feromonów
                 double updatedPheromoneLevel =
-                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel + this._AntColony._ALFA * 0;
-                    //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
+                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel
+                    + this._AntColony._ALFA * 0;
+                //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
                 choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
                 //I jeszcze trzeba bedzie globalnie gdzie indziej,
                 //ale globalne jeszcze trzeba dać gdzieś po skończonej iteracji,
@@ -173,7 +174,8 @@ namespace AntColonyNamespace
             private double CalculateFindedPathDistance()
             {
                 var distance = 0.0;
-                this._CurrentPheromonePath.ForEach(edge => {
+                this._CurrentPheromonePath.ForEach(edge =>
+                {
                     distance += edge.Distance;
                 });
 
