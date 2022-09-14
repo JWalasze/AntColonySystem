@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
-    internal class AdjacencyList
+    internal class AdjacencyList : IEnumerable<(Vertex _Vertex, List<Edge> _Edges)>
     {
         //Lista krotki: Wierzcholek z lista krawedzi z niego
         private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
@@ -19,6 +19,16 @@ namespace AntColonyNamespace
         public int NumberOfVertexes
         {
             get { return this.GetNumberOfVertexes(); }
+        }
+
+        public IEnumerator<(Vertex _Vertex, List<Edge> _Edges)> IEnumerable<(Vertex _Vertex, List<Edge> _Edges)>.GetEnumerator()
+        {
+            return (IEnumerator<(Vertex _Vertex, List<Edge> _Edges)>)GetEnumerator();
+        }
+
+        public CompletedGraphEnum GetEnumerator()
+        {
+            return new CompletedGraphEnum(this.AdjacencyList);
         }
 
         //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
@@ -79,7 +89,9 @@ namespace AntColonyNamespace
 
         public Vertex GetVertex(int vertexIndex)
         {
-            return this._AdjacencyList.Find(element => element._Vertex.VertexIndex == vertexIndex)._Vertex;
+            return this._AdjacencyList
+                .Find(element => element._Vertex.VertexIndex == vertexIndex)
+                ._Vertex;
         }
 
         //Dodanie nowego wierzcholka
@@ -108,6 +120,47 @@ namespace AntColonyNamespace
                 str += Environment.NewLine;
             });
             return str;
+        }
+    }
+
+    internal class AdjacencyListEnum
+    {
+        private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
+
+        public AdjacencyListEnum(List<(Vertex _Vertex, List<Edge> _Edges)> AdjacencyList)
+        {
+            this._AdjacencyList = AdjacencyList;
+        }
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < _people.Length);
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
+
+        object IEnumerator.Current
+        {
+            get { return Current; }
+        }
+
+        public Person Current
+        {
+            get
+            {
+                try
+                {
+                    return _people[position];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
         }
     }
 }
