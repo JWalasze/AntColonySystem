@@ -16,7 +16,7 @@ using System.Collections.ObjectModel;
 // graph.AddUndirectedEdge(2, 3);
 // Console.WriteLine(graph.ToString());
 // Console.WriteLine("Liczba wierzchołków: " + graph.GetNumberOfVertexes());
-for (int j = 0; j < 1; ++j)
+for (int j = 0; j < 0; ++j)
 {
     Graph graph = new Graph();
     for (int i = 0; i < 6; ++i)
@@ -64,12 +64,9 @@ for (int j = 0; j < 1; ++j)
     antColony.AddAntToTheColony();
     antColony.AddAntToTheColony();
     antColony.StartLookingForPath();
-
-    CompletedGraph l = new CompletedGraph(graph);
 }
 
 City city = new City(20);
-
 
 //!!!!!!!!
 //https://sci-hub.se/http://dx.doi.org/10.17535/crorr.2017.0029
@@ -80,3 +77,11 @@ City city = new City(20);
 //https://sci-hub.se/https://link.springer.com/article/10.1007/s00500-019-04072-6
 //https://www.google.com/search?client=firefox-b-d&q=a+giant+tour+representation#imgrc=IOSUiKddzLveiM
 //https://cezarywalenciuk.pl/blog/programing/ienumerable-i-ienumerator-implementowanie-tych-interfejsow
+List<int> ll = new List<int> { 1, 2, 3, 4, 5 };
+Console.WriteLine(ll[3]);
+ReadOnlyCollection<int> k = new ReadOnlyCollection<int>(ll);
+Console.WriteLine(k[3]);
+bool mn = object.ReferenceEquals(ll, k);
+Console.WriteLine(mn);
+
+CompletedGraph l = new CompletedGraph(10);
