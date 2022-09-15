@@ -4,27 +4,24 @@ namespace AntColonyNamespace
     {
         public CompletedGraph(int numberOfCities) : base(numberOfCities)
         {
-            for (int i = 0, k = numberOfCities; i < numberOfCities; ++i, --k)
+            for (
+                int currentVertexStart = 0, numberEdgesToCreate = numberOfCities;
+                currentVertexStart < numberOfCities;
+                ++currentVertexStart, --numberEdgesToCreate
+            )
             {
-                for (int j = k - 1; j > 0; --j)
+                for (
+                    int currentVertexEnd = currentVertexStart + 1;
+                    currentVertexEnd < numberOfCities;
+                    ++currentVertexEnd
+                )
                 {
                     this.AdjacencyList.AddUndirectedEdge(
-                        new Edge(i, numberOfCities - j, new Random().Next())
+                        new Edge(currentVertexStart, currentVertexEnd, new Random().Next())
                     );
                 }
             }
             Console.WriteLine(this.ToString());
         }
-
-        // public CompletedGraph(Graph graph) : base(graph.AdjacencyList.NumberOfVertexes)
-        // {
-        //     foreach ((Vertex _Vertex, List<Edge> _Edges) tuple in graph.AdjacencyList)
-        //     {
-        //         //var castedTuple = ((Vertex _Vertex, List<Edge> _Edges))tuple;
-        //         tuple._Edges.ForEach(edge => {
-        //             this.AdjacencyList.
-        //         });
-        //     }
-        // }
     }
 }

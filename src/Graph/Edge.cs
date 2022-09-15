@@ -5,10 +5,10 @@ namespace AntColonyNamespace
     internal class Edge
     {
         //Index startowego wierzcholka
-        public int StartVertex { get; }
+        //public int StartVertex { get; }
 
         //Index koncowego wierzcholka
-        public int EndVertex { get; }
+        //public int EndVertex { get; }
 
         //Dystans, czyli dlugosc krawedzi
         public double Distance { get; set; }
@@ -17,19 +17,24 @@ namespace AntColonyNamespace
         public double PheromoneLevel { get; set; }
 
         //Konstruktor z wyborem wstepnego poziomu feromonow
-        public Edge(int startVertex, int endVertex, double distance, double pheromoneLevel)
+        public Edge( /*int startVertex, int endVertex,*/
+            double distance,
+            double pheromoneLevel
+        )
         {
-            this.StartVertex = startVertex;
-            this.EndVertex = endVertex;
+            //this.StartVertex = startVertex;
+            //this.EndVertex = endVertex;
             this.Distance = distance;
             this.PheromoneLevel = pheromoneLevel;
         }
 
         //Konstruktor bez wstepnego wyboru feromonow
-        public Edge(int startVertex, int endVertex, double distance)
+        public Edge( /*int startVertex, int endVertex,*/
+            double distance
+        )
         {
-            this.StartVertex = startVertex;
-            this.EndVertex = endVertex;
+            //this.StartVertex = startVertex;
+            //this.EndVertex = endVertex;
             this.Distance = distance;
             this.PheromoneLevel = 0;
         }
@@ -40,9 +45,12 @@ namespace AntColonyNamespace
             this.PheromoneLevel = newPheromoneLevel;
         }
 
+        //Po to zeby dalo szanse ze sa rozne, po to jak jest do dziennika dodawane w possibilities
+        //To juz daje ze moze beda rozne hashe a jak beda takie same to i tak program nie uzna ze to te same
+        //edge i sprawdzi equals nizej
         public override int GetHashCode()
         {
-            return this.EndVertex;
+            return (int)(this.Distance * this.PheromoneLevel);
         }
 
         public override bool Equals(object? obj)
@@ -50,9 +58,7 @@ namespace AntColonyNamespace
             if (obj != null && this.GetType() == obj.GetType() && Object.ReferenceEquals(this, obj))
             {
                 Edge checkingEdge = (Edge)obj;
-                return checkingEdge.StartVertex == this.StartVertex
-                    && checkingEdge.EndVertex == this.EndVertex
-                    && checkingEdge.PheromoneLevel == this.PheromoneLevel
+                return checkingEdge.PheromoneLevel == this.PheromoneLevel
                     && checkingEdge.Distance == this.Distance;
             }
             else

@@ -7,7 +7,7 @@ namespace AntColonyNamespace
     internal class AdjacencyList /*: IEnumerable*/
     {
         //Lista krotki: Wierzcholek z lista krawedzi z niego
-        private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
+        private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList; //DODAC KLASE NA TEGO NIESZCZESNEGO TULPA
 
         //Konstruktor
         public AdjacencyList()
@@ -83,7 +83,14 @@ namespace AntColonyNamespace
             else
             {
                 this._AdjacencyList[newUndirectedEdge.StartVertex]._Edges.Add(newUndirectedEdge);
-                this._AdjacencyList[newUndirectedEdge.EndVertex]._Edges.Add(newUndirectedEdge);
+                this._AdjacencyList[newUndirectedEdge.EndVertex]._Edges.Add(
+                    new Edge(
+                        newUndirectedEdge.EndVertex,
+                        newUndirectedEdge.StartVertex,
+                        newUndirectedEdge.Distance,
+                        newUndirectedEdge.PheromoneLevel
+                    )
+                );
             }
         }
 

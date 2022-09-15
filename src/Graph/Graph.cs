@@ -14,7 +14,7 @@ namespace AntColonyNamespace
             get { return this._AdjacencyList; }
         }
 
-        //Konstruktor
+        //Konstruktory
         public Graph(int NumberOfVertexes)
         {
             this._AdjacencyList = new AdjacencyList();
