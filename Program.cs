@@ -64,9 +64,12 @@ for (int j = 0; j < 1; ++j)
     antColony.AddAntToTheColony();
     antColony.AddAntToTheColony();
     antColony.StartLookingForPath();
+
+    CompletedGraph l = new CompletedGraph(graph);
 }
 
 City city = new City(20);
+
 
 //!!!!!!!!
 //https://sci-hub.se/http://dx.doi.org/10.17535/crorr.2017.0029
