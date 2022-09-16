@@ -7,12 +7,12 @@ namespace AntColonyNamespace
     internal class AdjacencyList /*: IEnumerable*/
     {
         //Lista krotki: Wierzcholek z lista krawedzi z niego
-        private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList; //DODAC KLASE NA TEGO NIESZCZESNEGO TULPA
+        private List<(Vertex _Vertex, List<EdgeWithDestVertex> _Edges)> _AdjacencyList;
 
         //Konstruktor
         public AdjacencyList()
         {
-            this._AdjacencyList = new List<(Vertex _Vertex, List<Edge> _Edges)>();
+            this._AdjacencyList = new List<(Vertex _Vertex, List<EdgeWithDestVertex> _Edges)>();
         }
 
         //Zwraca ilosc wierzcholkow w grafie jako pole property
@@ -32,7 +32,7 @@ namespace AntColonyNamespace
         // }
 
         //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
-        public ReadOnlyCollection<Edge> this[int vertexNumber]
+        public ReadOnlyCollection<EdgeWithDestVertex> this[int vertexNumber]
         {
             get
             {
@@ -45,66 +45,72 @@ namespace AntColonyNamespace
                 }
                 else
                 {
-                    return new ReadOnlyCollection<Edge>(this._AdjacencyList[vertexNumber]._Edges);
+                    return new ReadOnlyCollection<EdgeWithDestVertex>(
+                        this._AdjacencyList[vertexNumber]._Edges
+                    );
                 }
             }
         }
 
         //Dodanie skierowanej krawedzi do listy sasiedztwa
-        public void AddDirectedEdge(Edge newDirectedEdge)
+        public void AddDirectedEdge(int startVertexIndex, int endVertexIndex, Edge newDirectedEdge)
         {
             if (
-                newDirectedEdge.StartVertex >= this.NumberOfVertexes
-                || newDirectedEdge.EndVertex >= this.NumberOfVertexes
-                || newDirectedEdge.StartVertex < 0
-                || newDirectedEdge.EndVertex < 0
+                startVertexIndex >= this.NumberOfVertexes
+                || endVertexIndex >= this.NumberOfVertexes
+                || startVertexIndex < 0
+                || endVertexIndex < 0
             )
             {
                 throw new Exception("Incorrect new edge!!!");
             }
             else
             {
-                this._AdjacencyList[newDirectedEdge.StartVertex]._Edges.Add(newDirectedEdge);
-            }
-        }
-
-        //Dodanie nieskierowanej krawedzi do listy sasiedztwa
-        public void AddUndirectedEdge(Edge newUndirectedEdge)
-        {
-            if (
-                newUndirectedEdge.StartVertex >= this.NumberOfVertexes
-                || newUndirectedEdge.EndVertex >= this.NumberOfVertexes
-                || newUndirectedEdge.StartVertex < 0
-                || newUndirectedEdge.EndVertex < 0
-            )
-            {
-                throw new Exception("Incorrect new edge!!!");
-            }
-            else
-            {
-                this._AdjacencyList[newUndirectedEdge.StartVertex]._Edges.Add(newUndirectedEdge);
-                this._AdjacencyList[newUndirectedEdge.EndVertex]._Edges.Add(
-                    new Edge(
-                        newUndirectedEdge.EndVertex,
-                        newUndirectedEdge.StartVertex,
-                        newUndirectedEdge.Distance,
-                        newUndirectedEdge.PheromoneLevel
-                    )
+                this._AdjacencyList[startVertexIndex]._Edges.Add(
+                    new EdgeWithDestVertex(newDirectedEdge, endVertexIndex)
                 );
             }
         }
 
+        //Dodanie nieskierowanej krawedzi do listy sasiedztwa
+        public void AddUndirectedEdge(
+            int firstVertexIndex,
+            int secondVertexIndex,
+            Edge newUndirectedEdge
+        )
+        {
+            if (
+                firstVertexIndex >= this.NumberOfVertexes
+                || secondVertexIndex >= this.NumberOfVertexes
+                || firstVertexIndex < 0
+                || secondVertexIndex < 0
+            )
+            {
+                throw new Exception("Incorrect new edge!!!");
+            }
+            else
+            {
+                this._AdjacencyList[firstVertexIndex]._Edges.Add(
+                    new EdgeWithDestVertex(newUndirectedEdge, secondVertexIndex)
+                );
+                this._AdjacencyList[secondVertexIndex]._Edges.Add(
+                    new EdgeWithDestVertex(newUndirectedEdge, firstVertexIndex)
+                );
+            }
+        }
+
+        //Zwykly get na wierzcholek
         public Vertex GetVertex(int vertexIndex)
         {
-            return this._AdjacencyList
-                .Find(element => element._Vertex.VertexIndex == vertexIndex)
-                ._Vertex;
+            return this._AdjacencyList.Find(tuple => tuple._Vertex.Index == vertexIndex)._Vertex;
         }
 
         //Dodanie nowego wierzcholka
-        public void AddVertex(Vertex newVertex)
+        public void AddVertex()
         {
-            this._AdjacencyList.Add((newVertex, new List<Edge>()));
+            this._AdjacencyList.Add(
+                (new Vertex(this.GetNumberOfVertexes()), new List<EdgeWithDestVertex>())
+            );
         }
 
         //Zwraca ilosc wierzcholkow - uzyte w property NumberOfVertexes
@@ -117,12 +123,12 @@ namespace AntColonyNamespace
         public override string ToString()
         {
             string str = string.Empty;
-            this._AdjacencyList.ForEach(item =>
+            this._AdjacencyList.ForEach(tuple =>
             {
-                str += item._Vertex.VertexIndex + ":";
-                item._Edges.ForEach(edge =>
+                str += tuple._Vertex.Index + ":";
+                tuple._Edges.ForEach(edgeWithDestVertex =>
                 {
-                    str += " " + edge.EndVertex;
+                    str += " " + edgeWithDestVertex._DestVertex;
                 });
                 str += Environment.NewLine;
             });

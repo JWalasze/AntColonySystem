@@ -11,10 +11,10 @@ namespace AntColonyNamespace
         //public int EndVertex { get; }
 
         //Dystans, czyli dlugosc krawedzi
-        public double Distance { get; set; }
+        public double Distance { get; private set; }
 
         //Poziom feromonow na krawedzi
-        public double PheromoneLevel { get; set; }
+        public double PheromoneLevel { get; private set; }
 
         //Konstruktor z wyborem wstepnego poziomu feromonow
         public Edge( /*int startVertex, int endVertex,*/

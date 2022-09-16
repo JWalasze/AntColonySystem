@@ -32,7 +32,7 @@ namespace AntColonyNamespace
         //Dodanie wierzcholka do grafu - nowy vertex ma zwiekszony o 1 index
         public void AddVertex()
         {
-            this._AdjacencyList.AddVertex(new Vertex());
+            this._AdjacencyList.AddVertex();
         }
 
         //Zwraca ilosc wierzchokow w grafie
@@ -47,19 +47,19 @@ namespace AntColonyNamespace
         }
 
         //Dodaje nieskierowana krawedz do grafu - info o wierzcholkach w newEdge
-        public void AddUndirectedEdge(Edge newEdge)
+        public void AddUndirectedEdge(int firstVertexIndex, int secondVertexIndex, Edge newEdge)
         {
-            this._AdjacencyList.AddUndirectedEdge(newEdge);
+            this._AdjacencyList.AddUndirectedEdge(firstVertexIndex, secondVertexIndex, newEdge);
         }
 
         //Dodanie skierowana krawedz - info o wierzcholkach w newEdge
-        public void AddDirectedEdge(Edge newEdge)
+        public void AddDirectedEdge(int startVertexIndex, int endVertexIndex, Edge newEdge)
         {
-            this._AdjacencyList.AddDirectedEdge(newEdge);
+            this._AdjacencyList.AddDirectedEdge(startVertexIndex, endVertexIndex, newEdge);
         }
 
         //Metoda zeby zwrocic krawedzie z podanego wierzcholka
-        public ReadOnlyCollection<Edge> GetEdgesFromVertex(int vertexIndex)
+        public ReadOnlyCollection<EdgeWithDestVertex> GetEdgesFromVertex(int vertexIndex)
         {
             return this._AdjacencyList[vertexIndex];
         }

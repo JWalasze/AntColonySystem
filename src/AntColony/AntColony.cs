@@ -79,7 +79,7 @@ namespace AntColonyNamespace
             //Zapisany index obecnego wierzcholka
             private int _CurrentVertexIndex;
 
-            private List<Edge> _CurrentPheromonePath;
+            private List<EdgeWithDestVertex> _CurrentPheromonePath;
 
             private AntColony _AntColony;
 
@@ -90,11 +90,11 @@ namespace AntColonyNamespace
                 this._InitialVertexIndex = InitialVertexIndex;
                 this._CurrentVertexIndex = this._InitialVertexIndex;
 
-                this._CurrentPheromonePath = new List<Edge>();
+                this._CurrentPheromonePath = new List<EdgeWithDestVertex>();
                 this.AntIndex = AntsGlobalIndex++;
             }
 
-            public Edge ChoosePath()
+            public EdgeWithDestVertex ChoosePath()
             {
                 foreach (
                     var possibleEdge in this._AntColony.Graph.GetEdgesFromVertex(
@@ -103,7 +103,7 @@ namespace AntColonyNamespace
                 )
                 {
                     //Nie bierzemy pod uwagę odwiedzonych wierzchołków
-                    if (!this.DidAntVisitVertex(possibleEdge.EndVertex))
+                    if (!this.DidAntVisitVertex(possibleEdge._DestVertex))
                     {
                         this._Possibilities.CountNominatorAndUpdateDenominator(possibleEdge);
                     }
@@ -121,7 +121,7 @@ namespace AntColonyNamespace
                 }
             }
 
-            private Edge ChoosePathBasedOnProb()
+            private EdgeWithDestVertex ChoosePathBasedOnProb()
             {
                 double randomNumberFrom0To1 = new Random().NextDouble();
                 double lowerLimit = 0;
@@ -141,16 +141,23 @@ namespace AntColonyNamespace
 
             private bool DidAntVisitVertex(int vertex)
             {
-                return this._CurrentPheromonePath.Any(
-                    partOfPath => partOfPath.EndVertex == vertex || partOfPath.StartVertex == vertex
-                );
+                if (vertex == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return this._CurrentPheromonePath.Any(
+                        partOfPath => partOfPath._DestVertex == vertex
+                    );
+                }
             }
 
             public void MoveToTheNextEdge()
             {
                 var choosenEdge = this.ChoosePath();
                 this._CurrentPheromonePath.Add(choosenEdge);
-                this._CurrentVertexIndex = choosenEdge.EndVertex;
+                this._CurrentVertexIndex = choosenEdge._DestVertex;
                 Console.WriteLine();
                 foreach (var item in _Possibilities.GetProbabilities())
                 {
@@ -160,10 +167,10 @@ namespace AntColonyNamespace
 
                 //Lokalne aktualizowanie feromonów
                 double updatedPheromoneLevel =
-                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel
+                    (1 - this._AntColony._ALFA) * choosenEdge._Edge.PheromoneLevel
                     + this._AntColony._ALFA * 0;
                 //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
-                choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
+                choosenEdge._Edge.UpdatePheromoneLevel(updatedPheromoneLevel);
                 //I jeszcze trzeba bedzie globalnie gdzie indziej,
                 //ale globalne jeszcze trzeba dać gdzieś po skończonej iteracji,
                 //że wszystkie mrówki znajdą swoje własne rozwiązanie...
@@ -176,7 +183,7 @@ namespace AntColonyNamespace
                 var distance = 0.0;
                 this._CurrentPheromonePath.ForEach(edge =>
                 {
-                    distance += edge.Distance;
+                    distance += edge._Edge.Distance;
                 });
 
                 return distance;
@@ -185,9 +192,10 @@ namespace AntColonyNamespace
             public void PrintPath()
             {
                 Console.WriteLine(this.AntIndex);
+                Console.WriteLine(0);
                 this._CurrentPheromonePath.ForEach(path =>
                 {
-                    Console.WriteLine("od: " + path.StartVertex + " do " + path.EndVertex + " -> ");
+                    Console.WriteLine(" -> " + path._DestVertex);
                 });
             }
         }

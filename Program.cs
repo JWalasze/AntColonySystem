@@ -8,31 +8,31 @@ for (int j = 0; j < 1; ++j)
     {
         graph.AddVertex();
     }
-    graph.AddDirectedEdge(new Edge(0, 1, 10, 5));
-    graph.AddDirectedEdge(new Edge(1, 0, 10, 5));
-    graph.AddDirectedEdge(new Edge(2, 1, 1, 2));
-    graph.AddDirectedEdge(new Edge(1, 2, 9, 3));
-    graph.AddDirectedEdge(new Edge(1, 3, 4, 6));
-    graph.AddDirectedEdge(new Edge(3, 4, 4, 6));
-    graph.AddDirectedEdge(new Edge(1, 5, 2, 3));
-    graph.AddDirectedEdge(new Edge(2, 4, 12, 4));
-    graph.AddDirectedEdge(new Edge(4, 2, 13, 7));
-    graph.AddDirectedEdge(new Edge(4, 5, 13, 7));
-    graph.AddDirectedEdge(new Edge(5, 1, 10, 1));
+    graph.AddDirectedEdge(0, 1, new Edge(10, 5));
+    graph.AddDirectedEdge(1, 0, new Edge(10, 5));
+    graph.AddDirectedEdge(2, 1, new Edge(1, 2));
+    graph.AddDirectedEdge(1, 2, new Edge(9, 3));
+    graph.AddDirectedEdge(1, 3, new Edge(4, 6));
+    graph.AddDirectedEdge(3, 4, new Edge(4, 6));
+    graph.AddDirectedEdge(1, 5, new Edge(2, 3));
+    graph.AddDirectedEdge(2, 4, new Edge(12, 4));
+    graph.AddDirectedEdge(4, 2, new Edge(13, 7));
+    graph.AddDirectedEdge(4, 5, new Edge(13, 7));
+    graph.AddDirectedEdge(5, 1, new Edge(10, 1));
     Console.WriteLine(graph.ToString());
 
     Possibilities possibilities = new Possibilities(2.3);
-    possibilities.CountNominatorAndUpdateDenominator(new Edge(0, 1, 10, 3));
-    possibilities.CountNominatorAndUpdateDenominator(new Edge(0, 2, 12, 5));
-    possibilities.CountNominatorAndUpdateDenominator(new Edge(1, 2, 8, 7));
-    possibilities.CountNominatorAndUpdateDenominator(new Edge(1, 3, 4, 2));
-    possibilities.CountNominatorAndUpdateDenominator(new Edge(3, 0, 15, 4.5));
-    possibilities.CountNominatorAndUpdateDenominator(new Edge(2, 3, 5, 13));
+    possibilities.CountNominatorAndUpdateDenominator(new EdgeWithDestVertex(new Edge(10, 3), 1));
+    possibilities.CountNominatorAndUpdateDenominator(new EdgeWithDestVertex(new Edge(12, 5), 1));
+    possibilities.CountNominatorAndUpdateDenominator(new EdgeWithDestVertex(new Edge(8, 7), 1));
+    possibilities.CountNominatorAndUpdateDenominator(new EdgeWithDestVertex(new Edge(4, 2), 1));
+    possibilities.CountNominatorAndUpdateDenominator(new EdgeWithDestVertex(new Edge(15, 4.5), 1));
+    possibilities.CountNominatorAndUpdateDenominator(new EdgeWithDestVertex(new Edge(5, 13), 1));
     possibilities.CountProbabilities();
     Console.WriteLine(
-        possibilities.GetMaxNominator().Key.StartVertex
+        possibilities.GetMaxNominator().Key._DestVertex
             + "--"
-            + +possibilities.GetMaxNominator().Key.EndVertex
+            + +possibilities.GetMaxNominator().Key._DestVertex
             + "--"
             + +possibilities.GetMaxNominator().Value
     );

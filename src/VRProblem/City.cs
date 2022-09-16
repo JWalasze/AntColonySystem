@@ -1,6 +1,6 @@
 namespace AntColonyNamespace
 {
-    internal class City : Vertex
+    internal class City /*: Vertex*/
     {
         private readonly double _Demand;
 

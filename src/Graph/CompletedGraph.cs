@@ -17,7 +17,9 @@ namespace AntColonyNamespace
                 )
                 {
                     this.AdjacencyList.AddUndirectedEdge(
-                        new Edge(currentVertexStart, currentVertexEnd, new Random().Next())
+                        currentVertexStart,
+                        currentVertexEnd,
+                        new Edge(new Random().Next())
                     );
                 }
             }
