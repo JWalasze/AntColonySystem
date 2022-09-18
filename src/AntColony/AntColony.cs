@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace AntColonyNamespace
 {
@@ -17,10 +18,12 @@ namespace AntColonyNamespace
 
         private readonly double _NumberOfIterations;
 
-        //List of every ant in a colony
-        public List<Ant> Ants;
+        private readonly double _Capacity;
 
-        private Graph Graph;
+        //List of every ant in a colony
+        private List<Ant> Ants;
+
+        public Graph CitiesGraph;
 
         public AntColony(
             Graph _Graph,
@@ -28,10 +31,11 @@ namespace AntColonyNamespace
             double BETA,
             double q0,
             int NumberOfAnts,
-            int NumberOfIterations
+            int NumberOfIterations,
+            string pathToBenchmarkData
         )
         {
-            this.Graph = _Graph;
+            this.CitiesGraph = _Graph;
             this._ALFA = ALFA;
             this._BETA = BETA;
             this._q0 = q0;
@@ -42,6 +46,43 @@ namespace AntColonyNamespace
             {
                 this.AddAntToTheColony();
             }
+
+            var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
+            var lineCounter = 0;
+            var dimension = -1; //ILOSC MIAST Z DEPOTEM
+            var capacity = 0; //Pojemnosc mrowki
+            foreach (var line in allBenchmarkLines) //DOKONCZYC...DODAC WIEZCHOLKI I KRAWEDZIE-WYLICZYC JE
+            {
+                ++lineCounter;
+                Console.WriteLine(line);
+
+                if (lineCounter == 1)
+                {
+                    dimension = int.Parse(Regex.Split(line, @"\D+")[1]);
+                    Console.WriteLine(dimension);
+                }
+                else if (lineCounter == 2)
+                {
+                    capacity = int.Parse(Regex.Split(line, @"\D+")[1]);
+                    Console.WriteLine(capacity);
+                }
+                else if (dimension != -1 && lineCounter > 3 && lineCounter <= dimension + 3)
+                {
+                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[0]);
+                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[1]);
+                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[2]);
+                }
+                else if (
+                    dimension != -1
+                    && lineCounter > dimension + 4
+                    && lineCounter < 2 * dimension + 4
+                )
+                {
+                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[0]);
+                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[1]);
+                }
+                else { }
+            }
         }
 
         public void AddAntToTheColony()
@@ -51,6 +92,7 @@ namespace AntColonyNamespace
 
         public void StartLookingForPath()
         {
+            //ITERACJE to nie to, pozniej zmienic
             for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
             {
                 this.Ants.ForEach(ant =>
@@ -79,7 +121,7 @@ namespace AntColonyNamespace
             //Zapisany index obecnego wierzcholka
             private int _CurrentVertexIndex;
 
-            private List<EdgeWithDestVertex> _CurrentPheromonePath;
+            private List<EdgeWithDestinationCity> _CurrentPheromonePath;
 
             private AntColony _AntColony;
 
@@ -90,20 +132,20 @@ namespace AntColonyNamespace
                 this._InitialVertexIndex = InitialVertexIndex;
                 this._CurrentVertexIndex = this._InitialVertexIndex;
 
-                this._CurrentPheromonePath = new List<EdgeWithDestVertex>();
+                this._CurrentPheromonePath = new List<EdgeWithDestinationCity>();
                 this.AntIndex = AntsGlobalIndex++;
             }
 
-            public EdgeWithDestVertex ChoosePath()
+            public EdgeWithDestinationCity ChoosePath()
             {
                 foreach (
-                    var possibleEdge in this._AntColony.Graph.GetEdgesFromVertex(
+                    var possibleEdge in this._AntColony.CitiesGraph.GetEdgesFromCity(
                         this._CurrentVertexIndex
                     )
                 )
                 {
                     //Nie bierzemy pod uwagę odwiedzonych wierzchołków
-                    if (!this.DidAntVisitVertex(possibleEdge._DestVertex))
+                    if (!this.DidAntVisitVertex(possibleEdge.DestinationCity))
                     {
                         this._Possibilities.CountNominatorAndUpdateDenominator(possibleEdge);
                     }
@@ -121,7 +163,7 @@ namespace AntColonyNamespace
                 }
             }
 
-            private EdgeWithDestVertex ChoosePathBasedOnProb()
+            private EdgeWithDestinationCity ChoosePathBasedOnProb()
             {
                 double randomNumberFrom0To1 = new Random().NextDouble();
                 double lowerLimit = 0;
@@ -148,7 +190,7 @@ namespace AntColonyNamespace
                 else
                 {
                     return this._CurrentPheromonePath.Any(
-                        partOfPath => partOfPath._DestVertex == vertex
+                        partOfPath => partOfPath.DestinationCity == vertex
                     );
                 }
             }
@@ -157,7 +199,7 @@ namespace AntColonyNamespace
             {
                 var choosenEdge = this.ChoosePath();
                 this._CurrentPheromonePath.Add(choosenEdge);
-                this._CurrentVertexIndex = choosenEdge._DestVertex;
+                this._CurrentVertexIndex = choosenEdge.DestinationCity;
                 Console.WriteLine();
                 foreach (var item in _Possibilities.GetProbabilities())
                 {
@@ -167,10 +209,10 @@ namespace AntColonyNamespace
 
                 //Lokalne aktualizowanie feromonów
                 double updatedPheromoneLevel =
-                    (1 - this._AntColony._ALFA) * choosenEdge._Edge.PheromoneLevel
+                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel
                     + this._AntColony._ALFA * 0;
                 //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
-                choosenEdge._Edge.UpdatePheromoneLevel(updatedPheromoneLevel);
+                choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
                 //I jeszcze trzeba bedzie globalnie gdzie indziej,
                 //ale globalne jeszcze trzeba dać gdzieś po skończonej iteracji,
                 //że wszystkie mrówki znajdą swoje własne rozwiązanie...
@@ -183,7 +225,7 @@ namespace AntColonyNamespace
                 var distance = 0.0;
                 this._CurrentPheromonePath.ForEach(edge =>
                 {
-                    distance += edge._Edge.Distance;
+                    distance += edge.Distance;
                 });
 
                 return distance;
@@ -191,12 +233,14 @@ namespace AntColonyNamespace
 
             public void PrintPath()
             {
-                Console.WriteLine(this.AntIndex);
-                Console.WriteLine(0);
+                Console.WriteLine("Index mrowki: " + this.AntIndex);
+                Console.Write(0);
                 this._CurrentPheromonePath.ForEach(path =>
                 {
-                    Console.WriteLine(" -> " + path._DestVertex);
+                    Console.Write(" -> " + path.DestinationCity);
                 });
+                Console.WriteLine();
+                Console.WriteLine("------------");
             }
         }
     }

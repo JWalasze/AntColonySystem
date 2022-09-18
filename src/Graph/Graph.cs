@@ -14,54 +14,52 @@ namespace AntColonyNamespace
             get { return this._AdjacencyList; }
         }
 
-        //Konstruktory
-        public Graph(int NumberOfVertexes)
-        {
-            this._AdjacencyList = new AdjacencyList();
-            for (int i = 0; i < NumberOfVertexes; ++i)
-            {
-                this.AddVertex();
-            }
-        }
-
-        public Graph()
+        public Graph() //DAC to do ANtColony, nie tu
         {
             this._AdjacencyList = new AdjacencyList();
         }
 
         //Dodanie wierzcholka do grafu - nowy vertex ma zwiekszony o 1 index
-        public void AddVertex()
+        public void AddCity(double latitude, double longitude, int demand)
         {
-            this._AdjacencyList.AddVertex();
+            this._AdjacencyList.AddCity(latitude, longitude, demand);
         }
 
         //Zwraca ilosc wierzchokow w grafie
-        public int GetNumberOfVertexes()
+        public int GetNumberOfCities()
         {
-            return this._AdjacencyList.NumberOfVertexes;
+            return this._AdjacencyList.NumberOfCities;
         }
 
-        public Vertex GetVertex(int vertexIndex)
+        public City GetCity(int cityIndex)
         {
-            return this._AdjacencyList.GetVertex(vertexIndex);
+            return this._AdjacencyList.GetCity(cityIndex);
         }
 
         //Dodaje nieskierowana krawedz do grafu - info o wierzcholkach w newEdge
-        public void AddUndirectedEdge(int firstVertexIndex, int secondVertexIndex, Edge newEdge)
+        public void AddUndirectedEdge(
+            int firstCityIndex,
+            int secondCityIndex,
+            Edge newUndirectedEdge
+        )
         {
-            this._AdjacencyList.AddUndirectedEdge(firstVertexIndex, secondVertexIndex, newEdge);
+            this._AdjacencyList.AddUndirectedEdge(
+                firstCityIndex,
+                secondCityIndex,
+                newUndirectedEdge
+            );
         }
 
         //Dodanie skierowana krawedz - info o wierzcholkach w newEdge
-        public void AddDirectedEdge(int startVertexIndex, int endVertexIndex, Edge newEdge)
+        public void AddDirectedEdge(int startCityIndex, int endCityINdex, Edge newDirectedEdge)
         {
-            this._AdjacencyList.AddDirectedEdge(startVertexIndex, endVertexIndex, newEdge);
+            this._AdjacencyList.AddDirectedEdge(startCityIndex, endCityINdex, newDirectedEdge);
         }
 
         //Metoda zeby zwrocic krawedzie z podanego wierzcholka
-        public ReadOnlyCollection<EdgeWithDestVertex> GetEdgesFromVertex(int vertexIndex)
+        public ReadOnlyCollection<EdgeWithDestinationCity> GetEdgesFromCity(int cityIndex)
         {
-            return this._AdjacencyList[vertexIndex];
+            return this._AdjacencyList[cityIndex];
         }
 
         //Zwraca graf w reprezentacji listy jako string

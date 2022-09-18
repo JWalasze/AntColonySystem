@@ -10,23 +10,22 @@ namespace AntColonyNamespace
 
         private double _Denominator;
 
-        private Dictionary<EdgeWithDestVertex, double> _Nominators;
+        private Dictionary<EdgeWithDestinationCity, double> _Nominators;
 
-        private Dictionary<EdgeWithDestVertex, double> _Probabilities;
+        private Dictionary<EdgeWithDestinationCity, double> _Probabilities;
 
         public Possibilities(double BETA)
         {
             this._Denominator = 0;
-            this._Nominators = new Dictionary<EdgeWithDestVertex, double>();
-            this._Probabilities = new Dictionary<EdgeWithDestVertex, double>();
+            this._Nominators = new Dictionary<EdgeWithDestinationCity, double>();
+            this._Probabilities = new Dictionary<EdgeWithDestinationCity, double>();
             this._BETA = BETA;
         }
 
-        public void CountNominatorAndUpdateDenominator(EdgeWithDestVertex pickedEdge)
+        public void CountNominatorAndUpdateDenominator(EdgeWithDestinationCity pickedEdge)
         {
             double countedValue =
-                pickedEdge._Edge.PheromoneLevel
-                * Math.Pow(1 / pickedEdge._Edge.Distance, this._BETA);
+                pickedEdge.PheromoneLevel * Math.Pow(1 / pickedEdge.Distance, this._BETA);
             this._Nominators.Add(pickedEdge, countedValue);
             this._Denominator += countedValue;
         }
@@ -42,7 +41,7 @@ namespace AntColonyNamespace
             }
         }
 
-        public KeyValuePair<EdgeWithDestVertex, double> GetMaxNominator()
+        public KeyValuePair<EdgeWithDestinationCity, double> GetMaxNominator()
         {
             if (this._Nominators.Count == 0)
             {
@@ -61,14 +60,14 @@ namespace AntColonyNamespace
             return maxNominator;
         }
 
-        public ReadOnlyDictionary<EdgeWithDestVertex, double> GetProbabilities() //DAC TU NAZWY DO EDGE i DOUBLE
+        public ReadOnlyDictionary<EdgeWithDestinationCity, double> GetProbabilities()
         {
             if (this._Probabilities.Count == 0)
             {
                 throw new Exception("Probabilities are empty!!!");
             }
 
-            return new ReadOnlyDictionary<EdgeWithDestVertex, double>(this._Probabilities);
+            return new ReadOnlyDictionary<EdgeWithDestinationCity, double>(this._Probabilities);
         }
 
         public void RestartAllValues()

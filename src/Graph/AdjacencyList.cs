@@ -7,18 +7,18 @@ namespace AntColonyNamespace
     internal class AdjacencyList /*: IEnumerable*/
     {
         //Lista krotki: Wierzcholek z lista krawedzi z niego
-        private List<(Vertex _Vertex, List<EdgeWithDestVertex> _Edges)> _AdjacencyList;
+        private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;
 
         //Konstruktor
         public AdjacencyList()
         {
-            this._AdjacencyList = new List<(Vertex _Vertex, List<EdgeWithDestVertex> _Edges)>();
+            this._AdjacencyList = new List<(City _City, List<EdgeWithDestinationCity> _Edges)>();
         }
 
         //Zwraca ilosc wierzcholkow w grafie jako pole property
-        public int NumberOfVertexes
+        public int NumberOfCities
         {
-            get { return this.GetNumberOfVertexes(); }
+            get { return this.GetNumberOfCities(); }
         }
 
         // IEnumerator IEnumerable.GetEnumerator()
@@ -32,89 +32,100 @@ namespace AntColonyNamespace
         // }
 
         //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
-        public ReadOnlyCollection<EdgeWithDestVertex> this[int vertexNumber]
+        public ReadOnlyCollection<EdgeWithDestinationCity> this[int cityNumber]
         {
             get
             {
-                if (vertexNumber < 0 || vertexNumber >= this.NumberOfVertexes)
+                if (cityNumber < 0 || cityNumber >= this.NumberOfCities)
                 {
                     throw new ArgumentOutOfRangeException(
-                        nameof(vertexNumber),
-                        "Vertex index is out of range!!!"
+                        nameof(cityNumber),
+                        "City index is out of range!!!"
                     );
                 }
                 else
                 {
-                    return new ReadOnlyCollection<EdgeWithDestVertex>(
-                        this._AdjacencyList[vertexNumber]._Edges
+                    return new ReadOnlyCollection<EdgeWithDestinationCity>(
+                        this._AdjacencyList[cityNumber]._Edges
                     );
                 }
             }
         }
 
         //Dodanie skierowanej krawedzi do listy sasiedztwa
-        public void AddDirectedEdge(int startVertexIndex, int endVertexIndex, Edge newDirectedEdge)
+        public void AddDirectedEdge(int startCityIndex, int endCityIndex, Edge newDirectedEdge)
         {
             if (
-                startVertexIndex >= this.NumberOfVertexes
-                || endVertexIndex >= this.NumberOfVertexes
-                || startVertexIndex < 0
-                || endVertexIndex < 0
+                startCityIndex >= this.NumberOfCities
+                || endCityIndex >= this.NumberOfCities
+                || startCityIndex < 0
+                || endCityIndex < 0
             )
             {
                 throw new Exception("Incorrect new edge!!!");
             }
             else
             {
-                this._AdjacencyList[startVertexIndex]._Edges.Add(
-                    new EdgeWithDestVertex(newDirectedEdge, endVertexIndex)
+                this._AdjacencyList[startCityIndex]._Edges.Add(
+                    new EdgeWithDestinationCity(newDirectedEdge, endCityIndex)
                 );
             }
         }
 
         //Dodanie nieskierowanej krawedzi do listy sasiedztwa
         public void AddUndirectedEdge(
-            int firstVertexIndex,
-            int secondVertexIndex,
+            int firstCityIndex,
+            int secondCityIndex,
             Edge newUndirectedEdge
         )
         {
             if (
-                firstVertexIndex >= this.NumberOfVertexes
-                || secondVertexIndex >= this.NumberOfVertexes
-                || firstVertexIndex < 0
-                || secondVertexIndex < 0
+                firstCityIndex >= this.NumberOfCities
+                || secondCityIndex >= this.NumberOfCities
+                || firstCityIndex < 0
+                || secondCityIndex < 0
             )
             {
                 throw new Exception("Incorrect new edge!!!");
             }
             else
             {
-                this._AdjacencyList[firstVertexIndex]._Edges.Add(
-                    new EdgeWithDestVertex(newUndirectedEdge, secondVertexIndex)
+                this._AdjacencyList[firstCityIndex]._Edges.Add(
+                    new EdgeWithDestinationCity(newUndirectedEdge, secondCityIndex)
                 );
-                this._AdjacencyList[secondVertexIndex]._Edges.Add(
-                    new EdgeWithDestVertex(newUndirectedEdge, firstVertexIndex)
+                this._AdjacencyList[secondCityIndex]._Edges.Add(
+                    new EdgeWithDestinationCity(newUndirectedEdge, firstCityIndex)
                 );
             }
         }
 
         //Zwykly get na wierzcholek
-        public Vertex GetVertex(int vertexIndex)
+        public City GetCity(int cityIndex)
         {
-            return this._AdjacencyList.Find(tuple => tuple._Vertex.Index == vertexIndex)._Vertex;
+            var city = this._AdjacencyList[cityIndex]._City;
+            if (city.Index != cityIndex)
+            {
+                return this._AdjacencyList.Find(tuple => tuple._City.Index == cityIndex)._City;
+            }
+            else
+            {
+                return city;
+            }
         }
 
         //Dodanie nowego wierzcholka
-        public void AddVertex()
+        public void AddCity(double latitude, double longitude, double demand)
         {
             this._AdjacencyList.Add(
-                (new Vertex(this.GetNumberOfVertexes()), new List<EdgeWithDestVertex>())
+                (
+                    new City(this.GetNumberOfCities(), latitude, longitude, demand),
+                    new List<EdgeWithDestinationCity>()
+                )
             );
         }
 
         //Zwraca ilosc wierzcholkow - uzyte w property NumberOfVertexes
-        private int GetNumberOfVertexes()
+        private int GetNumberOfCities()
         {
             return this._AdjacencyList.Count;
         }
@@ -125,10 +136,10 @@ namespace AntColonyNamespace
             string str = string.Empty;
             this._AdjacencyList.ForEach(tuple =>
             {
-                str += tuple._Vertex.Index + ":";
+                str += tuple._City.Index + ":";
                 tuple._Edges.ForEach(edgeWithDestVertex =>
                 {
-                    str += " " + edgeWithDestVertex._DestVertex;
+                    str += " " + edgeWithDestVertex.DestinationCity;
                 });
                 str += Environment.NewLine;
             });
