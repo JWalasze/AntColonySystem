@@ -20,10 +20,14 @@ namespace AntColonyNamespace
 
         private readonly double _Capacity;
 
+        private readonly int _NumberOfCities;
+
+        private readonly int _NumberOfTrucks;
+
         //List of every ant in a colony
         private List<Ant> Ants;
 
-        public Graph CitiesGraph;
+        public CompletedGraph CitiesGraph;
 
         public AntColony(
             Graph _Graph,
@@ -35,7 +39,7 @@ namespace AntColonyNamespace
             string pathToBenchmarkData
         )
         {
-            this.CitiesGraph = _Graph;
+            this.CitiesGraph = new CompletedGraph();
             this._ALFA = ALFA;
             this._BETA = BETA;
             this._q0 = q0;
@@ -49,40 +53,44 @@ namespace AntColonyNamespace
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
             var lineCounter = 0;
-            var dimension = -1; //ILOSC MIAST Z DEPOTEM
-            var capacity = 0; //Pojemnosc mrowki
             foreach (var line in allBenchmarkLines) //DOKONCZYC...DODAC WIEZCHOLKI I KRAWEDZIE-WYLICZYC JE
             {
                 ++lineCounter;
-                Console.WriteLine(line);
-
                 if (lineCounter == 1)
                 {
-                    dimension = int.Parse(Regex.Split(line, @"\D+")[1]);
-                    Console.WriteLine(dimension);
+                    this._NumberOfCities = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
                 else if (lineCounter == 2)
                 {
-                    capacity = int.Parse(Regex.Split(line, @"\D+")[1]);
-                    Console.WriteLine(capacity);
+                    this._Capacity = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
-                else if (dimension != -1 && lineCounter > 3 && lineCounter <= dimension + 3)
+                else if (lineCounter == 3)
                 {
-                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[0]);
-                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[1]);
-                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[2]);
+                    this._NumberOfTrucks = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
                 else if (
-                    dimension != -1
-                    && lineCounter > dimension + 4
-                    && lineCounter < 2 * dimension + 4
+                    this._NumberOfCities != -1
+                    && lineCounter > 4
+                    && lineCounter <= this._NumberOfCities + 4
                 )
                 {
-                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[0]);
-                    Console.WriteLine("->" + Regex.Split(line, @"\D+")[1]);
+                    var dataFromLine = Regex.Split(line, @"\D+");
+                    var numbersFromLine = Array.ConvertAll(dataFromLine, str => int.Parse(str));
+                    var capicityFromBenchmark = Regex.Split(
+                        allBenchmarkLines[lineCounter + this._NumberOfCities],
+                        @"\D+"
+                    );
+                    this.CitiesGraph.AddCity(
+                        numbersFromLine[0] - 1,
+                        numbersFromLine[1],
+                        numbersFromLine[2],
+                        int.Parse(capicityFromBenchmark[1])
+                    );
                 }
                 else { }
             }
+            this.CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
+            Console.WriteLine(this.CitiesGraph.AdjacencyList.ToString());
         }
 
         public void AddAntToTheColony()

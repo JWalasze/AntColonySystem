@@ -20,9 +20,22 @@ namespace AntColonyNamespace
         }
 
         //Dodanie wierzcholka do grafu - nowy vertex ma zwiekszony o 1 index
-        public void AddCity(double latitude, double longitude, int demand)
+        public void AddCity(int index, double latitude, double longitude, int demand)
         {
-            this._AdjacencyList.AddCity(latitude, longitude, demand);
+            this._AdjacencyList.AddCity(index, latitude, longitude, demand);
+        }
+
+        public int GetNumberOfEdges()
+        {
+            var counter = 0;
+            for (int i = 0; i < this._AdjacencyList.NumberOfCities; ++i)
+            {
+                foreach (var edge in this._AdjacencyList[i])
+                {
+                    ++counter;
+                }
+            }
+            return counter;
         }
 
         //Zwraca ilosc wierzchokow w grafie

@@ -114,13 +114,10 @@ namespace AntColonyNamespace
         }
 
         //Dodanie nowego wierzcholka
-        public void AddCity(double latitude, double longitude, double demand)
+        public void AddCity(int index, double latitude, double longitude, double demand)
         {
             this._AdjacencyList.Add(
-                (
-                    new City(this.GetNumberOfCities(), latitude, longitude, demand),
-                    new List<EdgeWithDestinationCity>()
-                )
+                (new City(index, latitude, longitude, demand), new List<EdgeWithDestinationCity>())
             );
         }
 
@@ -136,10 +133,15 @@ namespace AntColonyNamespace
             string str = string.Empty;
             this._AdjacencyList.ForEach(tuple =>
             {
-                str += tuple._City.Index + ":";
+                str += tuple._City.Index + " (" + tuple._City.Demand + ")" + ":";
+                //str += Environment.NewLine;
                 tuple._Edges.ForEach(edgeWithDestVertex =>
                 {
                     str += " " + edgeWithDestVertex.DestinationCity;
+                    // + "("
+                    // + edgeWithDestVertex.Distance
+                    // + ")";
+                    //str += Environment.NewLine;
                 });
                 str += Environment.NewLine;
             });

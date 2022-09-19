@@ -2,24 +2,40 @@ namespace AntColonyNamespace
 {
     internal class CompletedGraph : Graph
     {
-        public CompletedGraph(int numberOfCities) : base() //Czy napewno potrzeba i konieczne
+        public CompletedGraph() : base() { }
+
+        public void CreateCompletedGraphBasedOnCityCoord()
         {
             for (
-                int currentVertexStart = 0, numberEdgesToCreate = numberOfCities;
-                currentVertexStart < numberOfCities;
-                ++currentVertexStart, --numberEdgesToCreate
+                int currentCityStart = 0, numberEdgesToCreate = this.GetNumberOfCities();
+                currentCityStart < this.GetNumberOfCities();
+                ++currentCityStart, --numberEdgesToCreate
             )
             {
                 for (
-                    int currentVertexEnd = currentVertexStart + 1;
-                    currentVertexEnd < numberOfCities;
-                    ++currentVertexEnd
+                    int currentCityEnd = currentCityStart + 1;
+                    currentCityEnd < this.GetNumberOfCities();
+                    ++currentCityEnd
                 )
                 {
                     this.AdjacencyList.AddUndirectedEdge(
-                        currentVertexStart,
-                        currentVertexEnd,
-                        new Edge((new Random().Next() % 10) + 1, ((new Random().Next() % 10) + 1))
+                        currentCityStart,
+                        currentCityEnd,
+                        new Edge(
+                            Math.Sqrt(
+                                Math.Pow(
+                                    this.GetCity(currentCityEnd).Latitude
+                                        - this.GetCity(currentCityStart).Latitude,
+                                    2
+                                )
+                                    + Math.Pow(
+                                        this.GetCity(currentCityEnd).Longitude
+                                            - this.GetCity(currentCityStart).Longitude,
+                                        2
+                                    )
+                            ),
+                            1
+                        )
                     );
                 }
             }
