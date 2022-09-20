@@ -38,16 +38,18 @@ for (int j = 0; j < 1; ++j)
     Console.WriteLine("-------------------------");
 
     AntColony antColony = new AntColony(
-        new Graph(),
         0.1,
         2.3,
+        0.2,
         0.1,
         3,
         4,
         "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
     //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/src/BenchmarkData/A-n32-k5.txt"
     );
+
     antColony.StartLookingForPath();
+    Console.WriteLine(antColony.CitiesGraph.GetNumberOfEdges());
 
     // Graph g = new Graph(
     //     "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/src/BenchmarkData/A-n32-k5.txt"
@@ -72,3 +74,6 @@ for (int j = 0; j < 1; ++j)
 // {
 //     Console.WriteLine(m);
 // });
+//EXTREMALY IMPORTANT!!!
+//https://sci-hub.se/https://link.springer.com/chapter/10.1007/1-4020-3432-6_21
+//https://d1wqtxts1xzle7.cloudfront.net/57723244/357_Solving_Vehicle_Routing_Problem_using_Ant_Colony_Optimisation_ACO_Algorithm_FINAL-with-cover-page-v2.pdf?Expires=1663669356&Signature=GbW1SpvllXcJTRD5MtEbzoOP04KqS1YGsYHFOj5VYg-~1-4u22fQ21rm56t9t4cJBDEP65xpwcU6KCb4V0kRJqDRhYTFneFGLIkTvd0pNV8wnRbJF5NVzAOcy8mxf0uIi3D5JVedbfzakkFq~L7eQKF0lUxA28W3WtWzNSUkkhIgXhpGIE~9Ng5Qh6fp0OiHMsjglwRmy9-i5EM804UL~BcgBHM9tcswKPaTdHnF4CP6CKqVzGku6~bbotnYLipZPHGUJqqE9c55PTLIk~WBwP9jmXWBJJJ5qhvDhwRSJbUU1BbQqszN4YxoVhI8-vqQDTgX1NEalRW4kBBcJaxIPg__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA

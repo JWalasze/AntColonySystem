@@ -6,6 +6,8 @@ namespace AntColonyNamespace
 {
     internal class Possibilities
     {
+        private double _ALFA;
+
         private double _BETA;
 
         private double _Denominator;
@@ -14,18 +16,21 @@ namespace AntColonyNamespace
 
         private Dictionary<EdgeWithDestinationCity, double> _Probabilities;
 
-        public Possibilities(double BETA)
+        public Possibilities(double ALFA, double BETA)
         {
             this._Denominator = 0;
             this._Nominators = new Dictionary<EdgeWithDestinationCity, double>();
             this._Probabilities = new Dictionary<EdgeWithDestinationCity, double>();
+
+            this._ALFA = ALFA;
             this._BETA = BETA;
         }
 
         public void CountNominatorAndUpdateDenominator(EdgeWithDestinationCity pickedEdge)
         {
             double countedValue =
-                pickedEdge.PheromoneLevel * Math.Pow(1 / pickedEdge.Distance, this._BETA);
+                Math.Pow(pickedEdge.PheromoneLevel, this._ALFA)
+                * Math.Pow(1 / pickedEdge.Distance, this._BETA);
             this._Nominators.Add(pickedEdge, countedValue);
             this._Denominator += countedValue;
         }

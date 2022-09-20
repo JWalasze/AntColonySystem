@@ -8,13 +8,16 @@ namespace AntColonyNamespace
     internal class AntColony
     {
         //ALFA controls influence of TAU
-        public readonly double _ALFA;
+        private readonly double _ALFA;
 
         //BETA controls influence of ETA
-        public readonly double _BETA;
+        private readonly double _BETA;
 
         //q0 determins the importance of exploration versus exploitation
-        public readonly double _q0;
+        private readonly double _q0;
+
+        //Evaporation parameter
+        private readonly double _TAU;
 
         private readonly double _NumberOfIterations;
 
@@ -24,16 +27,15 @@ namespace AntColonyNamespace
 
         private readonly int _NumberOfTrucks;
 
-        //List of every ant in a colony
         private List<Ant> Ants;
 
         public CompletedGraph CitiesGraph;
 
         public AntColony(
-            Graph _Graph,
             double ALFA,
             double BETA,
             double q0,
+            double TAU,
             int NumberOfAnts,
             int NumberOfIterations,
             string pathToBenchmarkData
@@ -43,9 +45,10 @@ namespace AntColonyNamespace
             this._ALFA = ALFA;
             this._BETA = BETA;
             this._q0 = q0;
+            this._TAU = TAU;
             this._NumberOfIterations = NumberOfIterations;
 
-            this.Ants = new List<Ant>();
+            this.Ants = new List<Ant>(NumberOfAnts);
             for (int i = 0; i < NumberOfAnts; ++i)
             {
                 this.AddAntToTheColony();
@@ -53,7 +56,7 @@ namespace AntColonyNamespace
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
             var lineCounter = 0;
-            foreach (var line in allBenchmarkLines) //DOKONCZYC...DODAC WIEZCHOLKI I KRAWEDZIE-WYLICZYC JE
+            foreach (var line in allBenchmarkLines)
             {
                 ++lineCounter;
                 if (lineCounter == 1)
@@ -90,7 +93,6 @@ namespace AntColonyNamespace
                 else { }
             }
             this.CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
-            Console.WriteLine(this.CitiesGraph.AdjacencyList.ToString());
         }
 
         public void AddAntToTheColony()
@@ -117,8 +119,7 @@ namespace AntColonyNamespace
 
         public class Ant
         {
-            private static int AntsGlobalIndex = 0;
-            private int AntIndex;
+            private int _AntIndex;
 
             //Obiekt do liczenia prawdopodobienstw wyboru krawedzi
             private Possibilities _Possibilities;
@@ -136,7 +137,10 @@ namespace AntColonyNamespace
             public Ant(AntColony AntColony, int InitialVertexIndex)
             {
                 this._AntColony = AntColony;
-                this._Possibilities = new Possibilities(this._AntColony._BETA);
+                this._Possibilities = new Possibilities(
+                    this._AntColony._ALFA,
+                    this._AntColony._BETA
+                );
                 this._InitialVertexIndex = InitialVertexIndex;
                 this._CurrentVertexIndex = this._InitialVertexIndex;
 
@@ -209,10 +213,10 @@ namespace AntColonyNamespace
                 this._CurrentPheromonePath.Add(choosenEdge);
                 this._CurrentVertexIndex = choosenEdge.DestinationCity;
                 Console.WriteLine();
-                foreach (var item in _Possibilities.GetProbabilities())
-                {
-                    Console.WriteLine(item.Value);
-                }
+                // foreach (var item in _Possibilities.GetProbabilities())
+                // {
+                //     Console.WriteLine(item.Value);
+                // }
                 this._Possibilities.RestartAllValues();
 
                 //Lokalne aktualizowanie feromonów

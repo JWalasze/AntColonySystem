@@ -32,7 +32,10 @@ namespace AntColonyNamespace
             {
                 foreach (var edge in this._AdjacencyList[i])
                 {
-                    ++counter;
+                    if (edge.DestinationCity > i)
+                    {
+                        ++counter;
+                    }
                 }
             }
             return counter;

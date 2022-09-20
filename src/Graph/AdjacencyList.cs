@@ -127,19 +127,17 @@ namespace AntColonyNamespace
             return this._AdjacencyList.Count;
         }
 
-        //Zwraca liste sasiedztwa jako string
         public override string ToString()
         {
             string str = string.Empty;
             this._AdjacencyList.ForEach(tuple =>
             {
                 str += tuple._City.Index + " (" + tuple._City.Demand + ")" + ":";
-                //str += Environment.NewLine;
                 tuple._Edges.ForEach(edgeWithDestVertex =>
                 {
                     str += " " + edgeWithDestVertex.DestinationCity;
                     // + "("
-                    // + edgeWithDestVertex.Distance
+                    // + Math.Round(edgeWithDestVertex.Distance, 2)
                     // + ")";
                     //str += Environment.NewLine;
                 });

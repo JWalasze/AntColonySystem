@@ -5,7 +5,7 @@ namespace AntColonyNamespace
         public int DestinationCity { get; private set; }
 
         public EdgeWithDestinationCity(Edge Edge, int DestCity)
-            : base(Edge.Distance, Edge.PheromoneLevel)
+            : base(Edge.Distance, Edge.InitialPheromoneLevel)
         {
             this.DestinationCity = DestCity;
         }

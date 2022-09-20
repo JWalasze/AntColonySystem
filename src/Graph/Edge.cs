@@ -4,27 +4,20 @@ namespace AntColonyNamespace
 {
     internal class Edge
     {
-        //Dystans, czyli dlugosc krawedzi
         public double Distance { get; private set; }
 
-        //Poziom feromonow na krawedzi
         public double PheromoneLevel { get; private set; }
 
-        //Konstruktor z wyborem wstepnego poziomu feromonow
-        public Edge(double distance, double pheromoneLevel)
+        public double InitialPheromoneLevel { get; private set; }
+
+        public Edge(double distance, double initialPheromoneLevel)
         {
             this.Distance = distance;
-            this.PheromoneLevel = pheromoneLevel;
+            this.InitialPheromoneLevel = initialPheromoneLevel;
+            this.PheromoneLevel = initialPheromoneLevel;
         }
 
-        //Konstruktor bez wstepnego wyboru feromonow
-        public Edge(double distance)
-        {
-            this.Distance = distance;
-            this.PheromoneLevel = 0;
-        }
-
-        //Aktualizowanie wartosci feromonow na krawedzi
+        //Aktualizowanie wartosci feromonow na krawedzi//// MOZE dac liczenie i zmiane levelu po stronie tutak klasy Edge
         public void UpdatePheromoneLevel(double newPheromoneLevel)
         {
             this.PheromoneLevel = newPheromoneLevel;
