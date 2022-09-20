@@ -7,26 +7,34 @@ namespace AntColonyNamespace
 {
     internal class AntColony
     {
-        //ALFA controls influence of TAU
+        //Parametr do kontroli wplywu feromonow
         private readonly double _ALFA;
 
-        //BETA controls influence of ETA
+        //Paramter do kontroli wplywu dlugosci krawedzi
         private readonly double _BETA;
 
-        //q0 determins the importance of exploration versus exploitation
+        //Definiuje wplyw eksploracji vs eksploatacji
         private readonly double _q0;
 
-        //Evaporation parameter
+        //Paramter kontrolujacy wyparowywanie feromonow
         private readonly double _TAU;
 
+        //Liczba iteracji - ilosc cykli
         private readonly double _NumberOfIterations;
 
-        private readonly double _Capacity;
+        //Pojemnosc ciezarowki/mrowki
+        private readonly double _MaxCapacity;
 
-        private readonly int _NumberOfCities;
+        //Ilosc miast/wierzcholkow
+        private readonly int _NumberOfCitiesWithDepot;
 
+        //Ilosc ciezarowek/definiuje ile bedzie tras
         private readonly int _NumberOfTrucks;
 
+        //Indeks depotu/startowego wierzcholka
+        private readonly int _Depot;
+
+        //Lista mrowek/posiada ilosc mrowek
         private List<Ant> Ants;
 
         public CompletedGraph CitiesGraph;
@@ -61,26 +69,26 @@ namespace AntColonyNamespace
                 ++lineCounter;
                 if (lineCounter == 1)
                 {
-                    this._NumberOfCities = int.Parse(Regex.Split(line, @"\D+")[1]);
+                    this._NumberOfCitiesWithDepot = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
                 else if (lineCounter == 2)
                 {
-                    this._Capacity = int.Parse(Regex.Split(line, @"\D+")[1]);
+                    this._MaxCapacity = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
                 else if (lineCounter == 3)
                 {
                     this._NumberOfTrucks = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
                 else if (
-                    this._NumberOfCities != -1
+                    this._NumberOfCitiesWithDepot != -1
                     && lineCounter > 4
-                    && lineCounter <= this._NumberOfCities + 4
+                    && lineCounter <= this._NumberOfCitiesWithDepot + 4
                 )
                 {
                     var dataFromLine = Regex.Split(line, @"\D+");
                     var numbersFromLine = Array.ConvertAll(dataFromLine, str => int.Parse(str));
                     var capicityFromBenchmark = Regex.Split(
-                        allBenchmarkLines[lineCounter + this._NumberOfCities],
+                        allBenchmarkLines[lineCounter + this._NumberOfCitiesWithDepot],
                         @"\D+"
                     );
                     this.CitiesGraph.AddCity(
@@ -90,6 +98,13 @@ namespace AntColonyNamespace
                         int.Parse(capicityFromBenchmark[1])
                     );
                 }
+                else if (
+                    this._NumberOfCitiesWithDepot != 1
+                    && lineCounter == 2 * this._NumberOfCitiesWithDepot + 7
+                )
+                {
+                    this._Depot = int.Parse(Regex.Split(line, @"\D+")[0]) - 1;
+                }
                 else { }
             }
             this.CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
@@ -97,66 +112,92 @@ namespace AntColonyNamespace
 
         public void AddAntToTheColony()
         {
-            this.Ants.Add(new Ant(this, 0));
+            this.Ants.Add(new Ant(this, this.Ants.Count));
         }
 
-        public void StartLookingForPath()
+        public void StartSolvingProblemInSeries() //Sekwencyjnie
         {
-            //ITERACJE to nie to, pozniej zmienic
             for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
             {
                 this.Ants.ForEach(ant =>
                 {
-                    ant.MoveToTheNextEdge();
+                    ant.StartCreatingItinerary();
                 });
             }
 
-            this.Ants.ForEach(ant =>
-            {
-                ant.PrintPath();
-            });
+            // this.Ants.ForEach(ant =>
+            // {
+            //     ant.PrintPath();
+            // });
         }
+
+        public void StartSolvingProblemParallel() { } //Rownolegle
 
         public class Ant
         {
             private int _AntIndex;
 
-            //Obiekt do liczenia prawdopodobienstw wyboru krawedzi
             private Possibilities _Possibilities;
 
-            //Wierzcholek z ktorego mrowka zaczyna podroz
-            private int _InitialVertexIndex;
+            private int _CurrentCityIndex;
 
-            //Zapisany index obecnego wierzcholka
-            private int _CurrentVertexIndex;
+            private double _CurrentCapicity;
 
-            private List<EdgeWithDestinationCity> _CurrentPheromonePath;
+            private List<EdgeWithDestinationCity> _CurrentAntPath;
+
+            private int _NumberOfUnvisitedCitiesWithoutDepot;
 
             private AntColony _AntColony;
 
-            public Ant(AntColony AntColony, int InitialVertexIndex)
+            public Ant(AntColony AntColony, int Index)
             {
                 this._AntColony = AntColony;
                 this._Possibilities = new Possibilities(
                     this._AntColony._ALFA,
                     this._AntColony._BETA
                 );
-                this._InitialVertexIndex = InitialVertexIndex;
-                this._CurrentVertexIndex = this._InitialVertexIndex;
+                this._CurrentCityIndex = this._AntColony._Depot;
 
-                this._CurrentPheromonePath = new List<EdgeWithDestinationCity>();
-                this.AntIndex = AntsGlobalIndex++;
+                this._CurrentAntPath = new List<EdgeWithDestinationCity>();
+                this._NumberOfUnvisitedCitiesWithoutDepot =
+                    this._AntColony._NumberOfCitiesWithDepot - 1;
+                this._AntIndex = Index;
+                this._CurrentCapicity = 0;
+            }
+
+            public bool CanAntMoveToNextCity()
+            {
+                return this._CurrentCapicity >= this._AntColony._MaxCapacity;
+            }
+
+            public bool HasAntCreatedAllItinerary()
+            {
+                return this._NumberOfUnvisitedCitiesWithoutDepot == 0;
+            }
+
+            public void StartCreatingItinerary()
+            {
+                if (!this.HasAntCreatedAllItinerary())
+                {
+                    //Szukamy marszrut
+                    //Szukamy wierzcholkow zeby do nich isc
+                    //Mozemy tez wrocic do bazy
+                }
+                else
+                {
+                    //Marszruty znalezione
+                    //Proces aktualizacji,liczenia, itp
+                }
             }
 
             public EdgeWithDestinationCity ChoosePath()
             {
                 foreach (
                     var possibleEdge in this._AntColony.CitiesGraph.GetEdgesFromCity(
-                        this._CurrentVertexIndex
+                        this._CurrentCityIndex
                     )
                 )
                 {
-                    //Nie bierzemy pod uwagę odwiedzonych wierzchołków
                     if (!this.DidAntVisitVertex(possibleEdge.DestinationCity))
                     {
                         this._Possibilities.CountNominatorAndUpdateDenominator(possibleEdge);
@@ -201,7 +242,7 @@ namespace AntColonyNamespace
                 }
                 else
                 {
-                    return this._CurrentPheromonePath.Any(
+                    return this._CurrentAntPath.Any(
                         partOfPath => partOfPath.DestinationCity == vertex
                     );
                 }
@@ -210,19 +251,14 @@ namespace AntColonyNamespace
             public void MoveToTheNextEdge()
             {
                 var choosenEdge = this.ChoosePath();
-                this._CurrentPheromonePath.Add(choosenEdge);
-                this._CurrentVertexIndex = choosenEdge.DestinationCity;
-                Console.WriteLine();
-                // foreach (var item in _Possibilities.GetProbabilities())
-                // {
-                //     Console.WriteLine(item.Value);
-                // }
+                this._CurrentAntPath.Add(choosenEdge);
+                this._CurrentCityIndex = choosenEdge.DestinationCity;
                 this._Possibilities.RestartAllValues();
 
                 //Lokalne aktualizowanie feromonów
                 double updatedPheromoneLevel =
-                    (1 - this._AntColony._ALFA) * choosenEdge.PheromoneLevel
-                    + this._AntColony._ALFA * 0;
+                    (1 - this._AntColony._TAU) * choosenEdge.PheromoneLevel
+                    + this._AntColony._TAU * 0;
                 //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
                 choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
                 //I jeszcze trzeba bedzie globalnie gdzie indziej,
@@ -235,7 +271,7 @@ namespace AntColonyNamespace
             private double CalculateFindedPathDistance()
             {
                 var distance = 0.0;
-                this._CurrentPheromonePath.ForEach(edge =>
+                this._CurrentAntPath.ForEach(edge =>
                 {
                     distance += edge.Distance;
                 });
@@ -245,9 +281,9 @@ namespace AntColonyNamespace
 
             public void PrintPath()
             {
-                Console.WriteLine("Index mrowki: " + this.AntIndex);
+                Console.WriteLine("Index mrowki: " + this._AntIndex);
                 Console.Write(0);
-                this._CurrentPheromonePath.ForEach(path =>
+                this._CurrentAntPath.ForEach(path =>
                 {
                     Console.Write(" -> " + path.DestinationCity);
                 });

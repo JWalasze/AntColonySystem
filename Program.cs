@@ -44,12 +44,11 @@ for (int j = 0; j < 1; ++j)
         0.1,
         3,
         4,
-        "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
-    //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/src/BenchmarkData/A-n32-k5.txt"
+        //"C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
+        "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
     );
 
-    antColony.StartLookingForPath();
-    Console.WriteLine(antColony.CitiesGraph.GetNumberOfEdges());
+    antColony.StartSolvingProblemInSeries();
 
     // Graph g = new Graph(
     //     "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/src/BenchmarkData/A-n32-k5.txt"
