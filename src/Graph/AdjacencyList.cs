@@ -113,6 +113,21 @@ namespace AntColonyNamespace
             }
         }
 
+        public EdgeWithDestinationCity GetEdgeBetweenTwoCities(
+            int firstCityIndex,
+            int secondCityIndex
+        )
+        {
+            foreach (var edge in this._AdjacencyList[firstCityIndex]._Edges)
+            {
+                if (edge.DestinationCity == secondCityIndex)
+                {
+                    return edge;
+                }
+            }
+            throw new Exception("Brak sciezki powrotnej do depotu");
+        }
+
         //Dodanie nowego wierzcholka
         public void AddCity(int index, double latitude, double longitude, double demand)
         {

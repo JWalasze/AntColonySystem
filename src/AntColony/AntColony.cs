@@ -56,12 +56,6 @@ namespace AntColonyNamespace
             this._TAU = TAU;
             this._NumberOfIterations = NumberOfIterations;
 
-            this.Ants = new List<Ant>(NumberOfAnts);
-            for (int i = 0; i < NumberOfAnts; ++i)
-            {
-                this.AddAntToTheColony();
-            }
-
             var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
             var lineCounter = 0;
             foreach (var line in allBenchmarkLines)
@@ -108,6 +102,12 @@ namespace AntColonyNamespace
                 else { }
             }
             this.CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
+
+            this.Ants = new List<Ant>(NumberOfAnts);
+            for (int i = 0; i < NumberOfAnts; ++i)
+            {
+                this.AddAntToTheColony();
+            }
         }
 
         public void AddAntToTheColony()
@@ -125,19 +125,21 @@ namespace AntColonyNamespace
                 });
             }
 
-            // this.Ants.ForEach(ant =>
-            // {
-            //     ant.PrintPath();
-            // });
+            this.Ants.ForEach(ant =>
+            {
+                ant.PrintPath();
+            });
         }
 
         public void StartSolvingProblemParallel() { } //Rownolegle
 
         public class Ant
         {
-            private int _AntIndex;
+            private readonly int _AntIndex;
 
             private Possibilities _Possibilities;
+
+            private double _PossibilityToReturnToDepot;
 
             private int _CurrentCityIndex;
 
@@ -145,7 +147,7 @@ namespace AntColonyNamespace
 
             private List<EdgeWithDestinationCity> _CurrentAntPath;
 
-            private int _NumberOfUnvisitedCitiesWithoutDepot;
+            private int _NumberOfUnvisitedCustomers;
 
             private AntColony _AntColony;
 
@@ -159,35 +161,60 @@ namespace AntColonyNamespace
                 this._CurrentCityIndex = this._AntColony._Depot;
 
                 this._CurrentAntPath = new List<EdgeWithDestinationCity>();
-                this._NumberOfUnvisitedCitiesWithoutDepot =
-                    this._AntColony._NumberOfCitiesWithDepot - 1;
+                this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
                 this._AntIndex = Index;
                 this._CurrentCapicity = 0;
+                this._PossibilityToReturnToDepot = 0.1;
             }
 
-            public bool CanAntMoveToNextCity()
+            public bool CanAntMoveToNextCity(EdgeWithDestinationCity edge)
             {
-                return this._CurrentCapicity >= this._AntColony._MaxCapacity;
+                return this._CurrentCapicity < this._AntColony._MaxCapacity;
             }
 
             public bool HasAntCreatedAllItinerary()
             {
-                return this._NumberOfUnvisitedCitiesWithoutDepot == 0;
+                return this._NumberOfUnvisitedCustomers == 0;
             }
 
             public void StartCreatingItinerary()
             {
-                if (!this.HasAntCreatedAllItinerary())
+                while (!this.HasAntCreatedAllItinerary())
                 {
                     //Szukamy marszrut
                     //Szukamy wierzcholkow zeby do nich isc
                     //Mozemy tez wrocic do bazy
+                    if (
+                        new Random().NextDouble() < this._PossibilityToReturnToDepot
+                        && this._CurrentCityIndex != 0
+                    )
+                    {
+                        this.ReturnToDepot();
+                    }
+                    else
+                    {
+                        this.MoveToTheNextEdge();
+                    }
+                    this.PrintPath();
                 }
-                else
-                {
-                    //Marszruty znalezione
-                    //Proces aktualizacji,liczenia, itp
-                }
+
+                //Marszruty znalezione
+                //Proces aktualizacji,liczenia, itp
+            }
+
+            private void ReturnToDepot()
+            {
+                var returnToDepotEdge = this.GetEdgeToDepot();
+                this._CurrentAntPath.Add(returnToDepotEdge);
+                this._CurrentCityIndex = returnToDepotEdge.DestinationCity;
+            }
+
+            private EdgeWithDestinationCity GetEdgeToDepot()
+            {
+                return this._AntColony.CitiesGraph.GetEdgeBetweenTwoCities(
+                    this._CurrentCityIndex,
+                    0
+                );
             }
 
             public EdgeWithDestinationCity ChoosePath()
@@ -252,21 +279,19 @@ namespace AntColonyNamespace
             {
                 var choosenEdge = this.ChoosePath();
                 this._CurrentAntPath.Add(choosenEdge);
+                // foreach (var i in this._Possibilities.GetProbabilities())
+                // {
+                //     Console.WriteLine(Math.Round(i.Key.Distance, 2) + ", " + i.Value);
+                // }
                 this._CurrentCityIndex = choosenEdge.DestinationCity;
-                this._Possibilities.RestartAllValues();
+                --this._NumberOfUnvisitedCustomers;
 
-                //Lokalne aktualizowanie feromonów
-                double updatedPheromoneLevel =
-                    (1 - this._AntColony._TAU) * choosenEdge.PheromoneLevel
-                    + this._AntColony._TAU * 0;
-                //Na końcu powinna być initial value, ale nie wiadomo o co z tym chodzi
-                choosenEdge.UpdatePheromoneLevel(updatedPheromoneLevel);
-                //I jeszcze trzeba bedzie globalnie gdzie indziej,
-                //ale globalne jeszcze trzeba dać gdzieś po skończonej iteracji,
-                //że wszystkie mrówki znajdą swoje własne rozwiązanie...
-                //Może dać klasę Solution, a wręcz napewno xD
-                //Moze tez do macierzy feromonow xD
+                this._Possibilities.RestartAllValues();
             }
+
+            public void UpdatePheromonesOnEdges() { }
+
+            public void EvaporatePheromonesOnEdges() { }
 
             private double CalculateFindedPathDistance()
             {
