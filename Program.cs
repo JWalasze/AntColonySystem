@@ -76,3 +76,11 @@ for (int j = 0; j < 1; ++j)
 //EXTREMALY IMPORTANT!!!
 //https://sci-hub.se/https://link.springer.com/chapter/10.1007/1-4020-3432-6_21
 //https://d1wqtxts1xzle7.cloudfront.net/57723244/357_Solving_Vehicle_Routing_Problem_using_Ant_Colony_Optimisation_ACO_Algorithm_FINAL-with-cover-page-v2.pdf?Expires=1663669356&Signature=GbW1SpvllXcJTRD5MtEbzoOP04KqS1YGsYHFOj5VYg-~1-4u22fQ21rm56t9t4cJBDEP65xpwcU6KCb4V0kRJqDRhYTFneFGLIkTvd0pNV8wnRbJF5NVzAOcy8mxf0uIi3D5JVedbfzakkFq~L7eQKF0lUxA28W3WtWzNSUkkhIgXhpGIE~9Ng5Qh6fp0OiHMsjglwRmy9-i5EM804UL~BcgBHM9tcswKPaTdHnF4CP6CKqVzGku6~bbotnYLipZPHGUJqqE9c55PTLIk~WBwP9jmXWBJJJ5qhvDhwRSJbUU1BbQqszN4YxoVhI8-vqQDTgX1NEalRW4kBBcJaxIPg__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA
+
+//NEW ONES
+//https://sci-hub.se/https://www.tandfonline.com/doi/abs/10.1080/02522667.2005.10699639
+//https://sci-hub.se/https://link.springer.com/chapter/10.1007/1-4020-3432-6_21
+//https://sci-hub.se/https://link.springer.com/chapter/10.1007/11839088_30
+//https://sci-hub.se/https://ieeexplore.ieee.org/abstract/document/7018311
+//https://sci-hub.se/https://link.springer.com/chapter/10.1007/978-981-10-1837-4_96
+//https://sci-hub.se/https://www.sciencedirect.com/science/article/abs/pii/S0305054804003223
