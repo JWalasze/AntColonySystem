@@ -1,12 +1,14 @@
 namespace AntColonyNamespace
 {
-    internal class EdgeWithDestinationCity : Edge
+    internal class EdgeWithDestinationCity
     {
-        public int DestinationCity { get; private set; } //DAC ze jak aktualizujemy to wtedy logika zeby obydwie krawedzie zrobilo
+        public int DestinationCity { get; private set; }
+
+        public Edge EdgeToDestinationCity { get; private set; }
 
         public EdgeWithDestinationCity(Edge Edge, int DestCity)
-            : base(Edge.Distance, Edge.InitialPheromoneLevel)
         {
+            this.EdgeToDestinationCity = Edge;
             this.DestinationCity = DestCity;
         }
     }

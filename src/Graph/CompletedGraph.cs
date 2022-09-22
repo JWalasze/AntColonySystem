@@ -1,6 +1,6 @@
 namespace AntColonyNamespace
 {
-    internal class CompletedGraph : Graph
+    internal class CompletedGraph : CityGraph
     {
         public CompletedGraph() : base() { }
 

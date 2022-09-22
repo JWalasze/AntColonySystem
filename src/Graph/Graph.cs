@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
-    internal class Graph
+    internal class CityGraph
     {
         //Lista sasiedztwa grafu
         private AdjacencyList _AdjacencyList;
@@ -14,7 +14,7 @@ namespace AntColonyNamespace
             get { return this._AdjacencyList; }
         }
 
-        public Graph() //DAC to do ANtColony, nie tu
+        public CityGraph() //DAC to do ANtColony, nie tu
         {
             this._AdjacencyList = new AdjacencyList();
         }
@@ -39,6 +39,36 @@ namespace AntColonyNamespace
                 }
             }
             return counter;
+        }
+
+        public double GetTotalDemandOfCities()
+        {
+            var demands = 0.0;
+            foreach (var tuple in this._AdjacencyList)
+            {
+                demands += tuple._City.Demand;
+            }
+            return demands;
+        }
+
+        public ReadOnlyCollection<EdgeWithDestinationCity> this[int cityNumber]
+        {
+            get
+            {
+                if (cityNumber < 0 || cityNumber >= this._AdjacencyList.NumberOfCities)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(cityNumber),
+                        "City index is out of range!!!"
+                    );
+                }
+                else
+                {
+                    return new ReadOnlyCollection<EdgeWithDestinationCity>(
+                        this._AdjacencyList[cityNumber]
+                    );
+                }
+            }
         }
 
         //Zwraca ilosc wierzchokow w grafie

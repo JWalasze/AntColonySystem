@@ -29,8 +29,8 @@ namespace AntColonyNamespace
         public void CountNominatorAndUpdateDenominator(EdgeWithDestinationCity pickedEdge)
         {
             double countedValue =
-                Math.Pow(pickedEdge.PheromoneLevel, this._ALFA)
-                * Math.Pow(1 / pickedEdge.Distance, this._BETA);
+                Math.Pow(pickedEdge.EdgeToDestinationCity.PheromoneLevel, this._ALFA)
+                * Math.Pow(1 / pickedEdge.EdgeToDestinationCity.Distance, this._BETA);
             this._Nominators.Add(pickedEdge, countedValue);
             this._Denominator += countedValue;
         }

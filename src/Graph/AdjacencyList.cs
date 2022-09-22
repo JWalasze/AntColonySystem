@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
-    internal class AdjacencyList /*: IEnumerable*/
+    internal class AdjacencyList : IEnumerable
     {
         //Lista krotki: Wierzcholek z lista krawedzi z niego
         private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;
@@ -21,15 +21,15 @@ namespace AntColonyNamespace
             get { return this.GetNumberOfCities(); }
         }
 
-        // IEnumerator IEnumerable.GetEnumerator()
-        // {
-        //     return (IEnumerator)GetEnumerator();
-        // }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
-        // public AdjacencyListEnum GetEnumerator()
-        // {
-        //     return new AdjacencyListEnum(this._AdjacencyList);
-        // }
+        public AdjacencyListEnum GetEnumerator()
+        {
+            return new AdjacencyListEnum(this._AdjacencyList);
+        }
 
         //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
         public ReadOnlyCollection<EdgeWithDestinationCity> this[int cityNumber]
@@ -162,46 +162,48 @@ namespace AntColonyNamespace
         }
     }
 
-    // internal class AdjacencyListEnum : IEnumerator
-    // {
-    //     private List<(Vertex _Vertex, List<Edge> _Edges)> _AdjacencyList;
+    internal class AdjacencyListEnum : IEnumerator
+    {
+        private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;
 
-    //     private int position = -1;
+        private int position = -1;
 
-    //     public AdjacencyListEnum(List<(Vertex _Vertex, List<Edge> _Edges)> AdjacencyList)
-    //     {
-    //         this._AdjacencyList = AdjacencyList;
-    //     }
+        public AdjacencyListEnum(
+            List<(City _City, List<EdgeWithDestinationCity> _Edges)> AdjacencyList
+        )
+        {
+            this._AdjacencyList = AdjacencyList;
+        }
 
-    //     public bool MoveNext()
-    //     {
-    //         ++this.position;
-    //         return this.position < this._AdjacencyList.Count;
-    //     }
+        public bool MoveNext()
+        {
+            ++this.position;
+            return this.position < this._AdjacencyList.Count;
+        }
 
-    //     public void Reset()
-    //     {
-    //         this.position = -1;
-    //     }
+        public void Reset()
+        {
+            this.position = -1;
+        }
 
-    //     object IEnumerator.Current
-    //     {
-    //         get { return Current; }
-    //     }
+        object IEnumerator.Current
+        {
+            get { return Current; }
+        }
 
-    //     public (Vertex _Vertex, List<Edge> _Edges) Current
-    //     {
-    //         get
-    //         {
-    //             try
-    //             {
-    //                 return this._AdjacencyList[position];
-    //             }
-    //             catch (IndexOutOfRangeException)
-    //             {
-    //                 throw new InvalidOperationException();
-    //             }
-    //         }
-    //     }
-    // }
+        public (City _City, List<EdgeWithDestinationCity> _Edges) Current
+        {
+            get
+            {
+                try
+                {
+                    return this._AdjacencyList[position];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
+    }
 }

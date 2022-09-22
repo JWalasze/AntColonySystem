@@ -19,11 +19,13 @@ namespace AntColonyNamespace
         //Paramter kontrolujacy wyparowywanie feromonow
         private readonly double _TAU;
 
+        private readonly double _CoefOfReturningToBase = 0.9;
+
         //Liczba iteracji - ilosc cykli
         private readonly double _NumberOfIterations;
 
         //Pojemnosc ciezarowki/mrowki
-        private readonly double _MaxCapacity;
+        private readonly double _MaxCapacityOfTruck;
 
         //Ilosc miast/wierzcholkow
         private readonly int _NumberOfCitiesWithDepot;
@@ -35,9 +37,11 @@ namespace AntColonyNamespace
         private readonly int _Depot;
 
         //Lista mrowek/posiada ilosc mrowek
-        private List<Ant> Ants;
+        private List<Ant> _Ants;
 
-        public CompletedGraph CitiesGraph;
+        public CompletedGraph _CitiesGraph;
+
+        public PheromoneMatrix _PheromoneMatrix;
 
         public AntColony(
             double ALFA,
@@ -49,7 +53,7 @@ namespace AntColonyNamespace
             string pathToBenchmarkData
         )
         {
-            this.CitiesGraph = new CompletedGraph();
+            this._CitiesGraph = new CompletedGraph();
             this._ALFA = ALFA;
             this._BETA = BETA;
             this._q0 = q0;
@@ -67,7 +71,7 @@ namespace AntColonyNamespace
                 }
                 else if (lineCounter == 2)
                 {
-                    this._MaxCapacity = int.Parse(Regex.Split(line, @"\D+")[1]);
+                    this._MaxCapacityOfTruck = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
                 else if (lineCounter == 3)
                 {
@@ -85,7 +89,7 @@ namespace AntColonyNamespace
                         allBenchmarkLines[lineCounter + this._NumberOfCitiesWithDepot],
                         @"\D+"
                     );
-                    this.CitiesGraph.AddCity(
+                    this._CitiesGraph.AddCity(
                         numbersFromLine[0] - 1,
                         numbersFromLine[1],
                         numbersFromLine[2],
@@ -101,9 +105,10 @@ namespace AntColonyNamespace
                 }
                 else { }
             }
-            this.CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
+            this._CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
+            this._PheromoneMatrix = new PheromoneMatrix();
 
-            this.Ants = new List<Ant>(NumberOfAnts);
+            this._Ants = new List<Ant>(NumberOfAnts);
             for (int i = 0; i < NumberOfAnts; ++i)
             {
                 this.AddAntToTheColony();
@@ -112,20 +117,20 @@ namespace AntColonyNamespace
 
         public void AddAntToTheColony()
         {
-            this.Ants.Add(new Ant(this, this.Ants.Count));
+            this._Ants.Add(new Ant(this, this._Ants.Count));
         }
 
         public void StartSolvingProblemInSeries() //Sekwencyjnie
         {
             for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
             {
-                this.Ants.ForEach(ant =>
+                this._Ants.ForEach(ant =>
                 {
                     ant.StartCreatingItinerary();
                 });
             }
 
-            this.Ants.ForEach(ant =>
+            this._Ants.ForEach(ant =>
             {
                 ant.PrintPath();
             });
@@ -143,9 +148,15 @@ namespace AntColonyNamespace
 
             private int _CurrentCityIndex;
 
-            private double _CurrentCapicity;
+            private double _CurrentCapicityOfTruck;
 
-            private List<EdgeWithDestinationCity> _CurrentAntPath;
+            private double _CityDemandsToServe;
+
+            private int _NumberOfRemainingTrucks;
+
+            private List<EdgeWithDestinationCity> _CurrentAntPath; //STWORZ KLASE SOLUTION Z LEPSZYM ZPAISYWANIEM ROZWIAZANIA
+
+            //DO TEGO MOZE NA MACIERZ FEROMONOW xD OSOBNA KLASA
 
             private int _NumberOfUnvisitedCustomers;
 
@@ -163,13 +174,16 @@ namespace AntColonyNamespace
                 this._CurrentAntPath = new List<EdgeWithDestinationCity>();
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
                 this._AntIndex = Index;
-                this._CurrentCapicity = 0;
+                this._CurrentCapicityOfTruck = 0;
                 this._PossibilityToReturnToDepot = 0.1;
+                this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
+
+                this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
             }
 
             public bool CanAntMoveToNextCity(EdgeWithDestinationCity edge)
             {
-                return this._CurrentCapicity < this._AntColony._MaxCapacity;
+                return this._CurrentCapicityOfTruck < this._AntColony._MaxCapacityOfTruck;
             }
 
             public bool HasAntCreatedAllItinerary()
@@ -184,9 +198,19 @@ namespace AntColonyNamespace
                     //Szukamy marszrut
                     //Szukamy wierzcholkow zeby do nich isc
                     //Mozemy tez wrocic do bazy
+
+                    /*Sprawdzamy, czy:
+                    - nie jestesmy wlasnie w depocie
+                    - wracamy jesli zmiescimy sie w prawdopodobienstwie od 0 do PossibilityToReturnToDepot
+                    - musimy sie upewnic ze wracajac szybciej nie spowodujemy ze reszta
+                    ciezarowek nie sprosta wymaganiom klientow*/
                     if (
                         new Random().NextDouble() < this._PossibilityToReturnToDepot
                         && this._CurrentCityIndex != 0
+                        && this._CityDemandsToServe
+                            / (this._NumberOfRemainingTrucks * this._AntColony._MaxCapacityOfTruck)
+                            < this._AntColony._CoefOfReturningToBase
+                        && this._NumberOfRemainingTrucks > 1
                     )
                     {
                         this.ReturnToDepot();
@@ -195,8 +219,9 @@ namespace AntColonyNamespace
                     {
                         this.MoveToTheNextEdge();
                     }
-                    this.PrintPath();
+                    //this.PrintPath();
                 }
+                this.PrintPath();
 
                 //Marszruty znalezione
                 //Proces aktualizacji,liczenia, itp
@@ -211,7 +236,7 @@ namespace AntColonyNamespace
 
             private EdgeWithDestinationCity GetEdgeToDepot()
             {
-                return this._AntColony.CitiesGraph.GetEdgeBetweenTwoCities(
+                return this._AntColony._CitiesGraph.GetEdgeBetweenTwoCities(
                     this._CurrentCityIndex,
                     0
                 );
@@ -220,7 +245,7 @@ namespace AntColonyNamespace
             public EdgeWithDestinationCity ChoosePath()
             {
                 foreach (
-                    var possibleEdge in this._AntColony.CitiesGraph.GetEdgesFromCity(
+                    var possibleEdge in this._AntColony._CitiesGraph.GetEdgesFromCity(
                         this._CurrentCityIndex
                     )
                 )
@@ -298,7 +323,7 @@ namespace AntColonyNamespace
                 var distance = 0.0;
                 this._CurrentAntPath.ForEach(edge =>
                 {
-                    distance += edge.Distance;
+                    distance += edge.EdgeToDestinationCity.Distance;
                 });
 
                 return distance;
