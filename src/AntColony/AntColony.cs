@@ -39,7 +39,7 @@ namespace AntColonyNamespace
         //Lista mrowek/posiada ilosc mrowek
         private List<Ant> _Ants;
 
-        public CompletedGraph _CitiesGraph;
+        public BenchmarkGraph _CitiesGraph;
 
         public PheromoneMatrix _PheromoneMatrix;
 
@@ -53,7 +53,7 @@ namespace AntColonyNamespace
             string pathToBenchmarkData
         )
         {
-            this._CitiesGraph = new CompletedGraph();
+            this._CitiesGraph = new BenchmarkGraph();
             this._ALFA = ALFA;
             this._BETA = BETA;
             this._q0 = q0;
@@ -154,7 +154,7 @@ namespace AntColonyNamespace
 
             private int _NumberOfRemainingTrucks;
 
-            private List<EdgeWithDestinationCity> _CurrentAntPath; //STWORZ KLASE SOLUTION Z LEPSZYM ZPAISYWANIEM ROZWIAZANIA
+            private GiantTourSolution _GiantSolution;
 
             //DO TEGO MOZE NA MACIERZ FEROMONOW xD OSOBNA KLASA
 
@@ -171,12 +171,12 @@ namespace AntColonyNamespace
                 );
                 this._CurrentCityIndex = this._AntColony._Depot;
 
-                this._CurrentAntPath = new List<EdgeWithDestinationCity>();
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
                 this._AntIndex = Index;
                 this._CurrentCapicityOfTruck = 0;
                 this._PossibilityToReturnToDepot = 0.1;
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
+                this._GiantSolution = new GiantTourSolution();
 
                 this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
             }
@@ -230,7 +230,10 @@ namespace AntColonyNamespace
             private void ReturnToDepot()
             {
                 var returnToDepotEdge = this.GetEdgeToDepot();
-                this._CurrentAntPath.Add(returnToDepotEdge);
+                this._GiantSolution.AddPathToNextCity(
+                    this._CurrentCityIndex,
+                    returnToDepotEdge.EdgeToDestinationCity
+                );
                 this._CurrentCityIndex = returnToDepotEdge.DestinationCity;
             }
 
@@ -294,16 +297,17 @@ namespace AntColonyNamespace
                 }
                 else
                 {
-                    return this._CurrentAntPath.Any(
-                        partOfPath => partOfPath.DestinationCity == vertex
-                    );
+                    return this._GiantSolution.IsCityVisited(vertex);
                 }
             }
 
             public void MoveToTheNextEdge()
             {
                 var choosenEdge = this.ChoosePath();
-                this._CurrentAntPath.Add(choosenEdge);
+                this._GiantSolution.AddPathToNextCity(
+                    this._CurrentCityIndex,
+                    choosenEdge.EdgeToDestinationCity
+                );
                 // foreach (var i in this._Possibilities.GetProbabilities())
                 // {
                 //     Console.WriteLine(Math.Round(i.Key.Distance, 2) + ", " + i.Value);
@@ -321,9 +325,9 @@ namespace AntColonyNamespace
             private double CalculateFindedPathDistance()
             {
                 var distance = 0.0;
-                this._CurrentAntPath.ForEach(edge =>
+                this._GiantSolution.ForEach(edge =>
                 {
-                    distance += edge.EdgeToDestinationCity.Distance;
+                    distance += edge._Edge.Distance;
                 });
 
                 return distance;
@@ -332,10 +336,9 @@ namespace AntColonyNamespace
             public void PrintPath()
             {
                 Console.WriteLine("Index mrowki: " + this._AntIndex);
-                Console.Write(0);
-                this._CurrentAntPath.ForEach(path =>
+                this._GiantSolution.ForEach(path =>
                 {
-                    Console.Write(" -> " + path.DestinationCity);
+                    Console.Write(" -> " + path._CityIndex);
                 });
                 Console.WriteLine();
                 Console.WriteLine("------------");

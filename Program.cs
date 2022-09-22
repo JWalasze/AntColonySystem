@@ -85,6 +85,8 @@ for (int j = 0; j < 1; ++j)
 //https://sci-hub.se/https://link.springer.com/chapter/10.1007/978-981-10-1837-4_96
 //https://sci-hub.se/https://www.sciencedirect.com/science/article/abs/pii/S0305054804003223
 
+//https://ttpsc.com/pl/blog/jak-zaczac-przygode-z-azure-i-przygotowac-sie-do-certyfikacji-az-900/
+
 // var myEdge = new Edge(1, 1);
 // var e1 = new EdgeWithDestinationCity(myEdge, 5);
 // var e2 = new EdgeWithDestinationCity(myEdge, 6);

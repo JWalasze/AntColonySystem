@@ -14,6 +14,27 @@ namespace AntColonyNamespace
             this._GiantItinerary.Add((cityIndex, edge));
         }
 
-        public void AddPathToDepot() { }
+        public void ForEach(Action<(int _CityIndex, Edge _Edge)> action)
+        {
+            this._GiantItinerary.ForEach(tuple =>
+            {
+                action(tuple);
+            });
+        }
+
+        public double GetGiantIteneraryDistance()
+        {
+            var giantDistance = 0.0;
+            this._GiantItinerary.ForEach(solutionPart =>
+            {
+                giantDistance += solutionPart._Edge.Distance;
+            });
+            return giantDistance;
+        }
+
+        public bool IsCityVisited(int cityIndex)
+        {
+            return this._GiantItinerary.Any(partOfPath => partOfPath._CityIndex == cityIndex);
+        }
     }
 }
