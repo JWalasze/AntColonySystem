@@ -96,3 +96,12 @@ for (int j = 0; j < 1; ++j)
 // e1.EdgeToDestinationCity.UpdatePheromoneLevel(90);
 // Console.WriteLine("e1: " + e1.EdgeToDestinationCity.PheromoneLevel);
 // Console.WriteLine("e2: " + e2.EdgeToDestinationCity.PheromoneLevel);
+
+// var c = new GiantTourSolution();
+// c.AddPathToNextCity(1, new Edge(2, 5));
+// c.AddPathToNextCity(10, new Edge(2, 5));
+// c.AddPathToNextCity(100, new Edge(2, 5));
+// c.ForEach(m =>
+// {
+//     Console.WriteLine(m._CityIndex);
+// });

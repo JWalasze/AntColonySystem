@@ -116,6 +116,11 @@ namespace AntColonyNamespace
             return this._AdjacencyList.GetEdgeBetweenTwoCities(firstCityIndex, secondCityIndex);
         }
 
+        public EdgeWithDestinationCity GetEdgeToDepot(int cityIndex)
+        {
+            return this._AdjacencyList.GetEdgeToDepot(cityIndex);
+        }
+
         //Zwraca graf w reprezentacji listy jako string
         public override string ToString()
         {

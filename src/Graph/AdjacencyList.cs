@@ -125,7 +125,12 @@ namespace AntColonyNamespace
                     return edge;
                 }
             }
-            throw new Exception("Brak sciezki powrotnej do depotu");
+            throw new Exception("Brak sciezki pomiedzy miastami");
+        }
+
+        public EdgeWithDestinationCity GetEdgeToDepot(int cityIndex)
+        {
+            return this._AdjacencyList[cityIndex]._Edges[0];
         }
 
         //Dodanie nowego wierzcholka
