@@ -4,11 +4,11 @@ namespace AntColonyNamespace
     {
         public int DestinationCity { get; private set; }
 
-        public Edge EdgeToDestinationCity { get; private set; }
+        public Edge EdgeToDestCity { get; private set; }
 
         public EdgeWithDestinationCity(Edge Edge, int DestCity)
         {
-            this.EdgeToDestinationCity = Edge;
+            this.EdgeToDestCity = Edge;
             this.DestinationCity = DestCity;
         }
     }

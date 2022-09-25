@@ -26,12 +26,12 @@ namespace AntColonyNamespace
             this._BETA = BETA;
         }
 
-        public void CountNominatorAndUpdateDenominator(EdgeWithDestinationCity pickedEdge)
+        public void CountNominatorAndUpdateDenominator(EdgeWithDestinationCity pickedPath)
         {
             double countedValue =
-                Math.Pow(pickedEdge.EdgeToDestinationCity.PheromoneLevel, this._ALFA)
-                * Math.Pow(1 / pickedEdge.EdgeToDestinationCity.Distance, this._BETA);
-            this._Nominators.Add(pickedEdge, countedValue);
+                Math.Pow(pickedPath.EdgeToDestCity.PheromoneLevel, this._ALFA)
+                * Math.Pow(1 / pickedPath.EdgeToDestCity.Distance, this._BETA);
+            this._Nominators.Add(pickedPath, countedValue);
             this._Denominator += countedValue;
         }
 
@@ -73,6 +73,11 @@ namespace AntColonyNamespace
             }
 
             return new ReadOnlyDictionary<EdgeWithDestinationCity, double>(this._Probabilities);
+        }
+
+        public bool CheckIfProbabilitiesAreEmpty()
+        {
+            return this._Probabilities.Count == 0;
         }
 
         public void RestartAllValues()

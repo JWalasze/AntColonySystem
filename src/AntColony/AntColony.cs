@@ -150,11 +150,15 @@ namespace AntColonyNamespace
 
             private double _CurrentCapicityOfTruck;
 
+            private int _NumberOfDoneItinerary;
+
             private double _CityDemandsToServe;
 
             private int _NumberOfRemainingTrucks;
 
             private GiantTourSolution _GiantSolution;
+
+            private List<double> _CapacitiesOfDoneTrucks;
 
             //DO TEGO MOZE NA MACIERZ FEROMONOW xD OSOBNA KLASA
 
@@ -177,13 +181,16 @@ namespace AntColonyNamespace
                 this._PossibilityToReturnToDepot = 0.1;
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
                 this._GiantSolution = new GiantTourSolution();
+                this._NumberOfDoneItinerary = 0;
+
+                this._CapacitiesOfDoneTrucks = new List<double>();
 
                 this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
             }
 
             public void StartCreatingItinerary()
             {
-                while (!this.HasAntCreatedAllItinerary() || !this.IsAntInDepot())
+                while (!this.AreAllCitiesVisited() || !this.IsAntInDepot())
                 {
                     //Szukamy marszrut
                     //Szukamy wierzcholkow zeby do nich isc
@@ -194,77 +201,132 @@ namespace AntColonyNamespace
                     - wracamy jesli zmiescimy sie w prawdopodobienstwie od 0 do PossibilityToReturnToDepot
                     - musimy sie upewnic ze wracajac szybciej nie spowodujemy ze reszta
                     ciezarowek nie sprosta wymaganiom klientow*/
-                    if (
-                        new Random().NextDouble() < this._PossibilityToReturnToDepot
-                            && this._CurrentCityIndex != 0
-                            && this._CityDemandsToServe
-                                / (
-                                    this._NumberOfRemainingTrucks
-                                    * this._AntColony._MaxCapacityOfTruck
-                                )
-                                < this._AntColony._LimitOfBaseReturning
-                            && this._NumberOfRemainingTrucks > 1
-                        || this._CityDemandsToServe == 0
-                    )
-                    {
-                        this.ReturnToDepot();
-                    }
-                    else
-                    {
-                        this.MoveToTheNextCity();
-                    }
-                    this.PrintPath();
+
+                    //Jesli tu jestemsy to znaczy ze nie jestesmy w depocie
+                    //ale nie ma juz customerow wiec musimy wrocic
+
+                    // else if (
+                    //     !this.IsAntInDepot() &&
+                    //     this._CurrentCityIndex != 0
+                    //     && this._CityDemandsToServe
+                    //         / (this._NumberOfRemainingTrucks * this._AntColony._MaxCapacityOfTruck)
+                    //         < this._AntColony._LimitOfBaseReturning
+                    //     && this._NumberOfRemainingTrucks > 1
+                    // )
+                    // {
+                    //     this.ReturnToDepot();
+                    // }
+                    this.MoveUp();
                 }
+
+                while (this._NumberOfRemainingTrucks != 0)
+                {
+                    this._GiantSolution.AddNoDepotLeavingPathOfSolution();
+                    this._CapacitiesOfDoneTrucks.Add(0);
+                    this.DecreaseNumberOfRemainingTracks();
+                }
+
                 this.PrintPath();
+                Console.WriteLine("-----------------||------------------");
+                this._GiantSolution.PrintItineraryAllApart(this._CapacitiesOfDoneTrucks); //MOZE DAC ZEBY SOLUTION TRZYMALO DANE O ITINERARIES
+                Console.WriteLine(Math.Round(this._GiantSolution.GetGiantIteneraryDistance(), 2));
 
                 //Marszruty znalezione
                 //Proces aktualizacji,liczenia, itp
                 //Aktualizacji calej marszruty...czyli ewaporacja i tak dalej
             }
 
-            private void ReturnToDepot()
+            private void ReturnToDepot(EdgeWithDestinationCity pickedPath)
             {
-                var returnToDepotEdge = this.GetEdgeToDepot();
                 this._GiantSolution.AddPathOfSolution(
                     this._CurrentCityIndex,
-                    returnToDepotEdge.EdgeToDestinationCity,
-                    returnToDepotEdge.DestinationCity
+                    pickedPath.EdgeToDestCity,
+                    pickedPath.DestinationCity
                 );
-                this._CurrentCityIndex = returnToDepotEdge.DestinationCity;
+
+                this._CapacitiesOfDoneTrucks.Add(this._CurrentCapicityOfTruck);
+                this._CurrentCapicityOfTruck = 0;
+                this._CurrentCityIndex = pickedPath.DestinationCity;
+                ++this._NumberOfDoneItinerary;
                 --this._NumberOfRemainingTrucks;
 
                 this._Possibilities.RestartAllValues();
             }
 
-            private EdgeWithDestinationCity GetEdgeToDepot()
+            private void MoveToTheNextCity(EdgeWithDestinationCity pickedPath)
             {
-                return this._AntColony._CitiesGraph.GetEdgeToDepot(this._CurrentCityIndex);
+                this._GiantSolution.AddPathOfSolution(
+                    this._CurrentCityIndex,
+                    pickedPath.EdgeToDestCity,
+                    pickedPath.DestinationCity
+                );
+
+                this._CityDemandsToServe -= this._AntColony._CitiesGraph.GetDemandOfCity(
+                    pickedPath.DestinationCity
+                );
+                this._CurrentCapicityOfTruck += this._AntColony._CitiesGraph.GetDemandOfCity(
+                    pickedPath.DestinationCity
+                );
+                this._CurrentCityIndex = pickedPath.DestinationCity;
+                --this._NumberOfUnvisitedCustomers;
+
+                this._Possibilities.RestartAllValues();
             }
 
-            public EdgeWithDestinationCity ChoosePath()
+            private void MoveUp()
             {
                 foreach (
-                    var possibleEdge in this._AntColony._CitiesGraph.GetEdgesFromCity(
+                    var possiblePath in this._AntColony._CitiesGraph.GetEdgesFromCity(
                         this._CurrentCityIndex
                     )
                 )
                 {
-                    if (!this.DidAntVisitVertex(possibleEdge.DestinationCity))
+                    if (possiblePath.DestinationCity == 0)
                     {
-                        this._Possibilities.CountNominatorAndUpdateDenominator(possibleEdge);
+                        if (this.CanAntReturnToDepotEarlier())
+                        {
+                            this._Possibilities.CountNominatorAndUpdateDenominator(possiblePath);
+                        }
+                    }
+                    else
+                    {
+                        if (
+                            !this.DidAntVisitCity(possiblePath.DestinationCity)
+                            && this.CanAntMoveToNextCity(possiblePath.DestinationCity)
+                        )
+                        {
+                            this._Possibilities.CountNominatorAndUpdateDenominator(possiblePath);
+                        }
                     }
                 }
+
                 this._Possibilities.CountProbabilities();
 
+                EdgeWithDestinationCity pickedPath;
                 double randomNumberFrom0To1 = (new Random()).NextDouble();
+
                 if (randomNumberFrom0To1 <= this._AntColony._q0)
                 {
-                    return this._Possibilities.GetMaxNominator().Key;
+                    pickedPath = this._Possibilities.GetMaxNominator().Key;
                 }
                 else
                 {
-                    return this.ChoosePathBasedOnProb();
+                    pickedPath = this.ChoosePathBasedOnProb();
                 }
+
+                if (pickedPath.DestinationCity == 0)
+                {
+                    this.ReturnToDepot(pickedPath);
+                }
+                else
+                {
+                    this.MoveToTheNextCity(pickedPath);
+                }
+            }
+
+            private EdgeWithDestinationCity GetEdgeToDepot()
+            {
+                return this._AntColony._CitiesGraph.GetEdgeToDepot(this._CurrentCityIndex);
             }
 
             private EdgeWithDestinationCity ChoosePathBasedOnProb()
@@ -282,37 +344,26 @@ namespace AntColonyNamespace
                     lowerLimit += edge.Value;
                 }
 
-                return this._Possibilities.GetProbabilities().First().Key;
-            }
-
-            private bool DidAntVisitVertex(int vertex)
-            {
-                return this._GiantSolution.IsCityVisited(vertex);
-            }
-
-            private void MoveToTheNextCity()
-            {
-                var choosenEdge = this.ChoosePath();
-                this._GiantSolution.AddPathOfSolution(
-                    this._CurrentCityIndex,
-                    choosenEdge.EdgeToDestinationCity,
-                    choosenEdge.DestinationCity
+                throw new Exception(
+                    "Niepoprawnie wybrana sciezka na podstawie prawdopodobienstw!!!"
                 );
-                // foreach (var i in this._Possibilities.GetProbabilities())
-                // {
-                //     Console.WriteLine(Math.Round(i.Key.Distance, 2) + ", " + i.Value);
-                // }
-                this.DecreaseNumberOfUnvisitedCustomers();
-                this.DecreaseTotalDemandToServe(choosenEdge);
-                this.ChangeCurrentCity(choosenEdge);
-                this._Possibilities.RestartAllValues();
             }
 
+            private bool DidAntVisitCity(int cityIndex)
+            {
+                return this._GiantSolution.IsCityVisited(cityIndex);
+            }
+
+            private void UpdateItineraryAfterMovingToNextCity() { }
+
+            private void UpdateItineraryAfterReturningToDepot() { }
+
+            //SPORNE
             private void DecreaseTotalDemandToServe(EdgeWithDestinationCity chosenEdge)
             {
-                this._CityDemandsToServe -= this._AntColony._CitiesGraph
-                    .GetCity(chosenEdge.DestinationCity)
-                    .Demand;
+                this._CityDemandsToServe -= this._AntColony._CitiesGraph.GetDemandOfCity(
+                    chosenEdge.DestinationCity
+                );
             }
 
             private void DecreaseNumberOfUnvisitedCustomers()
@@ -320,23 +371,63 @@ namespace AntColonyNamespace
                 --this._NumberOfUnvisitedCustomers;
             }
 
-            private void ChangeCurrentCity(EdgeWithDestinationCity chosenEdge)
+            private void DecreaseNumberOfRemainingTracks()
             {
-                this._CurrentCityIndex = chosenEdge.DestinationCity;
+                --this._NumberOfRemainingTrucks;
+            }
+
+            private void ResetCapacityOfCurrentTruck()
+            {
+                this._CurrentCapicityOfTruck = 0;
+            }
+
+            private void IncreaseDoneItinerary()
+            {
+                ++this._NumberOfDoneItinerary;
+            }
+
+            private void AddCapacityOfDoneItinerary(double capacity)
+            {
+                this._CapacitiesOfDoneTrucks.Add(this._CurrentCapicityOfTruck);
+            }
+
+            private void AddCapacityToCurrentTruck(int cityIndex)
+            {
+                this._CurrentCapicityOfTruck += this._AntColony._CitiesGraph.GetDemandOfCity(
+                    cityIndex
+                );
+            }
+
+            private void ChangeCurrentCity(int newCity)
+            {
+                this._CurrentCityIndex = newCity;
             }
 
             public void UpdatePheromonesOnEdges() { }
 
             public void EvaporatePheromonesOnEdges() { }
 
-            private bool CanAntMoveToNextCity(EdgeWithDestinationCity nextEdge)
+            private bool CanAntMoveToNextCity(int cityIndex)
             {
                 return this._CurrentCapicityOfTruck
-                        + this._AntColony._CitiesGraph.GetCity(nextEdge.DestinationCity).Demand
+                        + this._AntColony._CitiesGraph.GetDemandOfCity(cityIndex)
                     <= this._AntColony._MaxCapacityOfTruck;
             }
 
-            private bool HasAntCreatedAllItinerary()
+            private bool CanAntReturnToDepotEarlier()
+            {
+                //Czy pozostale trucki razy ich pojemnosc
+                //dadza rade z pozostalymi demands
+                return this._CityDemandsToServe
+                        / (
+                            (this._NumberOfRemainingTrucks - 1)
+                            * this._AntColony._MaxCapacityOfTruck
+                        )
+                        < this._AntColony._LimitOfBaseReturning
+                    || this._NumberOfUnvisitedCustomers == 0;
+            }
+
+            private bool AreAllCitiesVisited()
             {
                 return this._NumberOfUnvisitedCustomers == 0;
             }

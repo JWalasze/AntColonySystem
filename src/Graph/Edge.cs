@@ -4,11 +4,11 @@ namespace AntColonyNamespace
 {
     internal class Edge
     {
-        public double Distance { get; private set; }
+        public double Distance { get; set; }
 
         public double PheromoneLevel { get; private set; }
 
-        public double InitialPheromoneLevel { get; private set; }
+        public double InitialPheromoneLevel { get; private set; } //ZAPEWNE DO ZMIANY, NIE WIADOMO CO ZROBIC Z INITIAL I PEROMONE SAMYM
 
         public Edge(double distance, double initialPheromoneLevel)
         {

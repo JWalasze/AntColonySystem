@@ -14,20 +14,25 @@ namespace AntColonyNamespace
             this._GiantItinerary.Add((startCityIndex, edge, endCityIndex));
         }
 
+        public void AddNoDepotLeavingPathOfSolution()
+        {
+            this._GiantItinerary.Add((0, new Edge(0, 0), 0));
+        }
+
         public void ForEach(Action<(int, Edge, int)> action)
         {
-            this._GiantItinerary.ForEach(path =>
+            this._GiantItinerary.ForEach(partOfPath =>
             {
-                action(path);
+                action(partOfPath);
             });
         }
 
         public double GetGiantIteneraryDistance()
         {
             var giantDistance = 0.0;
-            this._GiantItinerary.ForEach(path =>
+            this._GiantItinerary.ForEach(partOfPath =>
             {
-                giantDistance += path._Edge.Distance;
+                giantDistance += partOfPath._Edge.Distance;
             });
 
             return giantDistance;
@@ -35,8 +40,14 @@ namespace AntColonyNamespace
 
         public bool IsCityVisited(int cityIndex)
         {
+            if (cityIndex == 0)
+            {
+                return false;
+            }
+
             return this._GiantItinerary.Any(
-                path => path._StartCityIndex == cityIndex || path._EndCityIndex == cityIndex
+                partOfPath =>
+                    partOfPath._StartCityIndex == cityIndex || partOfPath._EndCityIndex == cityIndex
             );
         }
 
@@ -45,20 +56,52 @@ namespace AntColonyNamespace
             Console.WriteLine(this.ToString());
         }
 
-        public override string ToString()
+        public void PrintItineraryAllApart(List<double> capacitiesOfAllTrucks)
         {
             string str = string.Empty;
+            var itineraryNumber = 1;
             var lastPartOfPath = this._GiantItinerary.Last();
+
+            str += "Marszruta " + itineraryNumber;
+            str += Environment.NewLine;
+
             this._GiantItinerary.ForEach(partOfPath =>
             {
                 str += partOfPath._StartCityIndex;
                 str += " -> ";
-                str += partOfPath._EndCityIndex;
-                if (!partOfPath.Equals(lastPartOfPath))
+
+                if (partOfPath._EndCityIndex == 0)
                 {
-                    str += " | ";
+                    str += 0;
+                    str += " | zapelnienie tira: " + capacitiesOfAllTrucks[itineraryNumber - 1];
+                    str += Environment.NewLine;
+                    if (!lastPartOfPath.Equals(partOfPath))
+                    {
+                        str += "Maszruta " + ++itineraryNumber;
+                        str += Environment.NewLine;
+                    }
                 }
             });
+
+            Console.WriteLine(str);
+        }
+
+        public override string ToString()
+        {
+            string str = string.Empty;
+            var lastPartOfPath = this._GiantItinerary.Last();
+
+            this._GiantItinerary.ForEach(partOfPath =>
+            {
+                str += partOfPath._StartCityIndex;
+                str += " -> ";
+
+                if (lastPartOfPath.Equals(partOfPath))
+                {
+                    str += partOfPath._EndCityIndex;
+                }
+            });
+
             return str;
         }
     }

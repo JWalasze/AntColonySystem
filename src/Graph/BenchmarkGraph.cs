@@ -18,7 +18,7 @@ namespace AntColonyNamespace
                     ++currentCityEnd
                 )
                 {
-                    this.AdjacencyList.AddUndirectedEdge(
+                    this.AddUndirectedEdge(
                         currentCityStart,
                         currentCityEnd,
                         new Edge(

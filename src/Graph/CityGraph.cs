@@ -8,13 +8,8 @@ namespace AntColonyNamespace
         //Lista sasiedztwa grafu
         private AdjacencyList _AdjacencyList;
 
-        //Zwraca liste sasiedztwa
-        public AdjacencyList AdjacencyList
-        {
-            get { return this._AdjacencyList; }
-        }
-
-        public CityGraph() //DAC to do ANtColony, nie tu
+        //SPRAWDZIC CZY MOZNA FOREACHOWAC ADJACENCY LIST I CZY MOZNA COS UPROSCIC !!!!!!!!
+        public CityGraph()
         {
             this._AdjacencyList = new AdjacencyList();
         }
@@ -28,11 +23,11 @@ namespace AntColonyNamespace
         public int GetNumberOfEdges()
         {
             var counter = 0;
-            for (int i = 0; i < this._AdjacencyList.NumberOfCities; ++i)
+            foreach (var tuple in this._AdjacencyList)
             {
-                foreach (var edge in this._AdjacencyList[i])
+                foreach (var edge in tuple._Edges)
                 {
-                    if (edge.DestinationCity > i)
+                    if (edge.DestinationCity > tuple._City.Index)
                     {
                         ++counter;
                     }
@@ -82,6 +77,11 @@ namespace AntColonyNamespace
             return this._AdjacencyList.GetCity(cityIndex);
         }
 
+        public double GetDemandOfCity(int cityIndex)
+        {
+            return this._AdjacencyList.GetCity(cityIndex).Demand;
+        }
+
         //Dodaje nieskierowana krawedz do grafu - info o wierzcholkach w newEdge
         public void AddUndirectedEdge(
             int firstCityIndex,
@@ -108,10 +108,7 @@ namespace AntColonyNamespace
             return this._AdjacencyList[cityIndex];
         }
 
-        public EdgeWithDestinationCity GetEdgeBetweenTwoCities(
-            int firstCityIndex,
-            int secondCityIndex
-        )
+        public Edge GetEdgeBetweenTwoCities(int firstCityIndex, int secondCityIndex)
         {
             return this._AdjacencyList.GetEdgeBetweenTwoCities(firstCityIndex, secondCityIndex);
         }

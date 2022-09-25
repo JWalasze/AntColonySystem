@@ -21,6 +21,12 @@ namespace AntColonyNamespace
             get { return this.GetNumberOfCities(); }
         }
 
+        //Zwraca ilosc wierzcholkow - uzyte w property NumberOfVertexes
+        private int GetNumberOfCities()
+        {
+            return this._AdjacencyList.Count;
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
@@ -113,16 +119,13 @@ namespace AntColonyNamespace
             }
         }
 
-        public EdgeWithDestinationCity GetEdgeBetweenTwoCities(
-            int firstCityIndex,
-            int secondCityIndex
-        )
+        public Edge GetEdgeBetweenTwoCities(int firstCityIndex, int secondCityIndex)
         {
-            foreach (var edge in this._AdjacencyList[firstCityIndex]._Edges)
+            foreach (var edgeWithDestCity in this._AdjacencyList[firstCityIndex]._Edges)
             {
-                if (edge.DestinationCity == secondCityIndex)
+                if (edgeWithDestCity.DestinationCity == secondCityIndex)
                 {
-                    return edge;
+                    return edgeWithDestCity.EdgeToDestCity;
                 }
             }
             throw new Exception("Brak sciezki pomiedzy miastami");
@@ -130,7 +133,19 @@ namespace AntColonyNamespace
 
         public EdgeWithDestinationCity GetEdgeToDepot(int cityIndex)
         {
-            return this._AdjacencyList[cityIndex]._Edges[0];
+            var edgeToDepot = this._AdjacencyList[cityIndex]._Edges[0];
+            if (edgeToDepot.DestinationCity != 0)
+            {
+                throw new Exception("Zle zwrocona krawedz do depotu!!!");
+            }
+            else if (cityIndex == 0)
+            {
+                throw new Exception("Juz jestesmy w depocie!!!");
+            }
+            else
+            {
+                return edgeToDepot;
+            }
         }
 
         //Dodanie nowego wierzcholka
@@ -141,12 +156,6 @@ namespace AntColonyNamespace
             );
         }
 
-        //Zwraca ilosc wierzcholkow - uzyte w property NumberOfVertexes
-        private int GetNumberOfCities()
-        {
-            return this._AdjacencyList.Count;
-        }
-
         public override string ToString()
         {
             string str = string.Empty;
@@ -155,11 +164,13 @@ namespace AntColonyNamespace
                 str += tuple._City.Index + " (" + tuple._City.Demand + ")" + ":";
                 tuple._Edges.ForEach(edgeWithDestVertex =>
                 {
-                    str += " " + edgeWithDestVertex.DestinationCity;
-                    // + "("
-                    // + Math.Round(edgeWithDestVertex.Distance, 2)
-                    // + ")";
-                    //str += Environment.NewLine;
+                    str +=
+                        " "
+                        + edgeWithDestVertex.DestinationCity
+                        + "("
+                        + Math.Round(edgeWithDestVertex.EdgeToDestCity.Distance, 2)
+                        + ")";
+                    str += Environment.NewLine;
                 });
                 str += Environment.NewLine;
             });
