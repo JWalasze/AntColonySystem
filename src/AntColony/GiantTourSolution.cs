@@ -4,14 +4,22 @@ namespace AntColonyNamespace
     {
         private List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)> _GiantItinerary;
 
+        private List<double> _UsedCapacitiesInItineraries;
+
         public GiantTourSolution()
         {
             this._GiantItinerary = new List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)>();
+            this._UsedCapacitiesInItineraries = new List<double>();
         }
 
         public void AddPathOfSolution(int startCityIndex, Edge edge, int endCityIndex)
         {
             this._GiantItinerary.Add((startCityIndex, edge, endCityIndex));
+        }
+
+        public void AddUsedCapacityInItinerary(double usedCapacity)
+        {
+            this._UsedCapacitiesInItineraries.Add(usedCapacity);
         }
 
         public void AddNoDepotLeavingPathOfSolution()
@@ -56,7 +64,7 @@ namespace AntColonyNamespace
             Console.WriteLine(this.ToString());
         }
 
-        public void PrintItineraryAllApart(List<double> capacitiesOfAllTrucks)
+        public void PrintItineraryAllApart()
         {
             string str = string.Empty;
             var itineraryNumber = 1;
@@ -73,7 +81,9 @@ namespace AntColonyNamespace
                 if (partOfPath._EndCityIndex == 0)
                 {
                     str += 0;
-                    str += " | zapelnienie tira: " + capacitiesOfAllTrucks[itineraryNumber - 1];
+                    str +=
+                        " | zapelnienie tira: "
+                        + this._UsedCapacitiesInItineraries[itineraryNumber - 1];
                     str += Environment.NewLine;
                     if (!lastPartOfPath.Equals(partOfPath))
                     {
