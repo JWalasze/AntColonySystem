@@ -2,41 +2,6 @@
 
 for (int j = 0; j < 1; ++j)
 {
-    // Possibilities possibilities = new Possibilities(2.3);
-    // possibilities.CountNominatorAndUpdateDenominator(
-    //     new EdgeWithDestinationCity(new Edge(10, 3), 1)
-    // );
-    // possibilities.CountNominatorAndUpdateDenominator(
-    //     new EdgeWithDestinationCity(new Edge(12, 5), 1)
-    // );
-    // possibilities.CountNominatorAndUpdateDenominator(
-    //     new EdgeWithDestinationCity(new Edge(8, 7), 1)
-    // );
-    // possibilities.CountNominatorAndUpdateDenominator(
-    //     new EdgeWithDestinationCity(new Edge(4, 2), 1)
-    // );
-    // possibilities.CountNominatorAndUpdateDenominator(
-    //     new EdgeWithDestinationCity(new Edge(15, 4.5), 1)
-    // );
-    // possibilities.CountNominatorAndUpdateDenominator(
-    //     new EdgeWithDestinationCity(new Edge(5, 13), 1)
-    // );
-    // possibilities.CountProbabilities();
-    // Console.WriteLine(
-    //     possibilities.GetMaxNominator().Key.DestinationCity
-    //         + "--"
-    //         + +possibilities.GetMaxNominator().Key.DestinationCity
-    //         + "--"
-    //         + +possibilities.GetMaxNominator().Value
-    // );
-    // foreach (var item in possibilities.GetProbabilities())
-    // {
-    //     Console.WriteLine(item.Value);
-    // }
-    // possibilities.RestartAllValues();
-
-    Console.WriteLine("-------------------------");
-
     AntColony antColony = new AntColony(
         0.1,
         2.3,
@@ -44,18 +9,45 @@ for (int j = 0; j < 1; ++j)
         0.1,
         3,
         4,
-        //"C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
-        "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
+        "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
+    //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
     );
 
     antColony.StartSolvingProblemInSeries();
-
-    // Graph g = new Graph(
-    //     "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/src/BenchmarkData/A-n32-k5.txt"
-    // );
-
-    //Console.WriteLine(antColony.Graph.ToString());
 }
+
+// Possibilities possibilities = new Possibilities(2.3);
+// possibilities.CountNominatorAndUpdateDenominator(
+//     new EdgeWithDestinationCity(new Edge(10, 3), 1)
+// );
+// possibilities.CountNominatorAndUpdateDenominator(
+//     new EdgeWithDestinationCity(new Edge(12, 5), 1)
+// );
+// possibilities.CountNominatorAndUpdateDenominator(
+//     new EdgeWithDestinationCity(new Edge(8, 7), 1)
+// );
+// possibilities.CountNominatorAndUpdateDenominator(
+//     new EdgeWithDestinationCity(new Edge(4, 2), 1)
+// );
+// possibilities.CountNominatorAndUpdateDenominator(
+//     new EdgeWithDestinationCity(new Edge(15, 4.5), 1)
+// );
+// possibilities.CountNominatorAndUpdateDenominator(
+//     new EdgeWithDestinationCity(new Edge(5, 13), 1)
+// );
+// possibilities.CountProbabilities();
+// Console.WriteLine(
+//     possibilities.GetMaxNominator().Key.DestinationCity
+//         + "--"
+//         + +possibilities.GetMaxNominator().Key.DestinationCity
+//         + "--"
+//         + +possibilities.GetMaxNominator().Value
+// );
+// foreach (var item in possibilities.GetProbabilities())
+// {
+//     Console.WriteLine(item.Value);
+// }
+// possibilities.RestartAllValues();
 
 //https://sci-hub.se/http://dx.doi.org/10.17535/crorr.2017.0029
 //https://www.sciencedirect.com/topics/computer-science/pheromone-matrix
