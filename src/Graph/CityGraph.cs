@@ -14,6 +14,14 @@ namespace AntColonyNamespace
             this._AdjacencyList = new AdjacencyList();
         }
 
+        public void ForEach(Action<(City _City, List<EdgeWithDestinationCity> _Edges)> action)
+        {
+            foreach (var tuple in this._AdjacencyList)
+            {
+                action(tuple);
+            }
+        }
+
         //Dodanie wierzcholka do grafu - nowy vertex ma zwiekszony o 1 index
         public void AddCity(int index, double latitude, double longitude, int demand)
         {

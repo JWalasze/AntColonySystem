@@ -8,19 +8,25 @@ namespace AntColonyNamespace
 
         public double PheromoneLevel { get; private set; }
 
-        public double InitialPheromoneLevel { get; private set; } //ZAPEWNE DO ZMIANY, NIE WIADOMO CO ZROBIC Z INITIAL I PEROMONE SAMYM
-
         public Edge(double distance, double initialPheromoneLevel)
         {
             this.Distance = distance;
-            this.InitialPheromoneLevel = initialPheromoneLevel;
             this.PheromoneLevel = initialPheromoneLevel;
         }
 
         //Aktualizowanie wartosci feromonow na krawedzi//// MOZE dac liczenie i zmiane levelu po stronie tutak klasy Edge
-        public void UpdatePheromoneLevel(double newPheromoneLevel)
+        public void UpdatePheromoneLevel(
+            double inverseOfTour,
+            double stosunekXD,
+            double newCoefficient
+        )
         {
-            this.PheromoneLevel = newPheromoneLevel;
+            this.PheromoneLevel += inverseOfTour * stosunekXD * newCoefficient;
+        }
+
+        public void EvaporatePheromoneLevel(double TAU)
+        {
+            this.PheromoneLevel = (1 - TAU) * this.PheromoneLevel;
         }
 
         //Po to zeby dalo szanse ze sa rozne, po to jak jest do dziennika dodawane w possibilities

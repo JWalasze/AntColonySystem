@@ -29,8 +29,8 @@ namespace AntColonyNamespace
 
         public void ResetSolution()
         {
-            this.GiantItinerary.Clear();
-            this.UsedCapacitiesInItineraries.Clear();
+            this.GiantItinerary = new List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)>();
+            this.UsedCapacitiesInItineraries = new List<double>();
         }
 
         public void ForEach(Action<(int, Edge, int)> action)
@@ -49,6 +49,10 @@ namespace AntColonyNamespace
                 giantDistance += partOfPath._Edge.Distance;
             });
 
+            var c = new double[] { 1, 2, 3, 4 };
+            this.UsedCapacitiesInItineraries.CopyTo(c);
+            c.ToList(); //TO JEST DOBRE PODEJSCIE XDDDDDDD
+
             return giantDistance;
         }
 
@@ -63,6 +67,11 @@ namespace AntColonyNamespace
                 partOfPath =>
                     partOfPath._StartCityIndex == cityIndex || partOfPath._EndCityIndex == cityIndex
             );
+        }
+
+        public bool IsEdgeInSolution(Edge checkingEdge)
+        {
+            return this.GiantItinerary.Any(partOfPath => partOfPath._Edge == checkingEdge);
         }
 
         public void PrintGiantTourSolution()

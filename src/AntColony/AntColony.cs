@@ -39,7 +39,7 @@ namespace AntColonyNamespace
         //Lista mrowek/posiada ilosc mrowek
         private List<Ant> _Ants;
 
-        private double BestFoundTourDistance;
+        private GiantTourSolution? BestFoundSolutionYet;
 
         public BenchmarkGraph _CitiesGraph;
 
@@ -113,7 +113,7 @@ namespace AntColonyNamespace
                 this.AddAntToTheColony();
             }
 
-            this.BestFoundTourDistance = Double.PositiveInfinity;
+            this.BestFoundSolutionYet = null;
         }
 
         public void AddAntToTheColony()
@@ -129,26 +129,68 @@ namespace AntColonyNamespace
                 {
                     ant.StartCreatingItinerary();
                     ant.PrintItineraryAllApart();
-                    if (ant.GetObjectiveFunction() < this.BestFoundTourDistance)
+                    if (this.BestFoundSolutionYet != null)
                     {
-                        this.BestFoundTourDistance = ant.GetObjectiveFunction();
+                        if (
+                            this.BestFoundSolutionYet.GetGiantIteneraryDistance()
+                            > ant.GetObjectiveFunction()
+                        )
+                        {
+                            this.BestFoundSolutionYet = ant.GetGiantTourSolution();
+                        }
+                    }
+                    else
+                    {
+                        this.BestFoundSolutionYet = ant.GetGiantTourSolution();
                     }
                 });
 
                 //Rzeczy ktore robimy po iteracji, czyli np aktualizowanie globalnie feromonow
+                this.EvaporatePheromoneTrails();
+                this.UpdatePheromoneTrails();
 
-
-                this._Ants.ForEach(ant =>
-                {
-                    ant.ResetAntForNextItinerary();
-                });
+                // this._Ants.ForEach(ant =>
+                // {
+                //     ant.ResetAntForNextItinerary();
+                // });
             }
-            Console.WriteLine(
-                "Najlepsza znaleziona trasa: " + Math.Round(this.BestFoundTourDistance, 2)
-            );
+            if (this.BestFoundSolutionYet != null)
+            {
+                Console.WriteLine(
+                    "Najlepsza znaleziona trasa: "
+                        + Math.Round(this.BestFoundSolutionYet.GetGiantIteneraryDistance(), 2)
+                );
+            }
         }
 
+        private void UpdateBestFoundSolution() { }
+
         public void StartSolvingProblemParallel() { }
+
+        private void EvaporatePheromoneTrails()
+        {
+            this._CitiesGraph.ForEach(tuple =>
+            {
+                tuple._Edges.ForEach(partOfPath =>
+                {
+                    partOfPath.EdgeToDestCity.EvaporatePheromoneLevel(this._TAU);
+                });
+            });
+        }
+
+        private void UpdatePheromoneTrails()
+        {
+            this._CitiesGraph.ForEach(tuple =>
+            {
+                tuple._Edges.ForEach(partOfPath =>
+                {
+                    // if ()
+                    // {
+                    //     partOfPath.EdgeToDestCity.EvaporatePheromoneLevel(this._TAU);
+                    // }
+                });
+            });
+        }
 
         public class Ant
         {
@@ -204,7 +246,7 @@ namespace AntColonyNamespace
                     this._GiantSolution.AddNoDepotLeavingPathOfSolution();
                     this._GiantSolution.AddUsedCapacityInItinerary(0);
                     --this._NumberOfRemainingTrucks;
-                    --this._NumberOfDoneItinerary;
+                    ++this._NumberOfDoneItinerary;
                 }
 
                 //Marszruty znalezione
@@ -337,23 +379,20 @@ namespace AntColonyNamespace
                 return this._GiantSolution.GetGiantIteneraryDistance();
             }
 
-            public GiantTourSolution GetGiantTourSolution()
-            {
-                return this._GiantSolution;
-            }
-
             private bool DidAntVisitCity(int cityIndex)
             {
                 return this._GiantSolution.IsCityVisited(cityIndex);
             }
 
+            public GiantTourSolution GetGiantTourSolution()
+            {
+                var clonedSolution = new GiantTourSolution(this._GiantSolution);
+                return this._GiantSolution;
+            }
+
             private void UpdateItineraryAfterMovingToNextCity() { }
 
             private void UpdateItineraryAfterReturningToDepot() { }
-
-            public void UpdatePheromonesOnEdges() { }
-
-            public void EvaporatePheromonesOnEdges() { }
 
             private bool CanAntMoveToNextCity(int cityIndex)
             {
