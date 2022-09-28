@@ -129,30 +129,16 @@ namespace AntColonyNamespace
                 {
                     ant.StartCreatingItinerary();
                     ant.PrintItineraryAllApart();
-                    if (this.BestFoundSolutionYet != null)
-                    {
-                        if (
-                            this.BestFoundSolutionYet.GetGiantIteneraryDistance()
-                            > ant.GetObjectiveFunction()
-                        )
-                        {
-                            this.BestFoundSolutionYet = ant.GetGiantTourSolution();
-                        }
-                    }
-                    else
-                    {
-                        this.BestFoundSolutionYet = ant.GetGiantTourSolution();
-                    }
+                    ant.UpdateBestFoundSolutionSoFar();
                 });
 
-                //Rzeczy ktore robimy po iteracji, czyli np aktualizowanie globalnie feromonow
                 this.EvaporatePheromoneTrails();
                 this.UpdatePheromoneTrails();
 
-                // this._Ants.ForEach(ant =>
-                // {
-                //     ant.ResetAntForNextItinerary();
-                // });
+                this._Ants.ForEach(ant =>
+                {
+                    ant.ResetAntForNextItinerary();
+                });
             }
             if (this.BestFoundSolutionYet != null)
             {
@@ -160,7 +146,9 @@ namespace AntColonyNamespace
                     "Najlepsza znaleziona trasa: "
                         + Math.Round(this.BestFoundSolutionYet.GetGiantIteneraryDistance(), 2)
                 );
+                //Console.WriteLine(this.BestFoundSolutionYet.PrintItineraryAllApart());
             }
+            Console.WriteLine(this._CitiesGraph.ToString());
         }
 
         private void UpdateBestFoundSolution() { }
@@ -180,16 +168,26 @@ namespace AntColonyNamespace
 
         private void UpdatePheromoneTrails()
         {
-            this._CitiesGraph.ForEach(tuple =>
+            if (this.BestFoundSolutionYet != null)
             {
-                tuple._Edges.ForEach(partOfPath =>
+                this._CitiesGraph.ForEach(tuple =>
                 {
-                    // if ()
-                    // {
-                    //     partOfPath.EdgeToDestCity.EvaporatePheromoneLevel(this._TAU);
-                    // }
+                    tuple._Edges.ForEach(partOfPath =>
+                    {
+                        if (this.BestFoundSolutionYet.IsEdgeInSolution(partOfPath.EdgeToDestCity))
+                        {
+                            partOfPath.EdgeToDestCity.UpdatePheromoneLevel(
+                                1 / this.BestFoundSolutionYet.GetGiantIteneraryDistance(),
+                                0.8
+                            );
+                        }
+                    });
                 });
-            });
+            }
+            else
+            {
+                throw new Exception("Niepopawnie zaktualizowane najlepsze rozwiazanie!!!");
+            }
         }
 
         public class Ant
@@ -384,10 +382,18 @@ namespace AntColonyNamespace
                 return this._GiantSolution.IsCityVisited(cityIndex);
             }
 
-            public GiantTourSolution GetGiantTourSolution()
+            public void UpdateBestFoundSolutionSoFar()
             {
-                var clonedSolution = new GiantTourSolution(this._GiantSolution);
-                return this._GiantSolution;
+                if (
+                    this._AntColony.BestFoundSolutionYet != null
+                        && this._AntColony.BestFoundSolutionYet.GetGiantIteneraryDistance()
+                            > this._GiantSolution.GetGiantIteneraryDistance()
+                    || this._AntColony.BestFoundSolutionYet == null
+                )
+                {
+                    this._AntColony.BestFoundSolutionYet = (GiantTourSolution)
+                        this._GiantSolution.Clone();
+                }
             }
 
             private void UpdateItineraryAfterMovingToNextCity() { }

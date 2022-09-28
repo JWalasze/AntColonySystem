@@ -1,6 +1,6 @@
 namespace AntColonyNamespace
 {
-    internal class GiantTourSolution
+    internal class GiantTourSolution : ICloneable
     {
         public List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)> GiantItinerary;
 
@@ -49,11 +49,12 @@ namespace AntColonyNamespace
                 giantDistance += partOfPath._Edge.Distance;
             });
 
-            var c = new double[] { 1, 2, 3, 4 };
-            this.UsedCapacitiesInItineraries.CopyTo(c);
-            c.ToList(); //TO JEST DOBRE PODEJSCIE XDDDDDDD
-
             return giantDistance;
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         public bool IsCityVisited(int cityIndex)
@@ -92,6 +93,7 @@ namespace AntColonyNamespace
             {
                 str += partOfPath._StartCityIndex;
                 str += " -> ";
+                str += "(" + partOfPath._Edge.PheromoneLevel + ")";
 
                 if (partOfPath._EndCityIndex == 0)
                 {

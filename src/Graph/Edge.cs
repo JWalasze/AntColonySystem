@@ -15,13 +15,9 @@ namespace AntColonyNamespace
         }
 
         //Aktualizowanie wartosci feromonow na krawedzi//// MOZE dac liczenie i zmiane levelu po stronie tutak klasy Edge
-        public void UpdatePheromoneLevel(
-            double inverseOfTour,
-            double stosunekXD,
-            double newCoefficient
-        )
+        public void UpdatePheromoneLevel(double inverseOfTour, double newCoefficient)
         {
-            this.PheromoneLevel += inverseOfTour * stosunekXD * newCoefficient;
+            this.PheromoneLevel += inverseOfTour * newCoefficient;
         }
 
         public void EvaporatePheromoneLevel(double TAU)

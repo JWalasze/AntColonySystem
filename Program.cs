@@ -1,14 +1,14 @@
 ﻿using AntColonyNamespace;
 
-for (int j = 0; j < 1; ++j)
+for (int j = 0; j < 10; ++j)
 {
     AntColony antColony = new AntColony(
-        0.1,
-        2.3,
-        0.2,
         0.8,
-        3,
+        2,
+        0.9,
+        0.2,
         4,
+        10,
         "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
     //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
     );
@@ -47,6 +47,10 @@ for (int j = 0; j < 1; ++j)
 //     Console.WriteLine(item.Value);
 // }
 // possibilities.RestartAllValues();
+
+
+//To jest mega wazne, mamy tuatj jak aktualizowac feromony i jaka powinna byc ih inicjalizacyjna wartosc xDD
+//https://sci-hub.se/https://www.tandfonline.com/doi/abs/10.1080/10170660609509001
 
 //https://sci-hub.se/http://dx.doi.org/10.17535/crorr.2017.0029
 //https://www.sciencedirect.com/topics/computer-science/pheromone-matrix

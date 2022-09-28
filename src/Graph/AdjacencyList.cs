@@ -169,6 +169,9 @@ namespace AntColonyNamespace
                         + edgeWithDestVertex.DestinationCity
                         + "("
                         + Math.Round(edgeWithDestVertex.EdgeToDestCity.Distance, 2)
+                        + ")"
+                        + "("
+                        + Math.Round(edgeWithDestVertex.EdgeToDestCity.PheromoneLevel, 2)
                         + ")";
                     str += Environment.NewLine;
                 });
