@@ -51,6 +51,7 @@ for (int j = 0; j < 10; ++j)
 
 //To jest mega wazne, mamy tuatj jak aktualizowac feromony i jaka powinna byc ih inicjalizacyjna wartosc xDD
 //https://sci-hub.se/https://www.tandfonline.com/doi/abs/10.1080/10170660609509001
+//--------------------------------------------------------------------------------
 
 //https://sci-hub.se/http://dx.doi.org/10.17535/crorr.2017.0029
 //https://www.sciencedirect.com/topics/computer-science/pheromone-matrix

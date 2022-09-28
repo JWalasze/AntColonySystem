@@ -161,7 +161,8 @@ namespace AntColonyNamespace
             {
                 tuple._Edges.ForEach(partOfPath =>
                 {
-                    partOfPath.EdgeToDestCity.EvaporatePheromoneLevel(this._TAU);
+                    partOfPath.EdgeToDestCity.PheromoneLevel =
+                        (1 - this._TAU) * partOfPath.EdgeToDestCity.PheromoneLevel;
                 });
             });
         }
@@ -176,10 +177,7 @@ namespace AntColonyNamespace
                     {
                         if (this.BestFoundSolutionYet.IsEdgeInSolution(partOfPath.EdgeToDestCity))
                         {
-                            partOfPath.EdgeToDestCity.UpdatePheromoneLevel(
-                                1 / this.BestFoundSolutionYet.GetGiantIteneraryDistance(),
-                                0.8
-                            );
+                            partOfPath.EdgeToDestCity.PheromoneLevel += 
                         }
                     });
                 });

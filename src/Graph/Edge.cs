@@ -4,25 +4,14 @@ namespace AntColonyNamespace
 {
     internal class Edge
     {
-        public double Distance { get; set; }
+        public double Distance { get; private set; }
 
-        public double PheromoneLevel { get; private set; }
+        public double PheromoneLevel { get; set; }
 
         public Edge(double distance, double initialPheromoneLevel)
         {
             this.Distance = distance;
             this.PheromoneLevel = initialPheromoneLevel;
-        }
-
-        //Aktualizowanie wartosci feromonow na krawedzi//// MOZE dac liczenie i zmiane levelu po stronie tutak klasy Edge
-        public void UpdatePheromoneLevel(double inverseOfTour, double newCoefficient)
-        {
-            this.PheromoneLevel += inverseOfTour * newCoefficient;
-        }
-
-        public void EvaporatePheromoneLevel(double TAU)
-        {
-            this.PheromoneLevel = (1 - TAU) * this.PheromoneLevel;
         }
 
         //Po to zeby dalo szanse ze sa rozne, po to jak jest do dziennika dodawane w possibilities
