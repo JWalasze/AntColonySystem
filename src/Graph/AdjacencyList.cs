@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 
@@ -6,59 +5,72 @@ namespace AntColonyNamespace
 {
     internal class AdjacencyList : IEnumerable
     {
-        //Lista krotki: Wierzcholek z lista krawedzi z niego
+        /*Lista krotek składająca się z miasta i listy wychodzących z niego dróg -
+        wspólnie tworzą listę sąsiedztwa*/
         private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;
 
-        //Konstruktor
+        //Konstruktor listy sąsiedztwa
         public AdjacencyList()
         {
             this._AdjacencyList = new List<(City _City, List<EdgeWithDestinationCity> _Edges)>();
         }
 
-        //Zwraca ilosc wierzcholkow w grafie jako pole property
+        //Zwraca ilosc wierzchołków w grafie, jako pole property
         public int NumberOfCities
         {
             get { return this.GetNumberOfCities(); }
         }
 
-        //Zwraca ilosc wierzcholkow - uzyte w property NumberOfVertexes
-        private int GetNumberOfCities()
-        {
-            return this._AdjacencyList.Count;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public AdjacencyListEnum GetEnumerator()
-        {
-            return new AdjacencyListEnum(this._AdjacencyList);
-        }
-
-        //Pozwala nam na dostep do krawedzi danego wierzcholka za pomoca []
-        public ReadOnlyCollection<EdgeWithDestinationCity> this[int cityNumber]
+        //Pozwala nam na dostep do krawedzi danego miasta za pomoca []
+        public ReadOnlyCollection<EdgeWithDestinationCity> this[int cityIndex]
         {
             get
             {
-                if (cityNumber < 0 || cityNumber >= this.NumberOfCities)
+                if (cityIndex < 0 || cityIndex >= this.NumberOfCities)
                 {
                     throw new ArgumentOutOfRangeException(
-                        nameof(cityNumber),
+                        nameof(cityIndex),
                         "City index is out of range!!!"
                     );
                 }
                 else
                 {
                     return new ReadOnlyCollection<EdgeWithDestinationCity>(
-                        this._AdjacencyList[cityNumber]._Edges
+                        this._AdjacencyList[cityIndex]._Edges
                     );
                 }
             }
         }
 
-        //Dodanie skierowanej krawedzi do listy sasiedztwa
+        //Zwraca ilość wierzchołków użyte w polu NumberOfCIties
+        private int GetNumberOfCities()
+        {
+            return this._AdjacencyList.Count;
+        }
+
+        //Dodanie nowego miasta do listy sąsiedztwa
+        public void AddCity(int index, double latitude, double longitude, double demand)
+        {
+            this._AdjacencyList.Add(
+                (new City(index, latitude, longitude, demand), new List<EdgeWithDestinationCity>())
+            );
+        }
+
+        //Zwraca nam miasto na podstawie podanego indeksu
+        public City GetCity(int cityIndex)
+        {
+            var city = this._AdjacencyList[cityIndex]._City;
+            if (city.Index != cityIndex)
+            {
+                return this._AdjacencyList.Find(tuple => tuple._City.Index == cityIndex)._City;
+            }
+            else
+            {
+                return city;
+            }
+        }
+
+        //Dodanie skierowanej krawędzi do listy sąsiedztwa
         public void AddDirectedEdge(int startCityIndex, int endCityIndex, Edge newDirectedEdge)
         {
             if (
@@ -78,7 +90,7 @@ namespace AntColonyNamespace
             }
         }
 
-        //Dodanie nieskierowanej krawedzi do listy sasiedztwa
+        //Dodanie nieskierowanej krawędzi do listy sąsiedztwa
         public void AddUndirectedEdge(
             int firstCityIndex,
             int secondCityIndex,
@@ -105,36 +117,24 @@ namespace AntColonyNamespace
             }
         }
 
-        //Zwykly get na wierzcholek
-        public City GetCity(int cityIndex)
-        {
-            var city = this._AdjacencyList[cityIndex]._City;
-            if (city.Index != cityIndex)
-            {
-                return this._AdjacencyList.Find(tuple => tuple._City.Index == cityIndex)._City;
-            }
-            else
-            {
-                return city;
-            }
-        }
-
+        //Zwraca nam odcinek pomiędzy 2 konkretnymi miastami
         public Edge GetEdgeBetweenTwoCities(int firstCityIndex, int secondCityIndex)
         {
-            foreach (var edgeWithDestCity in this._AdjacencyList[firstCityIndex]._Edges)
+            foreach (var pathToCity in this[firstCityIndex])
             {
-                if (edgeWithDestCity.DestinationCity == secondCityIndex)
+                if (pathToCity.DestinationCity == secondCityIndex)
                 {
-                    return edgeWithDestCity.EdgeToDestCity;
+                    return pathToCity.EdgeToDestCity;
                 }
             }
             throw new Exception("Brak sciezki pomiedzy miastami");
         }
 
-        public EdgeWithDestinationCity GetEdgeToDepot(int cityIndex)
+        //Zwraca nam odcinek z konkretnego miasta do depotu (depot = city z indeksem 0)
+        public Edge GetEdgeToDepot(int cityIndex)
         {
-            var edgeToDepot = this._AdjacencyList[cityIndex]._Edges[0];
-            if (edgeToDepot.DestinationCity != 0)
+            var pathToDepot = this[cityIndex][0];
+            if (pathToDepot.DestinationCity != 0)
             {
                 throw new Exception("Zle zwrocona krawedz do depotu!!!");
             }
@@ -144,48 +144,61 @@ namespace AntColonyNamespace
             }
             else
             {
-                return edgeToDepot;
+                return pathToDepot.EdgeToDestCity;
             }
         }
 
-        //Dodanie nowego wierzcholka
-        public void AddCity(int index, double latitude, double longitude, double demand)
+        public (City _City, List<EdgeWithDestinationCity> _Edges) GetTuple(int tupleIndex)
         {
-            this._AdjacencyList.Add(
-                (new City(index, latitude, longitude, demand), new List<EdgeWithDestinationCity>())
-            );
+            return this._AdjacencyList[tupleIndex];
         }
 
+        //Przedstawia listę sąsiedztwa w postaci stringa
         public override string ToString()
         {
             string str = string.Empty;
             this._AdjacencyList.ForEach(tuple =>
             {
                 str += tuple._City.Index + " (" + tuple._City.Demand + ")" + ":";
-                tuple._Edges.ForEach(edgeWithDestVertex =>
+                tuple._Edges.ForEach(edgeWithDestCity =>
                 {
                     str +=
                         " "
-                        + edgeWithDestVertex.DestinationCity
+                        + edgeWithDestCity.DestinationCity
                         + "("
-                        + Math.Round(edgeWithDestVertex.EdgeToDestCity.Distance, 2)
+                        + Math.Round(edgeWithDestCity.EdgeToDestCity.Distance, 2)
                         + ")"
+                        + ", "
                         + "("
-                        + Math.Round(edgeWithDestVertex.EdgeToDestCity.PheromoneLevel, 2)
+                        + Math.Round(edgeWithDestCity.EdgeToDestCity.PheromoneLevel, 5)
                         + ")";
                     str += Environment.NewLine;
                 });
                 str += Environment.NewLine;
             });
+
             return str;
+        }
+
+        /*Zaimplementowana metoda interfejsu IEnumerable zwracająca instancję innego interfejsu
+        Klasa AdjacencyListEnum implementuje interfejs iEnumerator*/
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public AdjacencyListEnum GetEnumerator()
+        {
+            return new AdjacencyListEnum(this._AdjacencyList);
         }
     }
 
+    //Klasa potrzebna do iteracji po obiekcie AdjacencyList
     internal class AdjacencyListEnum : IEnumerator
     {
         private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;
 
-        private int position = -1;
+        private int Position = -1;
 
         public AdjacencyListEnum(
             List<(City _City, List<EdgeWithDestinationCity> _Edges)> AdjacencyList
@@ -196,13 +209,13 @@ namespace AntColonyNamespace
 
         public bool MoveNext()
         {
-            ++this.position;
-            return this.position < this._AdjacencyList.Count;
+            ++this.Position;
+            return this.Position < this._AdjacencyList.Count;
         }
 
         public void Reset()
         {
-            this.position = -1;
+            this.Position = -1;
         }
 
         object IEnumerator.Current
@@ -216,7 +229,7 @@ namespace AntColonyNamespace
             {
                 try
                 {
-                    return this._AdjacencyList[position];
+                    return this._AdjacencyList[Position];
                 }
                 catch (IndexOutOfRangeException)
                 {
