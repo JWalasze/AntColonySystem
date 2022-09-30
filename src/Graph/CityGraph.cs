@@ -26,11 +26,11 @@ namespace AntColonyNamespace
         public int GetNumberOfEdges()
         {
             var counter = 0;
-            foreach (var tuple in this)
+            foreach (var tuple in this._AdjacencyList)
             {
                 foreach (var edge in tuple)
                 {
-                    if (edge.DestinationCity > tuple._City.Index)
+                    if (edge.DestinationCity > tuple.Index)
                     {
                         ++counter;
                     }
@@ -129,10 +129,10 @@ namespace AntColonyNamespace
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return (IEnumerator)GetEnumerator();
+            return GetEnumerator();
         }
 
-        public IEnumerator GetEnumerator()
+        public CityGraphEnum GetEnumerator()
         {
             return new CityGraphEnum(this._AdjacencyList);
         }
