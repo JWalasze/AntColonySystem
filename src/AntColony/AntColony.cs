@@ -5,12 +5,14 @@ using System.Text.RegularExpressions;
 
 namespace AntColonyNamespace
 {
+    /*Glowna klasa zawierajaca graf wraz z mrowkami
+    i dokonujaca szukanai marszrut*/
     internal class AntColony
     {
-        //Parametr do kontroli wplywu feromonow
+        //Parametr do kontroli wplywu feromonow na wybor sciezki
         private readonly double _ALFA;
 
-        //Paramter do kontroli wplywu dlugosci krawedzi
+        //Paramter do kontroli wplywu dlugosci krawedzi na wybor krawedzi
         private readonly double _BETA;
 
         //Definiuje wplyw eksploracji vs eksploatacji
@@ -19,35 +21,49 @@ namespace AntColonyNamespace
         //Paramter kontrolujacy wyparowywanie feromonow
         private readonly double _TAU;
 
+        //Poczatkowa wartosc feromonow na krawedziach
+        private readonly double _InitialPheromoneLevel;
+
+        private readonly double _Lmn;
+
+        private readonly double _Q;
+
+        private readonly double _N;
+
+        /*Wspolczynnik definiujacy przy jakim stosunku pozostalych pojemnosci ciezarowek
+         i pozostalych rzadan ciezarowka moze wrocic wczesniej do depotu*/
         private readonly double _LimitOfBaseReturning = 0.9;
 
         //Liczba iteracji - ilosc cykli
         private readonly double _NumberOfIterations;
 
-        //Pojemnosc ciezarowki/mrowki
+        //Pojemnosc pojedynczej ciezarowki
         private readonly double _MaxCapacityOfTruck;
 
-        //Ilosc miast/wierzcholkow
+        //Ilosc miast
         private readonly int _NumberOfCitiesWithDepot;
 
         //Ilosc ciezarowek/definiuje ile bedzie tras
         private readonly int _NumberOfTrucks;
 
-        //Indeks depotu/startowego wierzcholka
-        private readonly int _Depot;
-
-        //Lista mrowek/posiada ilosc mrowek
+        //Lista mrowek
         private List<Ant> _Ants;
 
+        //Budowane rozwiazanie w postaci Grand Tour Representation
         private GiantTourSolution? BestFoundSolutionYet;
 
+        //Graf z miastami i sciezkami
         public BenchmarkGraph _CitiesGraph;
 
+        //Konstruktor
         public AntColony(
             double ALFA,
             double BETA,
             double q0,
             double TAU,
+            double Q,
+            double N,
+            double InitialPheromoneLevel,
             int NumberOfAnts,
             int NumberOfIterations,
             string pathToBenchmarkData
@@ -58,6 +74,8 @@ namespace AntColonyNamespace
             this._BETA = BETA;
             this._q0 = q0;
             this._TAU = TAU;
+            this._Q = Q;
+            this._N = N;
             this._NumberOfIterations = NumberOfIterations;
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
@@ -96,15 +114,9 @@ namespace AntColonyNamespace
                         int.Parse(capicityFromBenchmark[1])
                     );
                 }
-                else if (
-                    this._NumberOfCitiesWithDepot != 1
-                    && lineCounter == 2 * this._NumberOfCitiesWithDepot + 7
-                )
-                {
-                    this._Depot = int.Parse(Regex.Split(line, @"\D+")[0]) - 1;
-                }
                 else { }
             }
+
             this._CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
 
             this._Ants = new List<Ant>(NumberOfAnts);
@@ -114,13 +126,29 @@ namespace AntColonyNamespace
             }
 
             this.BestFoundSolutionYet = null;
+
+            this._Lmn = new Ant(this, 0).FindSolutionUsingNearestNeighbourTourAlgorithm();
+            this._InitialPheromoneLevel = this._Q / (this._NumberOfCitiesWithDepot * this._Lmn);
+
+            this._CitiesGraph.AddInitialPheromoneValues(this._InitialPheromoneLevel);
         }
 
+        //Dodanie mrowki do kolonii
         public void AddAntToTheColony()
         {
             this._Ants.Add(new Ant(this, this._Ants.Count));
         }
 
+        public double GetGiantTourDistance()
+        {
+            if (this.BestFoundSolutionYet != null)
+            {
+                return this.BestFoundSolutionYet.GetGiantTourDistance();
+            }
+            throw new Exception("No zleee");
+        }
+
+        //Glowna metoda rozpoczynajaca szukanie rozwiazania sekwencyjnie
         public void StartSolvingProblemInSeries()
         {
             for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
@@ -128,59 +156,62 @@ namespace AntColonyNamespace
                 this._Ants.ForEach(ant =>
                 {
                     ant.StartCreatingItinerary();
-                    ant.PrintItineraryAllApart();
+                    //ant.PrintItineraryAllApart();
                     ant.UpdateBestFoundSolutionSoFar();
                 });
 
-                this.EvaporatePheromoneTrails();
-                this.UpdatePheromoneTrails();
-
                 this._Ants.ForEach(ant =>
                 {
+                    ant.UpdatePheromonesTrials();
                     ant.ResetAntForNextItinerary();
                 });
+
+                this.EvaporateAllPathsAndUpdateBestFoundSolution();
+
+                if (this.BestFoundSolutionYet != null)
+                {
+                    // Console.WriteLine(
+                    //     "Najlepsza trasa jak dotad: "
+                    //         + this.BestFoundSolutionYet.GetGiantTourDistance()
+                    // );
+                    // //Console.WriteLine(this.BestFoundSolutionYet.PrintItineraryAllApart());
+                }
             }
+
             if (this.BestFoundSolutionYet != null)
             {
+                Console.WriteLine("-------------------BEST SOLUTION------------------");
                 Console.WriteLine(
                     "Najlepsza znaleziona trasa: "
-                        + Math.Round(this.BestFoundSolutionYet.GetGiantIteneraryDistance(), 2)
+                        + Math.Round(this.BestFoundSolutionYet.GetGiantTourDistance(), 2)
                 );
                 //Console.WriteLine(this.BestFoundSolutionYet.PrintItineraryAllApart());
             }
-            Console.WriteLine(this._CitiesGraph.ToString());
+
+            //Console.WriteLine("-------------------CITY GRAPH AFTER ALOGRITHM------------------");
+            //Console.WriteLine(this._CitiesGraph.ToString());
         }
 
-        private void UpdateBestFoundSolution() { }
-
-        public void StartSolvingProblemParallel() { }
-
-        private void EvaporatePheromoneTrails()
-        {
-            this._CitiesGraph.ForEach(tuple =>
-            {
-                tuple._Edges.ForEach(partOfPath =>
-                {
-                    partOfPath.EdgeToDestCity.PheromoneLevel =
-                        (1 - this._TAU) * partOfPath.EdgeToDestCity.PheromoneLevel;
-                });
-            });
-        }
-
-        private void UpdatePheromoneTrails()
+        //Aktualizacja najlepiej znaleznionej trasy i wyparowanie feromonow ze wszystkich krawedzi
+        private void EvaporateAllPathsAndUpdateBestFoundSolution()
         {
             if (this.BestFoundSolutionYet != null)
             {
-                this._CitiesGraph.ForEach(tuple =>
+                foreach (var tuple in this._CitiesGraph)
                 {
-                    tuple._Edges.ForEach(partOfPath =>
+                    foreach (var edge in tuple._Edges)
                     {
-                        if (this.BestFoundSolutionYet.IsEdgeInSolution(partOfPath.EdgeToDestCity))
+                        edge.EdgeToDestCity.PheromoneLevel =
+                            (1 - this._TAU) * edge.EdgeToDestCity.PheromoneLevel;
+
+                        if (this.BestFoundSolutionYet.IsEdgeInSolution(edge.EdgeToDestCity))
                         {
-                            partOfPath.EdgeToDestCity.PheromoneLevel += 
+                            edge.EdgeToDestCity.PheromoneLevel +=
+                                this._TAU
+                                * (this._Q / this.BestFoundSolutionYet.GetGiantTourDistance());
                         }
-                    });
-                });
+                    }
+                }
             }
             else
             {
@@ -188,6 +219,19 @@ namespace AntColonyNamespace
             }
         }
 
+        //Glowna metoda rozpoczynajaca szukanie rozwiazania rownolegle
+        public void StartSolvingProblemParallel() { }
+
+        public GiantTourSolution GetGiantTourSolution()
+        {
+            if (this.BestFoundSolutionYet != null)
+            {
+                return this.BestFoundSolutionYet;
+            }
+            throw new Exception("Kolejny blad");
+        }
+
+        //Wewnetrzna klasa odpowiedzialna za logike mrowki
         public class Ant
         {
             private readonly int _AntIndex;
@@ -218,7 +262,7 @@ namespace AntColonyNamespace
                     this._AntColony._ALFA,
                     this._AntColony._BETA
                 );
-                this._CurrentCityIndex = this._AntColony._Depot;
+                this._CurrentCityIndex = 0;
 
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
 
@@ -230,6 +274,83 @@ namespace AntColonyNamespace
                 this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
             }
 
+            public double FindSolutionUsingNearestNeighbourTourAlgorithm()
+            {
+                while (!this.AreAllCitiesVisited() || !this.IsAntInDepot())
+                {
+                    this.MoveUpNNTA();
+                }
+
+                while (this._NumberOfRemainingTrucks != 0)
+                {
+                    this._GiantSolution.AddNoDepotLivingPathToSolution();
+                    this._GiantSolution.AddUsedCapacityOfTruck(0);
+                    --this._NumberOfRemainingTrucks;
+                    ++this._NumberOfDoneItinerary;
+                }
+
+                return this._GiantSolution.GetGiantTourDistance();
+            }
+
+            private void MoveUpNNTA()
+            {
+                var edgesFromCity = this._AntColony._CitiesGraph.GetEdgesFromCity(
+                    this._CurrentCityIndex
+                );
+                EdgeWithDestinationCity? theShortestPath = null;
+
+                foreach (var possiblePath in edgesFromCity)
+                {
+                    if (possiblePath.DestinationCity == 0)
+                    {
+                        if (this.CanAntReturnToDepotEarlier())
+                        {
+                            if (
+                                theShortestPath == null
+                                || theShortestPath.EdgeToDestCity.Distance
+                                    > possiblePath.EdgeToDestCity.Distance
+                            )
+                            {
+                                theShortestPath = possiblePath;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (
+                            !this.DidAntVisitCity(possiblePath.DestinationCity)
+                            && this.CanAntMoveToNextCity(possiblePath.DestinationCity)
+                        )
+                        {
+                            if (
+                                theShortestPath == null
+                                || theShortestPath.EdgeToDestCity.Distance
+                                    > possiblePath.EdgeToDestCity.Distance
+                            )
+                            {
+                                theShortestPath = possiblePath;
+                            }
+                        }
+                    }
+                }
+
+                if (theShortestPath != null)
+                {
+                    if (theShortestPath.DestinationCity == 0)
+                    {
+                        this.ReturnToDepot(theShortestPath);
+                    }
+                    else
+                    {
+                        this.MoveToTheNextCity(theShortestPath);
+                    }
+                }
+                else
+                {
+                    throw new Exception("Zle znaleziona kolejna krawedz!!!");
+                }
+            }
+
             public void StartCreatingItinerary()
             {
                 while (!this.AreAllCitiesVisited() || !this.IsAntInDepot())
@@ -239,26 +360,22 @@ namespace AntColonyNamespace
 
                 while (this._NumberOfRemainingTrucks != 0)
                 {
-                    this._GiantSolution.AddNoDepotLeavingPathOfSolution();
-                    this._GiantSolution.AddUsedCapacityInItinerary(0);
+                    this._GiantSolution.AddNoDepotLivingPathToSolution();
+                    this._GiantSolution.AddUsedCapacityOfTruck(0);
                     --this._NumberOfRemainingTrucks;
                     ++this._NumberOfDoneItinerary;
                 }
-
-                //Marszruty znalezione
-                //Proces aktualizacji,liczenia, itp
-                //Aktualizacji calej marszruty...czyli ewaporacja i tak dalej
             }
 
             private void ReturnToDepot(EdgeWithDestinationCity pickedPath)
             {
-                this._GiantSolution.AddPathOfSolution(
+                this._GiantSolution.AddPathToGiantSolution(
                     this._CurrentCityIndex,
                     pickedPath.EdgeToDestCity,
                     pickedPath.DestinationCity
                 );
 
-                this._GiantSolution.AddUsedCapacityInItinerary(this._CurrentCapicityOfTruck);
+                this._GiantSolution.AddUsedCapacityOfTruck(this._CurrentCapicityOfTruck);
                 this._CurrentCapicityOfTruck = 0;
                 this._CurrentCityIndex = pickedPath.DestinationCity;
                 ++this._NumberOfDoneItinerary;
@@ -269,7 +386,7 @@ namespace AntColonyNamespace
 
             private void MoveToTheNextCity(EdgeWithDestinationCity pickedPath)
             {
-                this._GiantSolution.AddPathOfSolution(
+                this._GiantSolution.AddPathToGiantSolution(
                     this._CurrentCityIndex,
                     pickedPath.EdgeToDestCity,
                     pickedPath.DestinationCity
@@ -314,27 +431,38 @@ namespace AntColonyNamespace
                     }
                 }
 
-                this._Possibilities.CountProbabilities();
-
                 EdgeWithDestinationCity pickedPath;
                 double randomNumberFrom0To1 = (new Random()).NextDouble();
 
-                if (randomNumberFrom0To1 <= this._AntColony._q0)
+                if (!this._Possibilities.CheckIfNominatorsAreEmpty())
                 {
-                    pickedPath = this._Possibilities.GetMaxNominator().Key;
-                }
-                else
-                {
-                    pickedPath = this.ChoosePathBasedOnProb();
-                }
+                    this._Possibilities.CountProbabilities();
 
-                if (pickedPath.DestinationCity == 0)
-                {
-                    this.ReturnToDepot(pickedPath);
+                    if (randomNumberFrom0To1 <= this._AntColony._q0)
+                    {
+                        pickedPath = this._Possibilities.GetMaxNominator().Key;
+                    }
+                    else
+                    {
+                        pickedPath = this.ChoosePathBasedOnProb();
+                    }
+
+                    if (pickedPath.DestinationCity == 0)
+                    {
+                        this.ReturnToDepot(pickedPath);
+                    }
+                    else
+                    {
+                        this.MoveToTheNextCity(pickedPath);
+                    }
                 }
                 else
                 {
-                    this.MoveToTheNextCity(pickedPath);
+                    this.ReturnToDepot(
+                        this._AntColony._CitiesGraph.GetEdgeWithDestinationCityToDepot(
+                            this._CurrentCityIndex
+                        )
+                    );
                 }
             }
 
@@ -358,9 +486,26 @@ namespace AntColonyNamespace
                 );
             }
 
+            //Odparowywanie feromonow oraz pozostawienie czesci na sciezkach
+            public void UpdatePheromonesTrials()
+            {
+                foreach (var tuple in this._AntColony._CitiesGraph)
+                {
+                    foreach (var path in tuple._Edges)
+                    {
+                        if (this._GiantSolution.IsEdgeInSolution(path.EdgeToDestCity))
+                        {
+                            //-------DO ZMIANY ZAPEWNE-------------
+                            path.EdgeToDestCity.PheromoneLevel +=
+                                this._AntColony._TAU * this._AntColony._InitialPheromoneLevel;
+                        }
+                    }
+                }
+            }
+
             public void ResetAntForNextItinerary()
             {
-                this._CurrentCityIndex = this._AntColony._Depot;
+                this._CurrentCityIndex = 0;
                 this._CurrentCapicityOfTruck = 0;
 
                 this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
@@ -372,7 +517,7 @@ namespace AntColonyNamespace
 
             public double GetObjectiveFunction()
             {
-                return this._GiantSolution.GetGiantIteneraryDistance();
+                return this._GiantSolution.GetGiantTourDistance();
             }
 
             private bool DidAntVisitCity(int cityIndex)
@@ -384,8 +529,8 @@ namespace AntColonyNamespace
             {
                 if (
                     this._AntColony.BestFoundSolutionYet != null
-                        && this._AntColony.BestFoundSolutionYet.GetGiantIteneraryDistance()
-                            > this._GiantSolution.GetGiantIteneraryDistance()
+                        && this._AntColony.BestFoundSolutionYet.GetGiantTourDistance()
+                            > this._GiantSolution.GetGiantTourDistance()
                     || this._AntColony.BestFoundSolutionYet == null
                 )
                 {
@@ -407,12 +552,17 @@ namespace AntColonyNamespace
 
             private bool CanAntReturnToDepotEarlier()
             {
+                if (this._NumberOfRemainingTrucks == 1)
+                {
+                    return this._NumberOfUnvisitedCustomers == 0;
+                }
+
                 return this._CityDemandsToServe
                         / (
                             (this._NumberOfRemainingTrucks - 1)
                             * this._AntColony._MaxCapacityOfTruck
                         )
-                        < this._AntColony._LimitOfBaseReturning
+                        <= this._AntColony._LimitOfBaseReturning
                     || this._NumberOfUnvisitedCustomers == 0;
             }
 
@@ -438,10 +588,10 @@ namespace AntColonyNamespace
                 Console.WriteLine("----------||----------");
                 Console.WriteLine();
                 Console.WriteLine("Indeks mrówki: " + this._AntIndex);
-                Console.WriteLine(this._GiantSolution.PrintItineraryAllApart());
+                Console.WriteLine(this._GiantSolution.ToString());
                 Console.WriteLine(
                     "Wartość funkcji celu: "
-                        + Math.Round(this._GiantSolution.GetGiantIteneraryDistance(), 2)
+                        + Math.Round(this._GiantSolution.GetGiantTourDistance(), 2)
                 );
                 Console.WriteLine();
             }

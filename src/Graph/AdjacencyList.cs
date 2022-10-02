@@ -148,6 +148,23 @@ namespace AntColonyNamespace
             }
         }
 
+        public EdgeWithDestinationCity GetEdgeWithDestinationCityToDepot(int cityIndex)
+        {
+            var pathToDepot = this[cityIndex][0];
+            if (pathToDepot.DestinationCity != 0)
+            {
+                throw new Exception("Zle zwrocona krawedz do depotu!!!");
+            }
+            else if (cityIndex == 0)
+            {
+                throw new Exception("Juz jestesmy w depocie!!!");
+            }
+            else
+            {
+                return pathToDepot;
+            }
+        }
+
         public (City _City, List<EdgeWithDestinationCity> _Edges) GetTuple(int tupleIndex)
         {
             return this._AdjacencyList[tupleIndex];
