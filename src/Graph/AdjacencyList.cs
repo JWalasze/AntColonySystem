@@ -5,23 +5,18 @@ namespace AntColonyNamespace
 {
     internal class AdjacencyList : IEnumerable
     {
-        /*Lista krotek składająca się z miasta i listy wychodzących z niego dróg -
-        wspólnie tworzą listę sąsiedztwa*/
         private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;
 
-        //Konstruktor listy sąsiedztwa
         public AdjacencyList()
         {
             this._AdjacencyList = new List<(City _City, List<EdgeWithDestinationCity> _Edges)>();
         }
 
-        //Zwraca ilosc wierzchołków w grafie, jako pole property
         public int NumberOfCities
         {
             get { return this.GetNumberOfCities(); }
         }
 
-        //Pozwala nam na dostep do krawedzi danego miasta za pomoca []
         public ReadOnlyCollection<EdgeWithDestinationCity> this[int cityIndex]
         {
             get
@@ -42,13 +37,11 @@ namespace AntColonyNamespace
             }
         }
 
-        //Zwraca ilość wierzchołków użyte w polu NumberOfCIties
         private int GetNumberOfCities()
         {
             return this._AdjacencyList.Count;
         }
 
-        //Dodanie nowego miasta do listy sąsiedztwa
         public void AddCity(int index, double latitude, double longitude, double demand)
         {
             this._AdjacencyList.Add(
@@ -56,7 +49,6 @@ namespace AntColonyNamespace
             );
         }
 
-        //Zwraca nam miasto na podstawie podanego indeksu
         public City GetCity(int cityIndex)
         {
             var city = this._AdjacencyList[cityIndex]._City;
@@ -70,7 +62,6 @@ namespace AntColonyNamespace
             }
         }
 
-        //Dodanie skierowanej krawędzi do listy sąsiedztwa
         public void AddDirectedEdge(int startCityIndex, int endCityIndex, Edge newDirectedEdge)
         {
             if (
@@ -90,7 +81,6 @@ namespace AntColonyNamespace
             }
         }
 
-        //Dodanie nieskierowanej krawędzi do listy sąsiedztwa
         public void AddUndirectedEdge(
             int firstCityIndex,
             int secondCityIndex,
@@ -117,7 +107,6 @@ namespace AntColonyNamespace
             }
         }
 
-        //Zwraca nam odcinek pomiędzy 2 konkretnymi miastami
         public Edge GetEdgeBetweenTwoCities(int firstCityIndex, int secondCityIndex)
         {
             foreach (var pathToCity in this[firstCityIndex])
@@ -130,7 +119,6 @@ namespace AntColonyNamespace
             throw new Exception("Brak sciezki pomiedzy miastami");
         }
 
-        //Zwraca nam odcinek z konkretnego miasta do depotu (depot = city z indeksem 0)
         public Edge GetEdgeToDepot(int cityIndex)
         {
             var pathToDepot = this[cityIndex][0];
@@ -170,7 +158,6 @@ namespace AntColonyNamespace
             return this._AdjacencyList[tupleIndex];
         }
 
-        //Przedstawia listę sąsiedztwa w postaci stringa
         public override string ToString()
         {
             string str = string.Empty;
@@ -210,7 +197,6 @@ namespace AntColonyNamespace
         }
     }
 
-    //Klasa potrzebna do iteracji po obiekcie AdjacencyList
     internal class AdjacencyListEnum : IEnumerator
     {
         private List<(City _City, List<EdgeWithDestinationCity> _Edges)> _AdjacencyList;

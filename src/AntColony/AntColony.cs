@@ -28,8 +28,6 @@ namespace AntColonyNamespace
 
         private readonly double _Q;
 
-        private readonly double _N;
-
         /*Wspolczynnik definiujacy przy jakim stosunku pozostalych pojemnosci ciezarowek
          i pozostalych rzadan ciezarowka moze wrocic wczesniej do depotu*/
         private readonly double _LimitOfBaseReturning = 0.9;
@@ -62,8 +60,6 @@ namespace AntColonyNamespace
             double q0,
             double TAU,
             double Q,
-            double N,
-            double InitialPheromoneLevel,
             int NumberOfAnts,
             int NumberOfIterations,
             string pathToBenchmarkData
@@ -75,7 +71,6 @@ namespace AntColonyNamespace
             this._q0 = q0;
             this._TAU = TAU;
             this._Q = Q;
-            this._N = N;
             this._NumberOfIterations = NumberOfIterations;
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
@@ -130,7 +125,7 @@ namespace AntColonyNamespace
             this._Lmn = new Ant(this, 0).FindSolutionUsingNearestNeighbourTourAlgorithm();
             this._InitialPheromoneLevel = this._Q / (this._NumberOfCitiesWithDepot * this._Lmn);
 
-            this._CitiesGraph.AddInitialPheromoneValues(this._InitialPheromoneLevel);
+            this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
         }
 
         //Dodanie mrowki do kolonii
@@ -231,7 +226,6 @@ namespace AntColonyNamespace
             throw new Exception("Kolejny blad");
         }
 
-        //Wewnetrzna klasa odpowiedzialna za logike mrowki
         public class Ant
         {
             private readonly int _AntIndex;
@@ -538,10 +532,6 @@ namespace AntColonyNamespace
                         this._GiantSolution.Clone();
                 }
             }
-
-            private void UpdateItineraryAfterMovingToNextCity() { }
-
-            private void UpdateItineraryAfterReturningToDepot() { }
 
             private bool CanAntMoveToNextCity(int cityIndex)
             {

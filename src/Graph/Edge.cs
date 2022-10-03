@@ -1,16 +1,11 @@
 namespace AntColonyNamespace
 {
-    //Klasa krawędź pomiędzy miastami/klientami
     internal class Edge
     {
-        //Odległość drogi pomiędzy klientami - niezmienne w trakcie działania programu
         public double Distance { get; private set; }
 
-        //Ilość feromonów na odcinku - zmieniane w trakcie działania programu
         public double PheromoneLevel { get; set; }
 
-        /*Konstruktor - musimy podać również wstępną wartość feromonów na odcinku
-        Powinno się ją uzyskiwać za pomocą strategii Nearest Neighbour*/
         public Edge(double distance, double initialPheromoneLevel)
         {
             this.Distance = distance;

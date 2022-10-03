@@ -1,28 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace AntColonyNamespace
 {
-    //Klasa liczaca prawdopodobienstwa
     internal class Possibilities
     {
-        //Wspolczynnik z AntColony
         private double _ALFA;
 
-        //Wspolczynnik z AntColony
         private double _BETA;
 
-        //Mianownik
         private double _Denominator;
 
-        //Lista licznikow
         private Dictionary<EdgeWithDestinationCity, double> _Nominators;
 
-        //Lista obliczonych prawdopodobienstw na podstawie licznikow i mianownika
         private Dictionary<EdgeWithDestinationCity, double> _Probabilities;
 
-        //Konstruktor
         public Possibilities(double ALFA, double BETA)
         {
             this._Denominator = 0;
@@ -33,7 +24,6 @@ namespace AntColonyNamespace
             this._BETA = BETA;
         }
 
-        //Metoda do zliczania licznika i aktualizacji mianownika
         public void CountNominatorAndUpdateDenominator(EdgeWithDestinationCity pickedPath)
         {
             double countedValue =
@@ -43,7 +33,6 @@ namespace AntColonyNamespace
             this._Denominator += countedValue;
         }
 
-        //Metoda do ostatecznego zliczenia prawdopodobienstw
         public void CountProbabilities()
         {
             foreach (var nomiantor in this._Nominators)
@@ -55,7 +44,6 @@ namespace AntColonyNamespace
             }
         }
 
-        //Zwraca niemodyfikowalny maksymalna wartosc licznika
         public KeyValuePair<EdgeWithDestinationCity, double> GetMaxNominator()
         {
             if (this._Nominators.Count == 0)
@@ -75,7 +63,6 @@ namespace AntColonyNamespace
             return maxNominator;
         }
 
-        //Zwraca zliczone prawdopodobienstwa
         public ReadOnlyDictionary<EdgeWithDestinationCity, double> GetProbabilities()
         {
             if (this._Probabilities.Count == 0)
@@ -86,19 +73,16 @@ namespace AntColonyNamespace
             return new ReadOnlyDictionary<EdgeWithDestinationCity, double>(this._Probabilities);
         }
 
-        //Sprawdzamy czy zostaly dobrze zliczone prawdopodoienstwa
         public bool CheckIfProbabilitiesAreEmpty()
         {
             return this._Probabilities.Count == 0;
         }
 
-        //Sprawdzamy czy zostaly dobrze zliczone liczniki
         public bool CheckIfNominatorsAreEmpty()
         {
             return this._Nominators.Count == 0;
         }
 
-        //Resetujemy wartosci obiektu do ponownego uzytku
         public void RestartAllValues()
         {
             this._Denominator = 0;

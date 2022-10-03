@@ -1,13 +1,9 @@
 namespace AntColonyNamespace
 {
-    /*Klasa dziedziczaca po CityGraph nastawiona na liczenie
-    odleglosci pomiedzy dodanymi wierzcholkami*/
     internal class BenchmarkGraph : CityGraph
     {
-        //Konstruktor
         public BenchmarkGraph() : base() { }
 
-        //Tworzymy sciezki w grafie na podstawie dodanych wspolrzednych miast
         public void CreateCompletedGraphBasedOnCityCoord()
         {
             for (
@@ -38,6 +34,7 @@ namespace AntColonyNamespace
                                         2
                                     )
                             ),
+                            //Wstepnie, sciezki nie maja feromonow
                             0
                         )
                     );
@@ -45,7 +42,7 @@ namespace AntColonyNamespace
             }
         }
 
-        public void AddInitialPheromoneValues(double InitialPheromoneLevel)
+        public void SetInitialPheromoneValues(double InitialPheromoneLevel)
         {
             foreach (var tuple in this)
             {
