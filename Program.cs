@@ -25,16 +25,14 @@ foreach (var item in coefIterat)
             0.05, //TAU
             //
             200000, //Q 100000
-            1000, //N do wywalenia
-            10, //INITIAL do wywalenia
             20, //ANTS
-            5000, //ITERATIONS
-            //"C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
-            "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
+            1000, //ITERATIONS
+            "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
+        //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
         );
         antColony.StartSolvingProblemInSeries();
         _FoundDistances.Add(antColony.GetGiantTourDistance());
-        if (antColony.GetGiantTourDistance() < 800)
+        if (antColony.GetGiantTourDistance() < 820)
         {
             Console.WriteLine(antColony.GetGiantTourSolution().GetItineraryAllApart());
         }
@@ -42,3 +40,6 @@ foreach (var item in coefIterat)
     Console.WriteLine("Srednia:" + _FoundDistances.Average());
     _FoundDistances.Clear();
 }
+
+//Fajnie opisana matematyka
+//https://sci-hub.se/https://www.tandfonline.com/doi/abs/10.1080/02522667.2005.10699639
