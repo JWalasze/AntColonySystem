@@ -26,9 +26,9 @@ foreach (var item in coefIterat)
             //
             200000, //Q 100000
             20, //ANTS
-            1000, //ITERATIONS
-            "C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
-        //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
+            5000, //ITERATIONS
+            //"C:\\Users\\Kuba\\Desktop\\.NET_App\\AntColonySystem\\BenchmarkData\\A-n32-k5.txt"
+            "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/A-n32-k5.txt"
         );
         antColony.StartSolvingProblemInSeries();
         _FoundDistances.Add(antColony.GetGiantTourDistance());
@@ -36,6 +36,12 @@ foreach (var item in coefIterat)
         {
             Console.WriteLine(antColony.GetGiantTourSolution().GetItineraryAllApart());
         }
+        Console.WriteLine(
+            "Blad: "
+                + 100
+                    * (antColony.GetGiantTourDistance() - antColony.GetOptimalDistance())
+                    / antColony.GetOptimalDistance()
+        );
     }
     Console.WriteLine("Srednia:" + _FoundDistances.Average());
     _FoundDistances.Clear();

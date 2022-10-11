@@ -44,6 +44,10 @@ namespace AntColonyNamespace
         //Ilosc ciezarowek/definiuje ile bedzie tras
         private readonly int _NumberOfTrucks;
 
+        private readonly double _NumberOfTotalDemand;
+
+        private readonly double _OptimalDistance;
+
         //Lista mrowek
         private List<Ant> _Ants;
 
@@ -90,10 +94,14 @@ namespace AntColonyNamespace
                 {
                     this._NumberOfTrucks = int.Parse(Regex.Split(line, @"\D+")[1]);
                 }
+                else if (lineCounter == 4)
+                {
+                    this._OptimalDistance = int.Parse(Regex.Split(line, @"\D+")[1]);
+                }
                 else if (
                     this._NumberOfCitiesWithDepot != -1
-                    && lineCounter > 4
-                    && lineCounter <= this._NumberOfCitiesWithDepot + 4
+                    && lineCounter > 5
+                    && lineCounter <= this._NumberOfCitiesWithDepot + 5
                 )
                 {
                     var dataFromLine = Regex.Split(line, @"\D+");
@@ -126,6 +134,7 @@ namespace AntColonyNamespace
             this._InitialPheromoneLevel = this._Q / (this._NumberOfCitiesWithDepot * this._Lmn);
 
             this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
+            this._NumberOfTotalDemand = this._CitiesGraph.GetTotalDemandOfCities();
         }
 
         //Dodanie mrowki do kolonii
@@ -143,6 +152,11 @@ namespace AntColonyNamespace
             throw new Exception("No zleee");
         }
 
+        public double GetOptimalDistance()
+        {
+            return this._OptimalDistance;
+        }
+
         //Glowna metoda rozpoczynajaca szukanie rozwiazania sekwencyjnie
         public void StartSolvingProblemInSeries()
         {
@@ -152,7 +166,7 @@ namespace AntColonyNamespace
                 {
                     ant.StartCreatingItinerary();
                     //ant.PrintItineraryAllApart();
-                    ant.UpdateBestFoundSolutionSoFar();
+                    ant.ChangeIfNeededBestFoundSolutionSoFar();
                 });
 
                 this._Ants.ForEach(ant =>
@@ -196,8 +210,7 @@ namespace AntColonyNamespace
                 {
                     foreach (var edge in tuple._Edges)
                     {
-                        edge.EdgeToDestCity.PheromoneLevel =
-                            (1 - this._TAU) * edge.EdgeToDestCity.PheromoneLevel;
+                        edge.EdgeToDestCity.PheromoneLevel *= (1 - this._TAU);
 
                         if (this.BestFoundSolutionYet.IsEdgeInSolution(edge.EdgeToDestCity))
                         {
@@ -240,8 +253,6 @@ namespace AntColonyNamespace
 
             private int _NumberOfRemainingTrucks;
 
-            private int _NumberOfDoneItinerary;
-
             private int _NumberOfUnvisitedCustomers;
 
             private GiantTourSolution _GiantSolution;
@@ -263,7 +274,6 @@ namespace AntColonyNamespace
                 this._CurrentCapicityOfTruck = 0;
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
                 this._GiantSolution = new GiantTourSolution();
-                this._NumberOfDoneItinerary = 0;
 
                 this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
             }
@@ -280,7 +290,6 @@ namespace AntColonyNamespace
                     this._GiantSolution.AddNoDepotLivingPathToSolution();
                     this._GiantSolution.AddUsedCapacityOfTruck(0);
                     --this._NumberOfRemainingTrucks;
-                    ++this._NumberOfDoneItinerary;
                 }
 
                 return this._GiantSolution.GetGiantTourDistance();
@@ -357,7 +366,6 @@ namespace AntColonyNamespace
                     this._GiantSolution.AddNoDepotLivingPathToSolution();
                     this._GiantSolution.AddUsedCapacityOfTruck(0);
                     --this._NumberOfRemainingTrucks;
-                    ++this._NumberOfDoneItinerary;
                 }
             }
 
@@ -372,7 +380,6 @@ namespace AntColonyNamespace
                 this._GiantSolution.AddUsedCapacityOfTruck(this._CurrentCapicityOfTruck);
                 this._CurrentCapicityOfTruck = 0;
                 this._CurrentCityIndex = pickedPath.DestinationCity;
-                ++this._NumberOfDoneItinerary;
                 --this._NumberOfRemainingTrucks;
 
                 this._Possibilities.RestartAllValues();
@@ -386,12 +393,11 @@ namespace AntColonyNamespace
                     pickedPath.DestinationCity
                 );
 
-                this._CityDemandsToServe -= this._AntColony._CitiesGraph.GetDemandOfCity(
+                var visitedCityDemand = this._AntColony._CitiesGraph.GetDemandOfCity(
                     pickedPath.DestinationCity
                 );
-                this._CurrentCapicityOfTruck += this._AntColony._CitiesGraph.GetDemandOfCity(
-                    pickedPath.DestinationCity
-                );
+                this._CityDemandsToServe -= visitedCityDemand;
+                this._CurrentCapicityOfTruck += visitedCityDemand;
                 this._CurrentCityIndex = pickedPath.DestinationCity;
                 --this._NumberOfUnvisitedCustomers;
 
@@ -502,14 +508,13 @@ namespace AntColonyNamespace
                 this._CurrentCityIndex = 0;
                 this._CurrentCapicityOfTruck = 0;
 
-                this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
+                this._CityDemandsToServe = this._AntColony._NumberOfTotalDemand;
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
-                this._NumberOfDoneItinerary = 0;
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
                 this._GiantSolution.ResetSolution();
             }
 
-            public double GetObjectiveFunction()
+            public double GetGiantTourDistance()
             {
                 return this._GiantSolution.GetGiantTourDistance();
             }
@@ -519,7 +524,7 @@ namespace AntColonyNamespace
                 return this._GiantSolution.IsCityVisited(cityIndex);
             }
 
-            public void UpdateBestFoundSolutionSoFar()
+            public void ChangeIfNeededBestFoundSolutionSoFar()
             {
                 if (
                     this._AntColony.BestFoundSolutionYet != null
@@ -573,7 +578,7 @@ namespace AntColonyNamespace
                 Console.WriteLine("------------");
             }
 
-            public void PrintItineraryAllApart()
+            public void PrintItinerariesAllApart()
             {
                 Console.WriteLine("----------||----------");
                 Console.WriteLine();
