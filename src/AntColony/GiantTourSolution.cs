@@ -1,6 +1,6 @@
 namespace AntColonyNamespace
 {
-    internal class GiantTourSolution : ICloneable
+    internal class GiantTourSolution : ICloneable, IComparable
     {
         public List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)> GiantItinerary;
 
@@ -47,6 +47,22 @@ namespace AntColonyNamespace
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public int CompareTo(object? obj)
+        {
+            if (obj == null)
+            {
+                return 1;
+            }
+
+            var otherSolution = obj as GiantTourSolution;
+            if (otherSolution != null)
+            {
+                return otherSolution.GetGiantTourDistance().CompareTo(this.GetGiantTourDistance());
+            }
+
+            throw new Exception("Porównywany obiekt jest niepoprawny!");
         }
 
         public bool IsCityVisited(int cityIndex)
