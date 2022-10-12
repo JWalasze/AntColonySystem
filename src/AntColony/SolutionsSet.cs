@@ -15,6 +15,11 @@ namespace AntColonyNamespace
             this._SolutionSet = new List<GiantTourSolution>(3);
         }
 
+        public GiantTourSolution this[int index]
+        {
+            get { return _SolutionSet[index]; }
+        }
+
         public void AddSolutionIfNeeded(GiantTourSolution newSolution)
         {
             this._SolutionSet.Add(newSolution);
@@ -25,7 +30,17 @@ namespace AntColonyNamespace
             }
         }
 
-        public override string ToString() { }
+        public override string ToString()
+        {
+            var str = string.Empty;
+            this._SolutionSet.ForEach(solution =>
+            {
+                str += "Rozwiązanie: ";
+                str += solution.GetGiantTourDistance();
+            });
+
+            return str;
+        }
 
         public void ResetSolutionSet()
         {
