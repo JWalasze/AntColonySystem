@@ -9,7 +9,7 @@ namespace AntColonyNamespace
             this._SolutionSet = new List<GiantTourSolution>(3);
         }
 
-        public void AddSolutionIfNeeded(GiantTourSolution newSolution)
+        public void AddSolution(GiantTourSolution newSolution)
         {
             this._SolutionSet.Add(newSolution);
             this._SolutionSet.Sort();

@@ -169,11 +169,8 @@ namespace AntColonyNamespace
                 this._Ants.ForEach(ant =>
                 {
                     ant.StartCreatingItinerary();
-                    //ant.PrintItineraryAllApart();
                     //ant.ChangeIfNeededBestFoundSolutionSoFar();
                 });
-
-                //Console.WriteLine(this._SetOfBestSolutionsInCurrentIterations.ToString());
 
                 this._Ants.ForEach(ant =>
                 {
@@ -187,15 +184,6 @@ namespace AntColonyNamespace
                     ant.ChangeIfNeededBestFoundSolutionSoFar();
                     ant.ResetAntForNextItinerary();
                 });
-
-                if (this._BestFoundSolutionYet != null)
-                {
-                    // Console.WriteLine(
-                    //     "Najlepsza trasa jak dotad: "
-                    //         + this.BestFoundSolutionYet.GetGiantTourDistance()
-                    // );
-                    // //Console.WriteLine(this.BestFoundSolutionYet.PrintItineraryAllApart());
-                }
             }
 
             if (this._BestFoundSolutionYet != null)
@@ -212,6 +200,42 @@ namespace AntColonyNamespace
             //Console.WriteLine(this._CitiesGraph.ToString());
         }
 
+        //Glowna metoda rozpoczynajaca szukanie rozwiazania rownolegle
+        public void StartSolvingProblemParallel()
+        {
+            for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
+            {
+                var listOfThreads = new List<Thread>();
+                foreach (var ant in this._Ants)
+                {
+                    var newThread = new Thread(() => DelegateToSolveProblemParallel(ant));
+                    listOfThreads.Add(newThread);
+                }
+
+                listOfThreads.ForEach(thread => thread.Start());
+                listOfThreads.ForEach(thread => thread.Join());
+                listOfThreads.ForEach(thread => Console.WriteLine(thread.IsAlive));
+
+                this._Ants.ForEach(ant =>
+                {
+                    ant.UpdatePheromonesTrials();
+                });
+
+                this.EvaporateAllPathsAndUpdateBestFoundSolution();
+
+                this._Ants.ForEach(ant =>
+                {
+                    ant.ChangeIfNeededBestFoundSolutionSoFar();
+                    ant.ResetAntForNextItinerary();
+                });
+            }
+        }
+
+        private void DelegateToSolveProblemParallel(Ant ant)
+        {
+            ant.StartCreatingItinerary();
+        }
+
         //Aktualizacja najlepiej znaleznionej trasy i wyparowanie feromonow ze wszystkich krawedzi
         private void EvaporateAllPathsAndUpdateBestFoundSolution()
         {
@@ -223,19 +247,18 @@ namespace AntColonyNamespace
                     {
                         edge.EdgeToDestCity.PheromoneLevel *= (1 - this._TAU);
 
-                        var addedValueForBestTours =
-                            (
-                                (
-                                    this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
-                                    - this._BestFoundSolutionYet.GetGiantTourDistance()
-                                )
-                                + (
-                                    this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
-                                    - this._SetOfBestSolutionsInCurrentIterations.GetBestSolutionDistance()
-                                )
-                            )
-                            / this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance();
-                        //Console.WriteLine(addedValueForBestTours);
+                        // var addedValueForBestTours =
+                        //     (
+                        //         (
+                        //             this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
+                        //             - this._BestFoundSolutionYet.GetGiantTourDistance()
+                        //         )
+                        //         + (
+                        //             this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
+                        //             - this._SetOfBestSolutionsInCurrentIterations.GetBestSolutionDistance()
+                        //         )
+                        //     )
+                        //     / this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance();
 
                         if (this._BestFoundSolutionYet.IsEdgeInSolution(edge.EdgeToDestCity))
                         {
@@ -257,16 +280,9 @@ namespace AntColonyNamespace
                     }
                 }
             }
-            else
-            {
-                //throw new Exception("Niepopawnie zaktualizowane najlepsze rozwiazanie!!!");
-            }
 
             this._SetOfBestSolutionsInCurrentIterations.ResetSolutionSet();
         }
-
-        //Glowna metoda rozpoczynajaca szukanie rozwiazania rownolegle
-        public void StartSolvingProblemParallel() { }
 
         public GiantTourSolution GetGiantTourSolution()
         {
@@ -406,7 +422,7 @@ namespace AntColonyNamespace
                     --this._NumberOfRemainingTrucks;
                 }
 
-                this._AntColony._SetOfBestSolutionsInCurrentIterations.AddSolutionIfNeeded(
+                this._AntColony._SetOfBestSolutionsInCurrentIterations.AddSolution(
                     this._GiantSolution
                 );
             }
