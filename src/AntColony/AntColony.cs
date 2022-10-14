@@ -226,41 +226,33 @@ namespace AntColonyNamespace
                         var addedValueForBestTours =
                             (
                                 (
-                                    this._SetOfBestSolutionsInCurrentIterations[
-                                        2
-                                    ].GetGiantTourDistance()
+                                    this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
                                     - this._BestFoundSolutionYet.GetGiantTourDistance()
                                 )
                                 + (
-                                    this._SetOfBestSolutionsInCurrentIterations[
-                                        2
-                                    ].GetGiantTourDistance()
-                                    - this._SetOfBestSolutionsInCurrentIterations[
-                                        0
-                                    ].GetGiantTourDistance()
+                                    this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
+                                    - this._SetOfBestSolutionsInCurrentIterations.GetBestSolutionDistance()
                                 )
                             )
-                            / this._SetOfBestSolutionsInCurrentIterations[2].GetGiantTourDistance();
+                            / this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance();
                         //Console.WriteLine(addedValueForBestTours);
 
                         if (this._BestFoundSolutionYet.IsEdgeInSolution(edge.EdgeToDestCity))
                         {
                             edge.EdgeToDestCity.PheromoneLevel +=
-                                this._TAU * addedValueForBestTours;
+                                this._TAU
+                                * (this._Q / this._BestFoundSolutionYet.GetGiantTourDistance());
                         }
 
                         if (
-                            this._SetOfBestSolutionsInCurrentIterations[0].IsEdgeInSolution(
+                            this._SetOfBestSolutionsInCurrentIterations.IsEdgeInBestSolutionSet(
                                 edge.EdgeToDestCity
-                            )
-                            && !ReferenceEquals(
-                                this._SetOfBestSolutionsInCurrentIterations[0],
-                                this._BestFoundSolutionYet
                             )
                         )
                         {
                             edge.EdgeToDestCity.PheromoneLevel +=
-                                this._TAU * addedValueForBestTours;
+                                this._TAU
+                                * (this._Q / this._BestFoundSolutionYet.GetGiantTourDistance());
                         }
                     }
                 }
@@ -269,6 +261,8 @@ namespace AntColonyNamespace
             {
                 //throw new Exception("Niepopawnie zaktualizowane najlepsze rozwiazanie!!!");
             }
+
+            this._SetOfBestSolutionsInCurrentIterations.ResetSolutionSet();
         }
 
         //Glowna metoda rozpoczynajaca szukanie rozwiazania rownolegle

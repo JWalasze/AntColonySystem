@@ -6,15 +6,20 @@ namespace AntColonyNamespace
 
         public List<double> UsedCapacitiesOfTrucks;
 
+        private double GiantTourDistance;
+
         public GiantTourSolution()
         {
             this.GiantItinerary = new List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)>();
             this.UsedCapacitiesOfTrucks = new List<double>();
+
+            this.GiantTourDistance = 0;
         }
 
         public void AddPathToGiantSolution(int startCityIndex, Edge edgeBetween, int endCityIndex)
         {
             this.GiantItinerary.Add((startCityIndex, edgeBetween, endCityIndex));
+            this.GiantTourDistance += edgeBetween.Distance;
         }
 
         public void AddNoDepotLivingPathToSolution()
@@ -31,17 +36,13 @@ namespace AntColonyNamespace
         {
             this.GiantItinerary = new List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)>();
             this.UsedCapacitiesOfTrucks = new List<double>();
+
+            this.GiantTourDistance = 0;
         }
 
         public double GetGiantTourDistance()
         {
-            var giantDistance = 0.0;
-            this.GiantItinerary.ForEach(partOfPath =>
-            {
-                giantDistance += partOfPath._Edge.Distance;
-            });
-
-            return giantDistance;
+            return this.GiantTourDistance;
         }
 
         public object Clone()

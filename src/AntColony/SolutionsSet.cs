@@ -2,12 +2,6 @@ namespace AntColonyNamespace
 {
     internal class SolutionSet
     {
-        private GiantTourSolution? BestFoundSolution;
-
-        private GiantTourSolution? SecondBestFoundSolution;
-
-        private GiantTourSolution? ThirdBestFoundSolution;
-
         private List<GiantTourSolution> _SolutionSet;
 
         public SolutionSet()
@@ -15,19 +9,40 @@ namespace AntColonyNamespace
             this._SolutionSet = new List<GiantTourSolution>(3);
         }
 
-        public GiantTourSolution this[int index]
-        {
-            get { return _SolutionSet[index]; }
-        }
-
         public void AddSolutionIfNeeded(GiantTourSolution newSolution)
         {
             this._SolutionSet.Add(newSolution);
             this._SolutionSet.Sort();
+            this._SolutionSet.Reverse();
             if (this._SolutionSet.Count > 3)
             {
                 this._SolutionSet.Remove(this._SolutionSet[^1]);
             }
+        }
+
+        public double GetBestSolutionDistance()
+        {
+            return this._SolutionSet[0].GetGiantTourDistance();
+        }
+
+        public double GetSecondBestSolutionDistance()
+        {
+            return this._SolutionSet[1].GetGiantTourDistance();
+        }
+
+        public double GetThirdBestSolutionDistance()
+        {
+            return this._SolutionSet[2].GetGiantTourDistance();
+        }
+
+        public bool IsEdgeInBestSolutionSet(Edge checkedEdge)
+        {
+            return this._SolutionSet[0].IsEdgeInSolution(checkedEdge);
+        }
+
+        public bool CheckReferenceWithBestSolution(GiantTourSolution solutionToCheck)
+        {
+            return ReferenceEquals(solutionToCheck, this._SolutionSet[0]);
         }
 
         public override string ToString()
@@ -44,9 +59,7 @@ namespace AntColonyNamespace
 
         public void ResetSolutionSet()
         {
-            this.BestFoundSolution = null;
-            this.SecondBestFoundSolution = null;
-            this.ThirdBestFoundSolution = null;
+            this._SolutionSet.Clear();
         }
     }
 }
