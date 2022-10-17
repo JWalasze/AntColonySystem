@@ -166,17 +166,20 @@ namespace AntColonyNamespace
                 str += tuple._City.Index + " (" + tuple._City.Demand + ")" + ":";
                 tuple._Edges.ForEach(edgeWithDestCity =>
                 {
-                    str +=
-                        " "
-                        + edgeWithDestCity.DestinationCity
-                        + "("
-                        + Math.Round(edgeWithDestCity.EdgeToDestCity.Distance, 2)
-                        + ")"
-                        + ", "
-                        + "("
-                        + Math.Round(edgeWithDestCity.EdgeToDestCity.PheromoneLevel, 5)
-                        + ")";
-                    str += Environment.NewLine;
+                    if (tuple._City.Index < edgeWithDestCity.DestinationCity)
+                    {
+                        str +=
+                            " "
+                            + edgeWithDestCity.DestinationCity
+                            + "("
+                            + Math.Round(edgeWithDestCity.EdgeToDestCity.Distance, 2)
+                            + ")"
+                            + ", "
+                            + "("
+                            + Math.Round(edgeWithDestCity.EdgeToDestCity.PheromoneLevel, 5)
+                            + ")";
+                        str += Environment.NewLine;
+                    }
                 });
                 str += Environment.NewLine;
             });
@@ -184,8 +187,6 @@ namespace AntColonyNamespace
             return str;
         }
 
-        /*Zaimplementowana metoda interfejsu IEnumerable zwracająca instancję innego interfejsu
-        Klasa AdjacencyListEnum implementuje interfejs iEnumerator*/
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

@@ -2,9 +2,9 @@ namespace AntColonyNamespace
 {
     internal class GiantTourSolution : ICloneable, IComparable
     {
-        public List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)> GiantItinerary;
+        private List<(int _StartCityIndex, Edge _Edge, int _EndCityIndex)> GiantItinerary;
 
-        public List<double> UsedCapacitiesOfTrucks;
+        private List<double> UsedCapacitiesOfTrucks;
 
         private double GiantTourDistance;
 

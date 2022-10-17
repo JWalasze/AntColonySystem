@@ -42,13 +42,13 @@ namespace AntColonyNamespace
             }
         }
 
-        public void SetInitialPheromoneValues(double InitialPheromoneLevel)
+        public void SetInitialPheromoneValues(double initialPheromoneLevel)
         {
             foreach (var tuple in this)
             {
                 foreach (var path in tuple._Edges)
                 {
-                    path.EdgeToDestCity.PheromoneLevel = InitialPheromoneLevel;
+                    path.EdgeToDestCity.PheromoneLevel = initialPheromoneLevel;
                 }
             }
         }

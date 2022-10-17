@@ -54,8 +54,6 @@ namespace AntColonyNamespace
         //Budowane rozwiazanie w postaci Grand Tour Representation
         private GiantTourSolution? _BestFoundSolutionYet;
 
-        private SolutionSet _SetOfBestSolutionsInCurrentIterations;
-
         //Graf z miastami i sciezkami
         public BenchmarkGraph _CitiesGraph;
 
@@ -78,8 +76,6 @@ namespace AntColonyNamespace
             this._TAU = TAU;
             this._Q = Q;
             this._NumberOfIterations = NumberOfIterations;
-
-            this._SetOfBestSolutionsInCurrentIterations = new SolutionSet();
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(pathToBenchmarkData);
             var lineCounter = 0;
@@ -135,28 +131,28 @@ namespace AntColonyNamespace
             this._BestFoundSolutionYet = null;
 
             this._Lmn = new Ant(this, 0).FindSolutionUsingNearestNeighbourTourAlgorithm();
-            this._InitialPheromoneLevel = this._Q / (this._NumberOfCitiesWithDepot * this._Lmn);
+            this._InitialPheromoneLevel = 1 / (this._NumberOfCitiesWithDepot * this._Lmn);
 
             this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
             this._NumberOfTotalDemand = this._CitiesGraph.GetTotalDemandOfCities();
         }
 
-        //Dodanie mrowki do kolonii
         public void AddAntToTheColony()
         {
             this._Ants.Add(new Ant(this, this._Ants.Count));
         }
 
-        public double GetGiantTourDistance()
+        public double GetGiantTourSolutionDistance()
         {
             if (this._BestFoundSolutionYet != null)
             {
                 return this._BestFoundSolutionYet.GetGiantTourDistance();
             }
-            throw new Exception("No zleee");
+
+            throw new Exception("Nie znaleziono żadnego rozwiązania!!!");
         }
 
-        public double GetOptimalDistance()
+        public double GetOptimalDistanceFromBenchmarkFile()
         {
             return this._OptimalDistance;
         }
@@ -169,21 +165,42 @@ namespace AntColonyNamespace
                 this._Ants.ForEach(ant =>
                 {
                     ant.StartCreatingItinerary();
-                    //ant.ChangeIfNeededBestFoundSolutionSoFar();
+                    ant.UpdateBestFoundSolutionYet();
                 });
+
+                // Console.WriteLine("Graf przed update wszystkie: " + this._CitiesGraph.ToString());
+                // Console.WriteLine();
 
                 this._Ants.ForEach(ant =>
                 {
-                    ant.UpdatePheromonesTrials();
+                    ant.UpdatePheromonesOnVisitedPaths();
+                    //ant.PrintItinerariesAllApart();
                 });
+
+                // Console.WriteLine("Graf po update wszystkie" + this._CitiesGraph.ToString());
+                // this._BestFoundSolutionInCurrentIteration.GetItineraryAllApart();
+                // Console.WriteLine(
+                //     "Sciezka dlugosc:"
+                //         + this._BestFoundSolutionInCurrentIteration.GetGiantTourDistance()
+                // );
+                // Console.WriteLine();
 
                 this.EvaporateAllPathsAndUpdateBestFoundSolution();
 
+                // Console.WriteLine("Graf po akyualizacji najlepsze" + this._CitiesGraph.ToString());
+                // Console.WriteLine();
+
                 this._Ants.ForEach(ant =>
                 {
-                    ant.ChangeIfNeededBestFoundSolutionSoFar();
                     ant.ResetAntForNextItinerary();
                 });
+
+                if (this._BestFoundSolutionYet == null)
+                {
+                    throw new Exception(
+                        "1) Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!"
+                    );
+                }
             }
 
             if (this._BestFoundSolutionYet != null)
@@ -193,42 +210,95 @@ namespace AntColonyNamespace
                     "Najlepsza znaleziona trasa: "
                         + Math.Round(this._BestFoundSolutionYet.GetGiantTourDistance(), 2)
                 );
-                //Console.WriteLine(this.BestFoundSolutionYet.PrintItineraryAllApart());
+                File.AppendAllText(
+                    "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/Solution1",
+                    "Najlepsza znaleziona trasa: "
+                        + Math.Round(this._BestFoundSolutionYet.GetGiantTourDistance(), 2)
+                        + Environment.NewLine
+                );
             }
-
-            //Console.WriteLine("-------------------CITY GRAPH AFTER ALOGRITHM------------------");
-            //Console.WriteLine(this._CitiesGraph.ToString());
+            else
+            {
+                throw new Exception("Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!");
+            }
         }
 
         //Glowna metoda rozpoczynajaca szukanie rozwiazania rownolegle
         public void StartSolvingProblemParallel()
         {
-            for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
-            {
-                var listOfThreads = new List<Thread>();
-                foreach (var ant in this._Ants)
-                {
-                    var newThread = new Thread(() => DelegateToSolveProblemParallel(ant));
-                    listOfThreads.Add(newThread);
-                }
+            // for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
+            // {
+            //     var listOfThreads = new List<Thread>();
+            //     foreach (var ant in this._Ants)
+            //     {
+            //         var newThread = new Thread(() => DelegateToSolveProblemParallel(ant));
+            //         listOfThreads.Add(newThread);
+            //     }
 
-                listOfThreads.ForEach(thread => thread.Start());
-                listOfThreads.ForEach(thread => thread.Join());
-                listOfThreads.ForEach(thread => Console.WriteLine(thread.IsAlive));
+            //     listOfThreads.ForEach(thread => thread.Start());
+            //     listOfThreads.ForEach(thread => thread.Join());
+            //     //listOfThreads.ForEach(thread => Console.WriteLine(thread.IsAlive));
 
-                this._Ants.ForEach(ant =>
-                {
-                    ant.UpdatePheromonesTrials();
-                });
+            //     this._Ants.ForEach(ant =>
+            //     {
+            //         ant.UpdateBestFoundSolutionYet();
+            //     });
 
-                this.EvaporateAllPathsAndUpdateBestFoundSolution();
+            //     if (this._BestFoundSolutionInCurrentIteration == null)
+            //     {
+            //         throw new Exception(
+            //             "Niepoprawnie znalezione najlepsze rozwiązanie w iteracji!!!"
+            //         );
+            //     }
 
-                this._Ants.ForEach(ant =>
-                {
-                    ant.ChangeIfNeededBestFoundSolutionSoFar();
-                    ant.ResetAntForNextItinerary();
-                });
-            }
+            //     this._Ants.ForEach(ant =>
+            //     {
+            //         ant.UpdatePheromonesOnVisitedPaths();
+            //     });
+
+            //     this.EvaporateAllPathsAndUpdateBestFoundSolution();
+
+            //     if (
+            //         this._BestFoundSolutionYet == null
+            //         || this._BestFoundSolutionYet.GetGiantTourDistance()
+            //             > this._BestFoundSolutionInCurrentIteration.GetGiantTourDistance()
+            //     )
+            //     {
+            //         this._BestFoundSolutionYet = (GiantTourSolution)
+            //             this._BestFoundSolutionInCurrentIteration.Clone();
+            //     }
+
+            //     this._Ants.ForEach(ant =>
+            //     {
+            //         ant.ResetAntForNextItinerary();
+            //     });
+
+            //     if (this._BestFoundSolutionYet == null)
+            //     {
+            //         throw new Exception(
+            //             "1) Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!"
+            //         );
+            //     }
+            // }
+
+            // if (this._BestFoundSolutionYet != null)
+            // {
+            //     Console.WriteLine("-------------------BEST SOLUTION------------------");
+            //     Console.WriteLine(
+            //         "Najlepsza znaleziona trasa: "
+            //             + Math.Round(this._BestFoundSolutionYet.GetGiantTourDistance(), 2)
+            //     );
+            //     // File.AppendAllText(
+            //     //     "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/Solution1",
+            //     //     "Najlepsza znaleziona trasa: "
+            //     //         + Math.Round(this._BestFoundSolutionYet.GetGiantTourDistance(), 2)
+            //     //         + Environment.NewLine
+            //     // );
+            // }
+            // else
+            // {
+            //     throw new Exception("Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!");
+            // }
         }
 
         private void DelegateToSolveProblemParallel(Ant ant)
@@ -239,52 +309,27 @@ namespace AntColonyNamespace
         //Aktualizacja najlepiej znaleznionej trasy i wyparowanie feromonow ze wszystkich krawedzi
         private void EvaporateAllPathsAndUpdateBestFoundSolution()
         {
-            if (this._BestFoundSolutionYet != null)
+            foreach (var tuple in this._CitiesGraph)
             {
-                foreach (var tuple in this._CitiesGraph)
+                foreach (var path in tuple._Edges)
                 {
-                    foreach (var edge in tuple._Edges)
+                    if (tuple._City.Index < path.DestinationCity)
                     {
-                        edge.EdgeToDestCity.PheromoneLevel *= (1 - this._TAU);
-
-                        // var addedValueForBestTours =
-                        //     (
-                        //         (
-                        //             this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
-                        //             - this._BestFoundSolutionYet.GetGiantTourDistance()
-                        //         )
-                        //         + (
-                        //             this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance()
-                        //             - this._SetOfBestSolutionsInCurrentIterations.GetBestSolutionDistance()
-                        //         )
-                        //     )
-                        //     / this._SetOfBestSolutionsInCurrentIterations.GetThirdBestSolutionDistance();
-
-                        if (this._BestFoundSolutionYet.IsEdgeInSolution(edge.EdgeToDestCity))
+                        if (this._BestFoundSolutionYet != null)
                         {
-                            edge.EdgeToDestCity.PheromoneLevel +=
-                                this._TAU
-                                * (this._Q / this._BestFoundSolutionYet.GetGiantTourDistance());
-                        }
-
-                        if (
-                            this._SetOfBestSolutionsInCurrentIterations.IsEdgeInBestSolutionSet(
-                                edge.EdgeToDestCity
-                            )
-                        )
-                        {
-                            edge.EdgeToDestCity.PheromoneLevel +=
-                                this._TAU
-                                * (this._Q / this._BestFoundSolutionYet.GetGiantTourDistance());
+                            if (this._BestFoundSolutionYet.IsEdgeInSolution(path.EdgeToDestCity))
+                            {
+                                path.EdgeToDestCity.PheromoneLevel =
+                                    this._TAU
+                                    * (1 / this._BestFoundSolutionYet.GetGiantTourDistance());
+                            }
                         }
                     }
                 }
             }
-
-            this._SetOfBestSolutionsInCurrentIterations.ResetSolutionSet();
         }
 
-        public GiantTourSolution GetGiantTourSolution()
+        public GiantTourSolution GetGiantTourSolution() //SCHOWAC Z INTERFEJSU
         {
             if (this._BestFoundSolutionYet != null)
             {
@@ -322,21 +367,21 @@ namespace AntColonyNamespace
                     this._AntColony._BETA
                 );
                 this._CurrentCityIndex = 0;
+                this._CurrentCapicityOfTruck = 0;
 
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
-
-                this._CurrentCapicityOfTruck = 0;
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
                 this._GiantSolution = new GiantTourSolution();
 
                 this._CityDemandsToServe = this._AntColony._CitiesGraph.GetTotalDemandOfCities();
             }
 
+            //------------------------NearestNeighbourTourAlgorithm------------------------
             public double FindSolutionUsingNearestNeighbourTourAlgorithm()
             {
                 while (!this.AreAllCitiesVisited() || !this.IsAntInDepot())
                 {
-                    this.MoveUpNNTA();
+                    this.MoveUpInNearestNeighbourTourAlgorithm();
                 }
 
                 while (this._NumberOfRemainingTrucks != 0)
@@ -349,7 +394,7 @@ namespace AntColonyNamespace
                 return this._GiantSolution.GetGiantTourDistance();
             }
 
-            private void MoveUpNNTA()
+            private void MoveUpInNearestNeighbourTourAlgorithm()
             {
                 var edgesFromCity = this._AntColony._CitiesGraph.GetEdgesFromCity(
                     this._CurrentCityIndex
@@ -404,9 +449,11 @@ namespace AntColonyNamespace
                 }
                 else
                 {
-                    throw new Exception("Zle znaleziona kolejna krawedz!!!");
+                    throw new Exception("Błąd w znalezieniu kolejnej ścieżki w NNTA!!!");
                 }
             }
+
+            //-----------------------------------------------------------------------------
 
             public void StartCreatingItinerary()
             {
@@ -421,10 +468,6 @@ namespace AntColonyNamespace
                     this._GiantSolution.AddUsedCapacityOfTruck(0);
                     --this._NumberOfRemainingTrucks;
                 }
-
-                this._AntColony._SetOfBestSolutionsInCurrentIterations.AddSolution(
-                    this._GiantSolution
-                );
             }
 
             private void ReturnToDepot(EdgeWithDestinationCity pickedPath)
@@ -544,18 +587,23 @@ namespace AntColonyNamespace
                 );
             }
 
-            //Odparowywanie feromonow oraz pozostawienie czesci na sciezkach
-            public void UpdatePheromonesTrials()
+            public void UpdatePheromonesOnVisitedPaths()
             {
                 foreach (var tuple in this._AntColony._CitiesGraph)
                 {
                     foreach (var path in tuple._Edges)
                     {
-                        if (this._GiantSolution.IsEdgeInSolution(path.EdgeToDestCity))
+                        if (tuple._City.Index < path.DestinationCity)
                         {
-                            //-------DO ZMIANY ZAPEWNE-------------
-                            path.EdgeToDestCity.PheromoneLevel +=
-                                this._AntColony._TAU * this._AntColony._InitialPheromoneLevel;
+                            path.EdgeToDestCity.PheromoneLevel *= (1 - this._AntColony._TAU);
+                            if (this._GiantSolution.IsEdgeInSolution(path.EdgeToDestCity))
+                            {
+                                path.EdgeToDestCity.PheromoneLevel += (
+                                    this._AntColony._TAU
+                                    * //(1 / this._GiantSolution.GetGiantTourDistance())
+                                    this._AntColony._InitialPheromoneLevel
+                                );
+                            }
                         }
                     }
                 }
@@ -582,13 +630,12 @@ namespace AntColonyNamespace
                 return this._GiantSolution.IsCityVisited(cityIndex);
             }
 
-            public void ChangeIfNeededBestFoundSolutionSoFar()
+            public void UpdateBestFoundSolutionYet()
             {
                 if (
-                    this._AntColony._BestFoundSolutionYet != null
-                        && this._AntColony._BestFoundSolutionYet.GetGiantTourDistance()
-                            > this._GiantSolution.GetGiantTourDistance()
-                    || this._AntColony._BestFoundSolutionYet == null
+                    this._AntColony._BestFoundSolutionYet == null
+                    || this._AntColony._BestFoundSolutionYet.GetGiantTourDistance()
+                        > this._GiantSolution.GetGiantTourDistance()
                 )
                 {
                     this._AntColony._BestFoundSolutionYet = (GiantTourSolution)
@@ -629,24 +676,16 @@ namespace AntColonyNamespace
                 return this._CurrentCityIndex == 0;
             }
 
-            public void PrintGiantPath()
-            {
-                Console.WriteLine("Index mrowki: " + this._AntIndex);
-                Console.WriteLine(this._GiantSolution.ToString());
-                Console.WriteLine("------------");
-            }
-
             public void PrintItinerariesAllApart()
             {
-                Console.WriteLine("----------||----------");
-                Console.WriteLine();
+                Console.WriteLine("----------||----------" + Environment.NewLine);
                 Console.WriteLine("Indeks mrówki: " + this._AntIndex);
                 Console.WriteLine(this._GiantSolution.ToString());
                 Console.WriteLine(
                     "Wartość funkcji celu: "
-                        + Math.Round(this._GiantSolution.GetGiantTourDistance(), 2)
+                        + Math.Round(this._GiantSolution.GetGiantTourDistance(), 3)
+                        + Environment.NewLine
                 );
-                Console.WriteLine();
             }
         }
     }
