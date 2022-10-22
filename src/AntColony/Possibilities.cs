@@ -4,9 +4,9 @@ namespace AntColonyNamespace
 {
     internal class Possibilities
     {
-        private double _ALFA;
+        private readonly double _ALFA;
 
-        private double _BETA;
+        private readonly double _BETA;
 
         private double _Denominator;
 

@@ -34,7 +34,6 @@ namespace AntColonyNamespace
                                         2
                                     )
                             ),
-                            //Wstepnie, sciezki nie maja feromonow
                             0
                         )
                     );
@@ -48,7 +47,10 @@ namespace AntColonyNamespace
             {
                 foreach (var path in tuple._Edges)
                 {
-                    path.EdgeToDestCity.PheromoneLevel = initialPheromoneLevel;
+                    if (tuple._City.Index < path.DestinationCity)
+                    {
+                        path.EdgeToDestCity.PheromoneLevel = initialPheromoneLevel;
+                    }
                 }
             }
         }

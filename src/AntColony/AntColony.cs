@@ -28,6 +28,8 @@ namespace AntColonyNamespace
 
         private readonly double _Q;
 
+        private readonly double _ETA;
+
         /*Wspolczynnik definiujacy przy jakim stosunku pozostalych pojemnosci ciezarowek
          i pozostalych rzadan ciezarowka moze wrocic wczesniej do depotu*/
         private readonly double _LimitOfBaseReturning = 0.9;
@@ -63,6 +65,7 @@ namespace AntColonyNamespace
             double BETA,
             double q0,
             double TAU,
+            double ETA,
             double Q,
             int NumberOfAnts,
             int NumberOfIterations,
@@ -74,6 +77,7 @@ namespace AntColonyNamespace
             this._BETA = BETA;
             this._q0 = q0;
             this._TAU = TAU;
+            this._ETA = ETA;
             this._Q = Q;
             this._NumberOfIterations = NumberOfIterations;
 
@@ -157,8 +161,7 @@ namespace AntColonyNamespace
             return this._OptimalDistance;
         }
 
-        //Glowna metoda rozpoczynajaca szukanie rozwiazania sekwencyjnie
-        public void StartSolvingProblemInSeries()
+        public GiantTourSolution StartSolvingProblemInSeries()
         {
             for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
             {
@@ -198,32 +201,25 @@ namespace AntColonyNamespace
                 if (this._BestFoundSolutionYet == null)
                 {
                     throw new Exception(
-                        "1) Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!"
+                        "Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!"
                     );
                 }
             }
 
-            if (this._BestFoundSolutionYet != null)
-            {
-                Console.WriteLine("-------------------BEST SOLUTION------------------");
-                Console.WriteLine(
-                    "Najlepsza znaleziona trasa: "
-                        + Math.Round(this._BestFoundSolutionYet.GetGiantTourDistance(), 2)
-                );
-                File.AppendAllText(
-                    "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/Solution1",
-                    "Najlepsza znaleziona trasa: "
-                        + Math.Round(this._BestFoundSolutionYet.GetGiantTourDistance(), 2)
-                        + Environment.NewLine
-                );
-            }
-            else
+            if (this._BestFoundSolutionYet == null)
             {
                 throw new Exception("Niepoprawnie znalezione najlepsze rozwiązanie do tej pory!!!");
             }
+
+            return this._BestFoundSolutionYet;
         }
 
-        //Glowna metoda rozpoczynajaca szukanie rozwiazania rownolegle
+        public void ResetColonyForNextRun()
+        {
+            this._BestFoundSolutionYet = null;
+            this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
+        }
+
         public void StartSolvingProblemParallel()
         {
             // for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
@@ -306,7 +302,6 @@ namespace AntColonyNamespace
             ant.StartCreatingItinerary();
         }
 
-        //Aktualizacja najlepiej znaleznionej trasy i wyparowanie feromonow ze wszystkich krawedzi
         private void EvaporateAllPathsAndUpdateBestFoundSolution()
         {
             foreach (var tuple in this._CitiesGraph)
@@ -317,25 +312,17 @@ namespace AntColonyNamespace
                     {
                         if (this._BestFoundSolutionYet != null)
                         {
+                            path.EdgeToDestCity.PheromoneLevel *= (1 - this._TAU);
                             if (this._BestFoundSolutionYet.IsEdgeInSolution(path.EdgeToDestCity))
                             {
                                 path.EdgeToDestCity.PheromoneLevel =
-                                    this._TAU
+                                    this._ETA
                                     * (1 / this._BestFoundSolutionYet.GetGiantTourDistance());
                             }
                         }
                     }
                 }
             }
-        }
-
-        public GiantTourSolution GetGiantTourSolution() //SCHOWAC Z INTERFEJSU
-        {
-            if (this._BestFoundSolutionYet != null)
-            {
-                return this._BestFoundSolutionYet;
-            }
-            throw new Exception("Kolejny blad");
         }
 
         public class Ant
@@ -595,14 +582,15 @@ namespace AntColonyNamespace
                     {
                         if (tuple._City.Index < path.DestinationCity)
                         {
-                            path.EdgeToDestCity.PheromoneLevel *= (1 - this._AntColony._TAU);
                             if (this._GiantSolution.IsEdgeInSolution(path.EdgeToDestCity))
                             {
                                 path.EdgeToDestCity.PheromoneLevel += (
                                     this._AntColony._TAU
-                                    * //(1 / this._GiantSolution.GetGiantTourDistance())
+                                    *
+                                    //* (1 / this._GiantSolution.GetGiantTourDistance())
                                     this._AntColony._InitialPheromoneLevel
                                 );
+                                //Console.WriteLine(c - path.EdgeToDestCity.PheromoneLevel);
                             }
                         }
                     }
