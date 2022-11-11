@@ -33,6 +33,7 @@ namespace AntColonyNamespace
             double beta,
             double q0,
             double tau,
+            double eta,
             double Q,
             int ants,
             int iterations
@@ -58,6 +59,9 @@ namespace AntColonyNamespace
                     + Environment.NewLine
                     + "Tau: "
                     + tau
+                    + Environment.NewLine
+                    + "Eta: "
+                    + eta
                     + Environment.NewLine
                     + "Q: "
                     + Q
