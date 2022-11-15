@@ -18,7 +18,7 @@ namespace AntColonyNamespace
 
         private readonly double _InitialPheromoneLevel;
 
-        private readonly double _Lmn;
+        private readonly double _Lnn;
 
         private readonly double _Q;
 
@@ -125,8 +125,8 @@ namespace AntColonyNamespace
 
             this._BestFoundSolutionYet = null;
 
-            this._Lmn = new Ant(this, 0).FindSolutionUsingNearestNeighbourTourAlgorithm();
-            this._InitialPheromoneLevel = 1 / (this._NumberOfCitiesWithDepot * this._Lmn);
+            this._Lnn = new Ant(this, 0).FindSolutionUsingNearestNeighbourTourAlgorithm();
+            this._InitialPheromoneLevel = 1 / (this._NumberOfCitiesWithDepot * this._Lnn);
 
             this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
             this._NumberOfTotalDemand = this._CitiesGraph.GetTotalDemandOfCities();
@@ -174,7 +174,7 @@ namespace AntColonyNamespace
                 this._Ants.ForEach(ant =>
                 {
                     ant.UpdateBestFoundSolutionYet();
-                    ant.UpdatePheromonesOnVisitedPaths();
+                    //ant.UpdatePheromonesOnVisitedPaths();
                     //ant.PrintItinerariesAllApart();
                 });
 
@@ -335,12 +335,16 @@ namespace AntColonyNamespace
                     {
                         if (this._BestFoundSolutionYet != null)
                         {
-                            path.EdgeToDestCity.PheromoneLevel *= (1 - this._TAU);
+                            //path.EdgeToDestCity.PheromoneLevel *= (1 - this._TAU);
                             if (this._BestFoundSolutionYet.IsEdgeInSolution(path.EdgeToDestCity))
                             {
-                                path.EdgeToDestCity.PheromoneLevel +=
-                                    this._ETA
-                                    * (this._Q / this._BestFoundSolutionYet.GetGiantTourDistance());
+                                path.EdgeToDestCity.PheromoneLevel =
+                                    (1 - this._ETA) * path.EdgeToDestCity.PheromoneLevel
+                                    + this._ETA
+                                        * (
+                                            this._Q
+                                            / this._BestFoundSolutionYet.GetGiantTourDistance()
+                                        );
                             }
                         }
                     }
@@ -489,9 +493,12 @@ namespace AntColonyNamespace
                 );
 
                 this._GiantSolution.AddUsedCapacityOfTruck(this._CurrentCapicityOfTruck);
+
                 this._CurrentCapicityOfTruck = 0;
                 this._CurrentCityIndex = pickedPath.DestinationCity;
                 --this._NumberOfRemainingTrucks;
+
+                this.UpdateLocalPheromone(pickedPath);
 
                 this._Possibilities.RestartAllValues();
             }
@@ -511,6 +518,8 @@ namespace AntColonyNamespace
                 this._CurrentCapicityOfTruck += visitedCityDemand;
                 this._CurrentCityIndex = pickedPath.DestinationCity;
                 --this._NumberOfUnvisitedCustomers;
+
+                this.UpdateLocalPheromone(pickedPath);
 
                 this._Possibilities.RestartAllValues();
             }
@@ -595,6 +604,13 @@ namespace AntColonyNamespace
                 throw new Exception(
                     "Niepoprawnie wybrana sciezka na podstawie prawdopodobienstw!!!"
                 );
+            }
+
+            private void UpdateLocalPheromone(EdgeWithDestinationCity pickedPath)
+            {
+                pickedPath.EdgeToDestCity.PheromoneLevel =
+                    (1 - this._AntColony._TAU) * pickedPath.EdgeToDestCity.PheromoneLevel
+                    + this._AntColony._TAU * this._AntColony._InitialPheromoneLevel;
             }
 
             public void UpdatePheromonesOnVisitedPaths()
