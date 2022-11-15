@@ -154,6 +154,7 @@ namespace AntColonyNamespace
 
         public GiantTourSolution StartSolvingProblemInSeries()
         {
+            //Console.WriteLine(this._CitiesGraph.ToString());
             var timeWatch = new Stopwatch();
             var timeWatch2 = new Stopwatch();
 
@@ -205,6 +206,7 @@ namespace AntColonyNamespace
 
                 timeWatch2.Stop();
             }
+            Console.WriteLine(this._CitiesGraph.ToString());
 
             Console.WriteLine(
                 "Stop(szukanie): " + timeWatch.Elapsed.Minutes + ":" + timeWatch.Elapsed.Seconds
@@ -277,7 +279,7 @@ namespace AntColonyNamespace
                 {
                     //ant.PrintItinerariesAllApart();
                     ant.UpdateBestFoundSolutionYet();
-                    ant.UpdatePheromonesOnVisitedPaths();
+                    //ant.UpdatePheromonesOnVisitedPaths();
                 });
 
                 this.EvaporateAllPathsAndUpdateBestFoundSolution();
@@ -608,9 +610,12 @@ namespace AntColonyNamespace
 
             private void UpdateLocalPheromone(EdgeWithDestinationCity pickedPath)
             {
-                pickedPath.EdgeToDestCity.PheromoneLevel =
-                    (1 - this._AntColony._TAU) * pickedPath.EdgeToDestCity.PheromoneLevel
-                    + this._AntColony._TAU * this._AntColony._InitialPheromoneLevel;
+                lock (pickedPath.EdgeToDestCity)
+                {
+                    pickedPath.EdgeToDestCity.PheromoneLevel =
+                        (1 - this._AntColony._TAU) * pickedPath.EdgeToDestCity.PheromoneLevel
+                        + this._AntColony._TAU * this._AntColony._InitialPheromoneLevel;
+                }
             }
 
             public void UpdatePheromonesOnVisitedPaths()

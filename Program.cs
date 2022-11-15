@@ -35,16 +35,16 @@ listOfCoefs.Add(_Q, coefQ);
 listOfCoefs.Add(_ants, coefAnts);
 listOfCoefs.Add(_iterations, coefIterat);
 
-foreach (var coef in coefQ0)
+foreach (var coef in coefEta)
 {
     double alpha = 2;
     double beta = 2;
     double q0 = 0.5;
-    double tau = 0.2;
+    double tau = 0.3;
     double eta = 0.2;
     double Q = 1;
     int ants = 20;
-    int iterations = 4000;
+    int iterations = 2000;
 
     if (numberOfThreads > ants)
     {
@@ -82,8 +82,8 @@ foreach (var coef in coefQ0)
             var timeWatch = new Stopwatch();
 
             timeWatch.Start();
-            var solution = antColony.StartSolvingProblemInSeries();
-            //var solution = antColony.StartSolvingProblemParallel();
+            //var solution = antColony.StartSolvingProblemInSeries();
+            var solution = antColony.StartSolvingProblemParallel();
             timeWatch.Stop();
 
             if (
