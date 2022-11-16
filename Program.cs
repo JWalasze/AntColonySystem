@@ -10,11 +10,11 @@ var coefQ0 = new List<double> { 0.2, 0.4, 0.5, 0.7, 0.75, 0.8, 0.9, 0.95 };
 var coefAnts = new List<double> { 5, 10, 20, 30, 40 };
 var coefIterat = new List<double> { 5, 50, 100, 500, 1000, 5000, 6000, 7000 };
 
-var numberOfProgramIterations = 5;
+var numberOfProgramIterations = 3;
 var numberOfThreads = 3;
 var statisticSolution = "Solution.txt";
 var pythonSolution = "SolutionP.txt";
-var benchmarkFileName = "A-n39-k5.txt";
+var benchmarkFileName = "E-n51-k5.txt";
 
 string _alpha = "Alpha";
 string _beta = "Beta";
@@ -35,9 +35,9 @@ listOfCoefs.Add(_Q, coefQ);
 listOfCoefs.Add(_ants, coefAnts);
 listOfCoefs.Add(_iterations, coefIterat);
 
-foreach (var coef in coefEta)
+foreach (var coef in coefAlpha)
 {
-    double alpha = 2;
+    double alpha = 3;
     double beta = 2;
     double q0 = 0.5;
     double tau = 0.3;
@@ -45,7 +45,7 @@ foreach (var coef in coefEta)
     double Q = 1;
     int stagnation = 100;
     int ants = 20;
-    int iterations = 5000;
+    int iterations = 4000;
 
     if (numberOfThreads > ants)
     {

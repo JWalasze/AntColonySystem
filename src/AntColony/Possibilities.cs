@@ -30,6 +30,10 @@ namespace AntColonyNamespace
                 Math.Pow(pickedPath.EdgeToDestCity.PheromoneLevel, this._ALFA)
                 * Math.Pow(1 / pickedPath.EdgeToDestCity.Distance, this._BETA);
             this._Nominators.Add(pickedPath, countedValue);
+            if (Double.IsInfinity(countedValue))
+            {
+                Console.WriteLine(pickedPath.EdgeToDestCity.Distance);
+            }
             this._Denominator += countedValue;
         }
 

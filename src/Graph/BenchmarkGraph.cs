@@ -18,6 +18,22 @@ namespace AntColonyNamespace
                     ++currentCityEnd
                 )
                 {
+                    var c = Math.Sqrt(
+                        Math.Pow(
+                            this.GetCity(currentCityEnd).Latitude
+                                - this.GetCity(currentCityStart).Latitude,
+                            2
+                        )
+                            + Math.Pow(
+                                this.GetCity(currentCityEnd).Longitude
+                                    - this.GetCity(currentCityStart).Longitude,
+                                2
+                            )
+                    );
+                    if (c == 0)
+                    {
+                        Console.WriteLine();
+                    }
                     this.AddUndirectedEdge(
                         currentCityStart,
                         currentCityEnd,

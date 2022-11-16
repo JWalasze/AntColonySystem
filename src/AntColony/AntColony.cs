@@ -124,6 +124,8 @@ namespace AntColonyNamespace
 
             this._CitiesGraph.CreateCompletedGraphBasedOnCityCoord();
 
+            //Console.WriteLine(this._CitiesGraph.ToString());
+
             this._Ants = new List<Ant>(NumberOfAnts);
             for (int i = 0; i < NumberOfAnts; ++i)
             {
@@ -287,6 +289,7 @@ namespace AntColonyNamespace
                     lastAntForThread += numberOfAntsForOneThread;
                 }
 
+                //Console.Write("_");
                 timeWatch.Start();
                 listOfThreads.ForEach(thread => thread.Start());
                 listOfThreads.ForEach(thread => thread.Join());
@@ -294,13 +297,19 @@ namespace AntColonyNamespace
 
                 timeWatch2.Start();
 
+                // Console.Write(",");
                 this._Ants.ForEach(ant =>
                 {
+                    if (ant.IsSolutionCorrect == true)
+                    {
+                        ant.UpdateBestFoundSolutionYet();
+                    }
                     //ant.PrintItinerariesAllApart();
-                    ant.UpdateBestFoundSolutionYet();
+
                     //ant.UpdatePheromonesOnVisitedPaths();
                 });
 
+                //Console.Write("/");
                 this.EvaporateAllPathsAndUpdateBestFoundSolution();
 
                 this._Ants.ForEach(ant =>
@@ -308,6 +317,7 @@ namespace AntColonyNamespace
                     ant.ResetAntForNextItinerary();
                 });
 
+                //Console.Write("]");
                 this.PerformStagnationOperation();
 
                 if (this._BestFoundSolutionYet == null)
@@ -318,6 +328,7 @@ namespace AntColonyNamespace
                 }
 
                 timeWatch2.Stop();
+                //Console.Write(".");
             }
 
             Console.WriteLine(
@@ -344,6 +355,7 @@ namespace AntColonyNamespace
             var ant = firstAntForThread;
             for (; ant <= lastAntForThread; ++ant)
             {
+                //Console.Write("0");
                 this._Ants[ant].StartCreatingItinerary();
             }
         }
@@ -395,6 +407,8 @@ namespace AntColonyNamespace
 
             private AntColony _AntColony;
 
+            public bool IsSolutionCorrect;
+
             public Ant(AntColony AntColony, int Index)
             {
                 this._AntIndex = Index;
@@ -405,6 +419,8 @@ namespace AntColonyNamespace
                 );
                 this._CurrentCityIndex = 0;
                 this._CurrentCapicityOfTruck = 0;
+
+                this.IsSolutionCorrect = false;
 
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
@@ -421,12 +437,12 @@ namespace AntColonyNamespace
                     this.MoveUpInNearestNeighbourTourAlgorithm();
                 }
 
-                while (this._NumberOfRemainingTrucks != 0)
-                {
-                    this._GiantSolution.AddNoDepotLivingPathToSolution();
-                    this._GiantSolution.AddUsedCapacityOfTruck(0);
-                    --this._NumberOfRemainingTrucks;
-                }
+                // while (this._NumberOfRemainingTrucks != 0)
+                // {
+                //     this._GiantSolution.AddNoDepotLivingPathToSolution();
+                //     this._GiantSolution.AddUsedCapacityOfTruck(0);
+                //     --this._NumberOfRemainingTrucks;
+                // }
 
                 return this._GiantSolution.GetGiantTourDistance();
             }
@@ -442,17 +458,7 @@ namespace AntColonyNamespace
                 {
                     if (possiblePath.DestinationCity == 0)
                     {
-                        if (this.CanAntReturnToDepotEarlier())
-                        {
-                            if (
-                                theShortestPath == null
-                                || theShortestPath.EdgeToDestCity.Distance
-                                    > possiblePath.EdgeToDestCity.Distance
-                            )
-                            {
-                                theShortestPath = possiblePath;
-                            }
-                        }
+                        theShortestPath = possiblePath;
                     }
                     else
                     {
@@ -499,11 +505,18 @@ namespace AntColonyNamespace
                     this.MoveUp();
                 }
 
-                while (this._NumberOfRemainingTrucks != 0)
+                if (this._NumberOfRemainingTrucks < 0)
                 {
-                    this._GiantSolution.AddNoDepotLivingPathToSolution();
-                    this._GiantSolution.AddUsedCapacityOfTruck(0);
-                    --this._NumberOfRemainingTrucks;
+                    this.IsSolutionCorrect = false;
+                    //Console.Write("0");
+                    // this._GiantSolution.AddNoDepotLivingPathToSolution();
+                    // this._GiantSolution.AddUsedCapacityOfTruck(0);
+                    // --this._NumberOfRemainingTrucks;
+                }
+                else
+                {
+                    this.IsSolutionCorrect = true;
+                    //Console.Write("1");
                 }
             }
 
@@ -570,6 +583,7 @@ namespace AntColonyNamespace
                         )
                         {
                             this._Possibilities.CountNominatorAndUpdateDenominator(possiblePath);
+                            //Console.WriteLine();
                         }
                     }
                 }
@@ -670,6 +684,8 @@ namespace AntColonyNamespace
                 this._NumberOfRemainingTrucks = this._AntColony._NumberOfTrucks;
                 this._NumberOfUnvisitedCustomers = this._AntColony._NumberOfCitiesWithDepot - 1;
                 this._GiantSolution.ResetSolution();
+
+                this.IsSolutionCorrect = true;
             }
 
             public double GetGiantTourDistance()
