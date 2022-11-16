@@ -22,8 +22,7 @@ namespace AntColonyNamespace
             this.FoundDistancesInSeries = new List<double>(NumberOfSolutionsInSeries);
             this.NumberOfSolutionsInSeries = numberOfSOlutionsInSeries;
             this.SoutionFileName =
-                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/Solutions/"
-                + solutionFileName;
+                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\Solutions\\" + solutionFileName;
             this.OptimalSolutionDistance = optimalSolutionDistance;
             this.BenchmarkFileName = benchmarkFileName;
         }

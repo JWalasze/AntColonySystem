@@ -46,6 +46,10 @@ namespace AntColonyNamespace
 
         public BenchmarkGraph _CitiesGraph;
 
+        public int _StagnationCounter;
+
+        public int _StagnationnParameter;
+
         public AntColony(
             double ALFA,
             double BETA,
@@ -53,6 +57,7 @@ namespace AntColonyNamespace
             double TAU,
             double ETA,
             double Q,
+            int StagnationCounter,
             int NumberOfAnts,
             int NumberOfIterations,
             int NumberOfThreads,
@@ -66,12 +71,14 @@ namespace AntColonyNamespace
             this._TAU = TAU;
             this._ETA = ETA;
             this._Q = Q;
+            this._StagnationnParameter = StagnationCounter;
             this._NumberOfIterations = NumberOfIterations;
             this._NumberOfThreads = NumberOfThreads;
 
+            this._StagnationCounter = 0;
+
             var allBenchmarkLines = System.IO.File.ReadAllLines(
-                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/"
-                    + pathToBenchmarkData
+                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\BenchmarkData\\" + pathToBenchmarkData
             );
             var lineCounter = 0;
             foreach (var line in allBenchmarkLines)
@@ -204,9 +211,11 @@ namespace AntColonyNamespace
                     );
                 }
 
+                this.PerformStagnationOperation();
+
                 timeWatch2.Stop();
             }
-            Console.WriteLine(this._CitiesGraph.ToString());
+            //Console.WriteLine(this._CitiesGraph.ToString());
 
             Console.WriteLine(
                 "Stop(szukanie): " + timeWatch.Elapsed.Minutes + ":" + timeWatch.Elapsed.Seconds
@@ -230,6 +239,16 @@ namespace AntColonyNamespace
         {
             this._BestFoundSolutionYet = null;
             this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
+        }
+
+        private void PerformStagnationOperation()
+        {
+            if (this._StagnationCounter == this._StagnationnParameter)
+            {
+                //Console.WriteLine("Jest stagnacja - jest zerowane");
+                this._StagnationCounter = 0;
+                this._CitiesGraph.SetInitialPheromoneValues(this._InitialPheromoneLevel);
+            }
         }
 
         public GiantTourSolution StartSolvingProblemParallel()
@@ -288,6 +307,8 @@ namespace AntColonyNamespace
                 {
                     ant.ResetAntForNextItinerary();
                 });
+
+                this.PerformStagnationOperation();
 
                 if (this._BestFoundSolutionYet == null)
                 {
@@ -671,7 +692,9 @@ namespace AntColonyNamespace
                 {
                     this._AntColony._BestFoundSolutionYet = (GiantTourSolution)
                         this._GiantSolution.Clone();
+                    this._AntColony._StagnationCounter = 0;
                 }
+                ++this._AntColony._StagnationCounter;
             }
 
             private bool CanAntMoveToNextCity(int cityIndex)

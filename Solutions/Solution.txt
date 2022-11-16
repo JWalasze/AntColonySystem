@@ -38629,3 +38629,1650 @@ Maszruta 5
 Maszruta 6
 0 -> 6 -> 1 -> 11 -> 0 | zapelnienie tira: 55
 
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 863,897
+Czas trwania: 0:16:720
+Błąd względny dla optymalnego rozwiązania: 3,9586882879769973
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 27 -> 10 -> 16 -> 4 -> 19 -> 33 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 30 -> 20 -> 32 -> 18 -> 34 -> 22 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 94
+Maszruta 4
+0 -> 24 -> 37 -> 31 -> 14 -> 35 -> 25 -> 2 -> 8 -> 7 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 26 -> 5 -> 29 -> 28 -> 9 -> 12 -> 38 -> 3 -> 0 | zapelnienie tira: 91
+Maszruta 6
+0 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 55
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 860,602
+Czas trwania: 0:17:504
+Błąd względny dla optymalnego rozwiązania: 3,562262744574234
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 21 -> 18 -> 22 -> 34 -> 27 -> 10 -> 32 -> 20 -> 0 | zapelnienie tira: 84
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 13 -> 15 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 2 -> 0 | zapelnienie tira: 84
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 33 -> 19 -> 4 -> 16 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 894,632
+Czas trwania: 0:16:268
+Błąd względny dla optymalnego rozwiązania: 7,6572538821866125
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 32 -> 18 -> 27 -> 10 -> 16 -> 4 -> 0 | zapelnienie tira: 99
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 34 -> 22 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 20 -> 7 -> 2 -> 8 -> 19 -> 33 -> 25 -> 35 -> 14 -> 0 | zapelnienie tira: 97
+Maszruta 6
+0 -> 3 -> 12 -> 38 -> 31 -> 37 -> 30 -> 0 | zapelnienie tira: 69
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 848,106
+Czas trwania: 0:16:64
+Błąd względny dla optymalnego rozwiązania: 2,058443593211938
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 2
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 20 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 99
+Maszruta 4
+0 -> 12 -> 38 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 7 -> 8 -> 2 -> 4 -> 16 -> 10 -> 32 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 11 -> 6 -> 0 | zapelnienie tira: 37
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 850,482
+Czas trwania: 0:17:188
+Błąd względny dla optymalnego rozwiązania: 2,3444412106015418
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 5 -> 9 -> 28 -> 29 -> 12 -> 38 -> 3 -> 24 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 20 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 99
+Maszruta 4
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+Maszruta 5
+0 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 2 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 32 -> 10 -> 16 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 82
+
+Średnia z serii: 863,5437711122324
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 877,267
+Czas trwania: 0:18:133
+Błąd względny dla optymalnego rozwiązania: 5,567680356452887
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 26 -> 5 -> 29 -> 28 -> 9 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 2
+0 -> 15 -> 30 -> 13 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 20 -> 7 -> 8 -> 33 -> 19 -> 4 -> 16 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 32 -> 10 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 97
+Maszruta 5
+0 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 2 -> 14 -> 0 | zapelnienie tira: 84
+Maszruta 6
+0 -> 6 -> 1 -> 11 -> 0 | zapelnienie tira: 55
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 856,894
+Czas trwania: 0:15:789
+Błąd względny dla optymalnego rozwiązania: 3,1160025903106403
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 21 -> 23 -> 17 -> 36 -> 1 -> 6 -> 11 -> 0 | zapelnienie tira: 86
+Maszruta 2
+0 -> 15 -> 30 -> 20 -> 32 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 86
+Maszruta 3
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 12 -> 38 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 10 -> 16 -> 4 -> 7 -> 8 -> 2 -> 0 | zapelnienie tira: 87
+Maszruta 6
+0 -> 13 -> 0 | zapelnienie tira: 72
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 848,038
+Czas trwania: 0:15:826
+Błąd względny dla optymalnego rozwiązania: 2,0503211964096213
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 32 -> 18 -> 22 -> 34 -> 27 -> 10 -> 16 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 3
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 5
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 14 -> 25 -> 35 -> 0 | zapelnienie tira: 90
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 840,788
+Czas trwania: 0:16:217
+Błąd względny dla optymalnego rozwiązania: 1,1779105132314747
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 3
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 11 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 852,821
+Czas trwania: 0:16:87
+Błąd względny dla optymalnego rozwiązania: 2,6259275857448188
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 13 -> 15 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 12 -> 38 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 30 -> 20 -> 32 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 22 -> 34 -> 27 -> 10 -> 16 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 35 -> 25 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+Średnia z serii: 855,1618938064523
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 838
+Czas trwania: 0:15:759
+Błąd względny dla optymalnego rozwiązania: 0,8423901365142313
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 21 -> 18 -> 22 -> 34 -> 16 -> 10 -> 27 -> 32 -> 0 | zapelnienie tira: 100
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 30 -> 20 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 888,874
+Czas trwania: 0:15:871
+Błąd względny dla optymalnego rozwiązania: 6,964433564718914
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 26 -> 0 | zapelnienie tira: 91
+Maszruta 3
+0 -> 30 -> 20 -> 32 -> 27 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 3 -> 37 -> 31 -> 25 -> 35 -> 14 -> 2 -> 8 -> 7 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 34 -> 10 -> 16 -> 4 -> 19 -> 33 -> 0 | zapelnienie tira: 94
+Maszruta 6
+0 -> 6 -> 1 -> 11 -> 0 | zapelnienie tira: 55
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 839,293
+Czas trwania: 0:16:315
+Błąd względny dla optymalnego rozwiązania: 0,9979029087284449
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 5 -> 29 -> 28 -> 9 -> 12 -> 38 -> 3 -> 24 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 32 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 7 -> 8 -> 4 -> 16 -> 10 -> 27 -> 20 -> 30 -> 0 | zapelnienie tira: 94
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 851,276
+Czas trwania: 0:16:536
+Błąd względny dla optymalnego rozwiązania: 2,439907359233307
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 38 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 2 -> 0 | zapelnienie tira: 100
+Maszruta 3
+0 -> 24 -> 3 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 85
+Maszruta 5
+0 -> 26 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 70
+Maszruta 6
+0 -> 30 -> 20 -> 10 -> 16 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 87
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 869,127
+Czas trwania: 0:15:805
+Błąd względny dla optymalnego rozwiązania: 4,588100323579323
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 36 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 27 -> 10 -> 32 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 20 -> 16 -> 4 -> 19 -> 33 -> 8 -> 7 -> 0 | zapelnienie tira: 98
+Maszruta 5
+0 -> 2 -> 35 -> 25 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 84
+Maszruta 6
+0 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 55
+
+Średnia z serii: 857,3140043945908
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 859,484
+Czas trwania: 0:15:650
+Błąd względny dla optymalnego rozwiązania: 3,4277044310731015
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 11 -> 1 -> 36 -> 17 -> 23 -> 21 -> 22 -> 18 -> 0 | zapelnienie tira: 100
+Maszruta 3
+0 -> 8 -> 7 -> 4 -> 16 -> 10 -> 27 -> 34 -> 32 -> 20 -> 0 | zapelnienie tira: 99
+Maszruta 4
+0 -> 24 -> 3 -> 38 -> 12 -> 29 -> 28 -> 9 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 6 -> 0 | zapelnienie tira: 34
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 838,5
+Czas trwania: 0:15:953
+Błąd względny dla optymalnego rozwiązania: 0,9025547241687423
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 30 -> 13 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 24 -> 3 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 22 -> 34 -> 27 -> 32 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 20 -> 7 -> 8 -> 4 -> 16 -> 10 -> 18 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 0 | zapelnienie tira: 33
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 873,063
+Czas trwania: 0:16:96
+Błąd względny dla optymalnego rozwiązania: 5,061727245881285
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 24 -> 3 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 2
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 20 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 99
+Maszruta 4
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+Maszruta 5
+0 -> 10 -> 16 -> 4 -> 19 -> 33 -> 14 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 32 -> 7 -> 8 -> 2 -> 25 -> 35 -> 31 -> 37 -> 0 | zapelnienie tira: 82
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 841,304
+Czas trwania: 0:14:972
+Błąd względny dla optymalnego rozwiązania: 1,2399846475888356
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 30 -> 8 -> 2 -> 33 -> 19 -> 4 -> 7 -> 0 | zapelnienie tira: 93
+Maszruta 3
+0 -> 18 -> 22 -> 34 -> 27 -> 16 -> 10 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 11 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 844,692
+Czas trwania: 0:15:416
+Błąd względny dla optymalnego rozwiązania: 1,6476806198077625
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 3
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 11 -> 0 | zapelnienie tira: 86
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 883,841
+Czas trwania: 0:15:547
+Błąd względny dla optymalnego rozwiązania: 6,3586987316258385
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 30 -> 13 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 20 -> 32 -> 22 -> 18 -> 21 -> 1 -> 23 -> 36 -> 17 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 7 -> 8 -> 2 -> 4 -> 16 -> 10 -> 34 -> 27 -> 0 | zapelnienie tira: 97
+Maszruta 5
+0 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 6 -> 0 | zapelnienie tira: 37
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 904,08
+Czas trwania: 0:15:473
+Błąd względny dla optymalnego rozwiązania: 8,794269170787834
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 31 -> 14 -> 35 -> 25 -> 19 -> 33 -> 2 -> 8 -> 7 -> 0 | zapelnienie tira: 100
+Maszruta 2
+0 -> 36 -> 17 -> 34 -> 27 -> 10 -> 16 -> 4 -> 32 -> 0 | zapelnienie tira: 99
+Maszruta 3
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 11 -> 6 -> 1 -> 23 -> 21 -> 18 -> 22 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 24 -> 3 -> 30 -> 20 -> 0 | zapelnienie tira: 60
+Maszruta 6
+0 -> 26 -> 5 -> 29 -> 28 -> 9 -> 12 -> 38 -> 37 -> 0 | zapelnienie tira: 79
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 899,767
+Czas trwania: 0:21:621
+Błąd względny dla optymalnego rozwiązania: 8,275258824836362
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 29 -> 28 -> 3 -> 0 | zapelnienie tira: 73
+Maszruta 3
+0 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 33 -> 19 -> 8 -> 0 | zapelnienie tira: 99
+Maszruta 4
+0 -> 24 -> 20 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 0 | zapelnienie tira: 94
+Maszruta 5
+0 -> 11 -> 6 -> 36 -> 17 -> 23 -> 1 -> 0 | zapelnienie tira: 75
+Maszruta 6
+0 -> 14 -> 2 -> 7 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 88
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 890,516
+Czas trwania: 0:15:486
+Błąd względny dla optymalnego rozwiązania: 7,161922769273765
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 3 -> 38 -> 12 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 0 | zapelnienie tira: 99
+Maszruta 3
+0 -> 26 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 70
+Maszruta 4
+0 -> 5 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 0 | zapelnienie tira: 89
+Maszruta 5
+0 -> 16 -> 4 -> 19 -> 2 -> 8 -> 7 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 30 -> 20 -> 10 -> 27 -> 34 -> 22 -> 18 -> 32 -> 0 | zapelnienie tira: 82
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 909,277
+Czas trwania: 0:15:289
+Błąd względny dla optymalnego rozwiązania: 9,419581117846072
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 26 -> 5 -> 29 -> 28 -> 9 -> 24 -> 15 -> 30 -> 0 | zapelnienie tira: 98
+Maszruta 2
+0 -> 13 -> 0 | zapelnienie tira: 72
+Maszruta 3
+0 -> 20 -> 32 -> 18 -> 22 -> 34 -> 27 -> 10 -> 16 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 35 -> 25 -> 33 -> 19 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 91
+Maszruta 5
+0 -> 3 -> 38 -> 12 -> 37 -> 31 -> 14 -> 2 -> 0 | zapelnienie tira: 83
+Maszruta 6
+0 -> 11 -> 6 -> 21 -> 36 -> 17 -> 23 -> 1 -> 0 | zapelnienie tira: 86
+
+Średnia z serii: 897,4961722810827
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 851,968
+Czas trwania: 0:17:881
+Błąd względny dla optymalnego rozwiązania: 2,523250768683697
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 32 -> 10 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 97
+Maszruta 4
+0 -> 30 -> 2 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 93
+Maszruta 5
+0 -> 20 -> 16 -> 4 -> 19 -> 33 -> 8 -> 7 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 11 -> 6 -> 1 -> 0 | zapelnienie tira: 55
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 835,252
+Czas trwania: 0:15:142
+Błąd względny dla optymalnego rozwiązania: 0,5116443555348088
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 20 -> 32 -> 27 -> 10 -> 16 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 3
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 11 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 845,697
+Czas trwania: 0:15:144
+Błąd względny dla optymalnego rozwiązania: 1,7685552942595029
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 24 -> 3 -> 38 -> 12 -> 29 -> 28 -> 9 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 2
+0 -> 13 -> 30 -> 15 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 7 -> 8 -> 4 -> 16 -> 10 -> 27 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 1 -> 36 -> 17 -> 23 -> 21 -> 22 -> 34 -> 18 -> 0 | zapelnienie tira: 85
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 876,122
+Czas trwania: 0:15:653
+Błąd względny dla optymalnego rozwiązania: 5,429877939571841
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 3 -> 37 -> 38 -> 12 -> 9 -> 28 -> 29 -> 0 | zapelnienie tira: 99
+Maszruta 2
+0 -> 24 -> 13 -> 0 | zapelnienie tira: 94
+Maszruta 3
+0 -> 30 -> 20 -> 7 -> 8 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 5 -> 26 -> 6 -> 11 -> 0 | zapelnienie tira: 55
+Maszruta 5
+0 -> 32 -> 27 -> 10 -> 16 -> 4 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 1 -> 36 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 0 | zapelnienie tira: 85
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 856,652
+Czas trwania: 0:16:645
+Błąd względny dla optymalnego rozwiązania: 3,0868936941207252
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 2 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 100
+Maszruta 2
+0 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 27 -> 10 -> 32 -> 20 -> 0 | zapelnienie tira: 89
+Maszruta 3
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 30 -> 7 -> 8 -> 33 -> 19 -> 4 -> 16 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 13 -> 0 | zapelnienie tira: 72
+Maszruta 6
+0 -> 11 -> 36 -> 1 -> 6 -> 0 | zapelnienie tira: 70
+
+Średnia z serii: 853,1382090507075
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 860,602
+Czas trwania: 0:20:343
+Błąd względny dla optymalnego rozwiązania: 3,5622627445742476
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 2 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 84
+Maszruta 4
+0 -> 20 -> 32 -> 10 -> 27 -> 34 -> 22 -> 18 -> 21 -> 0 | zapelnienie tira: 84
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 33 -> 19 -> 4 -> 16 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 843,757
+Czas trwania: 0:18:813
+Błąd względny dla optymalnego rozwiązania: 1,5351013561091702
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 30 -> 0 | zapelnienie tira: 99
+Maszruta 3
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 20 -> 32 -> 27 -> 10 -> 16 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 5
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 84
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 845,354
+Czas trwania: 0:19:99
+Błąd względny dla optymalnego rozwiązania: 1,7273705370595271
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 20 -> 0 | zapelnienie tira: 100
+Maszruta 3
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 68
+Maszruta 5
+0 -> 21 -> 18 -> 22 -> 34 -> 16 -> 10 -> 27 -> 32 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 853,742
+Czas trwania: 0:31:148
+Błąd względny dla optymalnego rozwiązania: 2,7367376575879763
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 2 -> 0 | zapelnienie tira: 99
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+Maszruta 5
+0 -> 8 -> 7 -> 16 -> 4 -> 19 -> 33 -> 14 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 30 -> 20 -> 32 -> 10 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 82
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 841,036
+Czas trwania: 0:32:604
+Błąd względny dla optymalnego rozwiązania: 1,2077377961404325
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 3 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 90
+Maszruta 3
+0 -> 30 -> 20 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 32 -> 27 -> 10 -> 16 -> 34 -> 22 -> 18 -> 21 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 2000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 841,345
+Czas trwania: 1:18:631
+Błąd względny dla optymalnego rozwiązania: 1,2448917937467632
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 20 -> 0 | zapelnienie tira: 100
+Maszruta 3
+0 -> 24 -> 9 -> 28 -> 29 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 5
+0 -> 32 -> 27 -> 10 -> 16 -> 34 -> 22 -> 18 -> 21 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 6 -> 1 -> 23 -> 17 -> 36 -> 11 -> 0 | zapelnienie tira: 75
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 835,592
+Czas trwania: 1:19:926
+Błąd względny dla optymalnego rozwiązania: 0,552559768281888
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 93
+Maszruta 3
+0 -> 18 -> 22 -> 34 -> 27 -> 16 -> 10 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 839,735
+Czas trwania: 0:46:412
+Błąd względny dla optymalnego rozwiązania: 1,0511320855892332
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 13 -> 15 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 7 -> 8 -> 2 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 36 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 27 -> 32 -> 20 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 30 -> 33 -> 19 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 6 -> 1 -> 11 -> 0 | zapelnienie tira: 55
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 855,282
+Czas trwania: 0:48:897
+Błąd względny dla optymalnego rozwiązania: 2,922011752134555
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 14 -> 25 -> 35 -> 0 | zapelnienie tira: 90
+Maszruta 3
+0 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 30 -> 8 -> 7 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 21 -> 23 -> 17 -> 36 -> 1 -> 6 -> 11 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 840,6
+Czas trwania: 0:48:553
+Błąd względny dla optymalnego rozwiązania: 1,1552468129072526
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 20 -> 32 -> 27 -> 10 -> 16 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 3
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 0 | zapelnienie tira: 86
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 847,33
+Czas trwania: 0:39:947
+Błąd względny dla optymalnego rozwiązania: 1,9651352543420988
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 30 -> 7 -> 8 -> 4 -> 16 -> 10 -> 20 -> 0 | zapelnienie tira: 87
+Maszruta 4
+0 -> 36 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 27 -> 32 -> 0 | zapelnienie tira: 85
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 70
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 842,715
+Czas trwania: 0:40:147
+Błąd względny dla optymalnego rozwiązania: 1,4097412766178257
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 30 -> 7 -> 8 -> 2 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 20 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 10 -> 16 -> 4 -> 19 -> 33 -> 14 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 55
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 851,421
+Czas trwania: 0:36:661
+Błąd względny dla optymalnego rozwiązania: 2,4574252143498865
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 18 -> 22 -> 34 -> 27 -> 32 -> 20 -> 30 -> 15 -> 0 | zapelnienie tira: 86
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 3 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 10 -> 16 -> 4 -> 19 -> 8 -> 7 -> 0 | zapelnienie tira: 94
+Maszruta 4
+0 -> 12 -> 38 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 5
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 13 -> 0 | zapelnienie tira: 72
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 838,44
+Czas trwania: 0:39:178
+Błąd względny dla optymalnego rozwiązania: 0,895248239833062
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 13 -> 15 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 30 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 3 -> 0 | zapelnienie tira: 99
+Maszruta 3
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 5
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 84
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 837,992
+Czas trwania: 0:41:531
+Błąd względny dla optymalnego rozwiązania: 0,8413878798046125
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 30 -> 32 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 91
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 5 -> 29 -> 28 -> 9 -> 12 -> 38 -> 3 -> 24 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 2 -> 0 | zapelnienie tira: 98
+Maszruta 5
+0 -> 20 -> 7 -> 8 -> 4 -> 16 -> 10 -> 27 -> 34 -> 22 -> 0 | zapelnienie tira: 99
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 864,089
+Czas trwania: 0:40:385
+Błąd względny dla optymalnego rozwiązania: 3,9818875708730874
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 30 -> 13 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 12 -> 38 -> 37 -> 31 -> 0 | zapelnienie tira: 89
+Maszruta 3
+0 -> 20 -> 7 -> 8 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 0 | zapelnienie tira: 97
+Maszruta 4
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 22 -> 34 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 32 -> 18 -> 27 -> 10 -> 16 -> 4 -> 0 | zapelnienie tira: 99
+Maszruta 6
+0 -> 24 -> 3 -> 0 | zapelnienie tira: 44
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 840,94
+Czas trwania: 0:41:791
+Błąd względny dla optymalnego rozwiązania: 1,1961622256543318
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 93
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 21 -> 23 -> 17 -> 36 -> 1 -> 6 -> 11 -> 0 | zapelnienie tira: 86
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 839,735
+Czas trwania: 1:21:5
+Błąd względny dla optymalnego rozwiązania: 1,0511320855892332
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 7 -> 8 -> 2 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 20 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 30 -> 33 -> 19 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 55
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 835,561
+Czas trwania: 1:20:198
+Błąd względny dla optymalnego rozwiązania: 0,5488104271855524
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 18 -> 22 -> 34 -> 16 -> 10 -> 27 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 93
+Maszruta 5
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 11 -> 0 | zapelnienie tira: 86
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 838,44
+Czas trwania: 1:18:156
+Błąd względny dla optymalnego rozwiązania: 0,895248239833062
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 30 -> 0 | zapelnienie tira: 99
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 3
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 5
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 84
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 848,409
+Czas trwania: 0:49:39
+Błąd względny dla optymalnego rozwiązania: 2,094951918479788
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 5 -> 29 -> 28 -> 9 -> 12 -> 3 -> 24 -> 0 | zapelnienie tira: 96
+Maszruta 3
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 0 | zapelnienie tira: 100
+Maszruta 4
+0 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 85
+Maszruta 5
+0 -> 26 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 70
+Maszruta 6
+0 -> 30 -> 7 -> 8 -> 4 -> 16 -> 10 -> 20 -> 0 | zapelnienie tira: 87
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 847,465
+Czas trwania: 0:48:662
+Błąd względny dla optymalnego rozwiązania: 1,981371919856909
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 20 -> 32 -> 27 -> 10 -> 16 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 96
+Maszruta 2
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 24 -> 3 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 38 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 2 -> 0 | zapelnienie tira: 100
+Maszruta 5
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+Maszruta 6
+0 -> 1 -> 36 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 0 | zapelnienie tira: 85
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 839,735
+Czas trwania: 0:50:45
+Błąd względny dla optymalnego rozwiązania: 1,0511320855892332
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 7 -> 8 -> 2 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 20 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 30 -> 33 -> 19 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 1 -> 6 -> 0 | zapelnienie tira: 55
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 859,231
+Czas trwania: 0:38:569
+Błąd względny dla optymalnego rozwiązania: 3,3972767004720357
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 2 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 100
+Maszruta 2
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 13 -> 0 | zapelnienie tira: 72
+Maszruta 4
+0 -> 20 -> 32 -> 10 -> 27 -> 34 -> 22 -> 18 -> 21 -> 0 | zapelnienie tira: 84
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 33 -> 19 -> 4 -> 16 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 847,435
+Czas trwania: 0:39:385
+Błąd względny dla optymalnego rozwiązania: 1,9777965646214533
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 2
+0 -> 18 -> 22 -> 34 -> 27 -> 16 -> 10 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 3
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 5
+0 -> 21 -> 23 -> 17 -> 36 -> 1 -> 6 -> 11 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 3 -> 38 -> 12 -> 37 -> 35 -> 25 -> 14 -> 31 -> 0 | zapelnienie tira: 90
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 843,2
+Czas trwania: 0:40:697
+Błąd względny dla optymalnego rozwiązania: 1,4681597366371828
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 96
+Maszruta 3
+0 -> 30 -> 20 -> 32 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 8 -> 7 -> 4 -> 16 -> 10 -> 27 -> 34 -> 22 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 38 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 26 -> 6 -> 11 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 840,631
+Czas trwania: 0:44:373
+Błąd względny dla optymalnego rozwiązania: 1,1589961540035882
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 6
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 839,889
+Czas trwania: 0:44:517
+Błąd względny dla optymalnego rozwiązania: 1,0696356017859865
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 30 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 3 -> 0 | zapelnienie tira: 99
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 20 -> 32 -> 16 -> 10 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 5
+0 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 11 -> 0 | zapelnienie tira: 86
+Maszruta 6
+0 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 84
+
+Średnia z serii: 846,0774392269986
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 853,53
+Czas trwania: 0:43:171
+Błąd względny dla optymalnego rozwiązania: 2,7111874445401383
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 2 -> 33 -> 19 -> 4 -> 16 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 30 -> 20 -> 32 -> 18 -> 22 -> 34 -> 27 -> 10 -> 7 -> 8 -> 0 | zapelnienie tira: 94
+Maszruta 4
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 0 | zapelnienie tira: 86
+Maszruta 5
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 6
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 841,572
+Czas trwania: 0:48:844
+Błąd względny dla optymalnego rozwiązania: 1,2721891767356095
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 30 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 18 -> 22 -> 34 -> 27 -> 16 -> 10 -> 32 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 4
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 5
+0 -> 3 -> 38 -> 12 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 21 -> 23 -> 17 -> 36 -> 1 -> 6 -> 11 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 838,44
+Czas trwania: 0:45:637
+Błąd względny dla optymalnego rozwiązania: 0,895248239833062
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 30 -> 0 | zapelnienie tira: 99
+Maszruta 3
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 20 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 5
+0 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 84
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 21 -> 1 -> 6 -> 0 | zapelnienie tira: 86
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 836,002
+Czas trwania: 0:46:288
+Błąd względny dla optymalnego rozwiązania: 0,6019167513537254
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 24 -> 3 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 30 -> 20 -> 32 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 7 -> 8 -> 4 -> 16 -> 10 -> 27 -> 34 -> 22 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 19 -> 2 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 845,872
+Czas trwania: 0:41:35
+Błąd względny dla optymalnego rozwiązania: 1,789646375897011
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 2 -> 8 -> 7 -> 0 | zapelnienie tira: 96
+Maszruta 2
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 20 -> 32 -> 27 -> 34 -> 22 -> 18 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 30 -> 33 -> 19 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 6 -> 1 -> 11 -> 0 | zapelnienie tira: 55
+
+Średnia z serii: 843,0830524366535
+
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 838,51
+Czas trwania: 0:39:861
+Błąd względny dla optymalnego rozwiązania: 0,9036977681340058
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 20 -> 0 | zapelnienie tira: 100
+Maszruta 2
+0 -> 24 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 73
+Maszruta 3
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 4
+0 -> 3 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 90
+Maszruta 5
+0 -> 32 -> 10 -> 16 -> 27 -> 34 -> 22 -> 18 -> 21 -> 0 | zapelnienie tira: 100
+Maszruta 6
+0 -> 11 -> 36 -> 17 -> 23 -> 1 -> 6 -> 0 | zapelnienie tira: 75
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 869,2
+Czas trwania: 0:39:993
+Błąd względny dla optymalnego rozwiązania: 4,596856130504292
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 26 -> 5 -> 29 -> 28 -> 9 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 2
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 3
+0 -> 11 -> 6 -> 1 -> 21 -> 23 -> 17 -> 36 -> 0 | zapelnienie tira: 86
+Maszruta 4
+0 -> 20 -> 32 -> 27 -> 10 -> 16 -> 34 -> 22 -> 18 -> 0 | zapelnienie tira: 96
+Maszruta 5
+0 -> 12 -> 38 -> 37 -> 31 -> 35 -> 25 -> 14 -> 0 | zapelnienie tira: 68
+Maszruta 6
+0 -> 7 -> 8 -> 4 -> 19 -> 33 -> 2 -> 0 | zapelnienie tira: 84
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 889,072
+Czas trwania: 0:42:364
+Błąd względny dla optymalnego rozwiązania: 6,988252489780936
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 7 -> 8 -> 4 -> 33 -> 19 -> 2 -> 0 | zapelnienie tira: 84
+Maszruta 3
+0 -> 26 -> 5 -> 29 -> 28 -> 9 -> 3 -> 24 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 11 -> 6 -> 36 -> 1 -> 21 -> 23 -> 17 -> 0 | zapelnienie tira: 86
+Maszruta 5
+0 -> 32 -> 18 -> 22 -> 34 -> 27 -> 10 -> 16 -> 20 -> 0 | zapelnienie tira: 96
+Maszruta 6
+0 -> 14 -> 25 -> 35 -> 31 -> 37 -> 38 -> 12 -> 0 | zapelnienie tira: 68
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 900,661
+Czas trwania: 0:44:318
+Błąd względny dla optymalnego rozwiązania: 8,382788976981331
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 5 -> 11 -> 6 -> 1 -> 36 -> 23 -> 21 -> 17 -> 0 | zapelnienie tira: 89
+Maszruta 3
+0 -> 24 -> 3 -> 38 -> 12 -> 29 -> 28 -> 9 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 26 -> 18 -> 22 -> 34 -> 27 -> 32 -> 20 -> 30 -> 0 | zapelnienie tira: 85
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 7 -> 8 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 71
+
+---------------------||---------------------
+Problem z pliku: A-n39-k5.txt
+Współczynniki: 
+Alpha: 2
+Beta: 2
+Q0: 0,5
+Tau: 0,3
+Eta: 0,2
+Q: 1
+Ants: 20
+Iterations: 5000
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 843,082
+Czas trwania: 0:38:202
+Błąd względny dla optymalnego rozwiązania: 1,4539644286380815
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 24 -> 3 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 2
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 3
+0 -> 30 -> 7 -> 8 -> 4 -> 16 -> 10 -> 27 -> 32 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 20 -> 18 -> 34 -> 22 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 37 -> 31 -> 35 -> 25 -> 33 -> 19 -> 2 -> 14 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 836,002
+Czas trwania: 0:40:29
+Błąd względny dla optymalnego rozwiązania: 0,6019167513537254
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 30 -> 20 -> 32 -> 18 -> 21 -> 23 -> 17 -> 36 -> 1 -> 0 | zapelnienie tira: 98
+Maszruta 3
+0 -> 24 -> 3 -> 38 -> 12 -> 9 -> 28 -> 29 -> 5 -> 0 | zapelnienie tira: 98
+Maszruta 4
+0 -> 7 -> 8 -> 4 -> 16 -> 10 -> 27 -> 34 -> 22 -> 0 | zapelnienie tira: 92
+Maszruta 5
+0 -> 2 -> 19 -> 33 -> 25 -> 35 -> 14 -> 31 -> 37 -> 0 | zapelnienie tira: 98
+Maszruta 6
+0 -> 26 -> 11 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 857,504
+Czas trwania: 0:39:842
+Błąd względny dla optymalnego rozwiązania: 3,189451562997267
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 30 -> 0 | zapelnienie tira: 97
+Maszruta 2
+0 -> 24 -> 3 -> 29 -> 28 -> 9 -> 5 -> 26 -> 0 | zapelnienie tira: 95
+Maszruta 3
+0 -> 1 -> 17 -> 23 -> 21 -> 18 -> 22 -> 34 -> 27 -> 32 -> 20 -> 0 | zapelnienie tira: 95
+Maszruta 4
+0 -> 38 -> 12 -> 37 -> 31 -> 14 -> 35 -> 25 -> 33 -> 2 -> 0 | zapelnienie tira: 93
+Maszruta 5
+0 -> 8 -> 7 -> 19 -> 4 -> 16 -> 10 -> 0 | zapelnienie tira: 94
+Maszruta 6
+0 -> 11 -> 36 -> 6 -> 0 | zapelnienie tira: 52
+
+-------------------BEST SOLUTION------------------
+Najlepsza znaleziona trasa: 854,799
+Czas trwania: 0:39:3
+Błąd względny dla optymalnego rozwiązania: 2,8639475943697397
+Prezentacja rozwiązania (marszruty): 
+Marszruta 1
+0 -> 15 -> 13 -> 0 | zapelnienie tira: 88
+Maszruta 2
+0 -> 20 -> 16 -> 10 -> 27 -> 34 -> 22 -> 18 -> 32 -> 0 | zapelnienie tira: 96
+Maszruta 3
+0 -> 26 -> 5 -> 9 -> 28 -> 29 -> 24 -> 0 | zapelnienie tira: 73
+Maszruta 4
+0 -> 30 -> 2 -> 33 -> 19 -> 4 -> 8 -> 7 -> 0 | zapelnienie tira: 93
+Maszruta 5
+0 -> 3 -> 12 -> 38 -> 37 -> 31 -> 14 -> 35 -> 25 -> 0 | zapelnienie tira: 90
+Maszruta 6
+0 -> 11 -> 6 -> 1 -> 36 -> 17 -> 23 -> 21 -> 0 | zapelnienie tira: 86
+

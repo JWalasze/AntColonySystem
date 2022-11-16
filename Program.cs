@@ -43,8 +43,9 @@ foreach (var coef in coefEta)
     double tau = 0.3;
     double eta = 0.2;
     double Q = 1;
+    int stagnation = 100;
     int ants = 20;
-    int iterations = 2000;
+    int iterations = 5000;
 
     if (numberOfThreads > ants)
     {
@@ -58,6 +59,7 @@ foreach (var coef in coefEta)
         tau,
         eta,
         Q,
+        stagnation,
         ants,
         iterations,
         numberOfThreads,
