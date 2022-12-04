@@ -34,6 +34,7 @@ namespace AntColonyNamespace
             double tau,
             double eta,
             double Q,
+            int stagnation,
             int ants,
             int iterations
         )
@@ -64,6 +65,9 @@ namespace AntColonyNamespace
                     + Environment.NewLine
                     + "Q: "
                     + Q
+                    + Environment.NewLine
+                    + "Stagnation: "
+                    + stagnation
                     + Environment.NewLine
                     + "Ants: "
                     + ants

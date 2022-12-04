@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Threading;
 
 namespace AntColonyNamespace
 {
@@ -255,36 +256,60 @@ namespace AntColonyNamespace
             var timeWatch = new Stopwatch();
             var timeWatch2 = new Stopwatch();
 
-            for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
+            var listOfThreads = new List<int[]>();
+
+            int firstAntForThread = 0;
+            int lastAntForThread = numberOfAntsForOneThread - 1;
+            int otherAntsToAdd = moduloOfDivision;
+
+            for (int thread = 0; thread < this._NumberOfThreads; ++thread)
             {
-                var listOfThreads = new List<Thread>();
-
-                int firstAntForThread = 0;
-                int lastAntForThread = numberOfAntsForOneThread - 1;
-                int otherAntsToAdd = moduloOfDivision;
-
-                for (int thread = 0; thread < this._NumberOfThreads; ++thread)
+                if (otherAntsToAdd != 0)
                 {
-                    if (otherAntsToAdd != 0)
-                    {
-                        lastAntForThread += 1;
-                        --otherAntsToAdd;
-                    }
-
-                    int firstAnt = firstAntForThread;
-                    int lastAnt = lastAntForThread;
-                    var newThread = new Thread(
-                        () => DelegateToSolveProblemParallel(firstAnt, lastAnt)
-                    );
-                    listOfThreads.Add(newThread);
-
-                    firstAntForThread = lastAntForThread + 1;
-                    lastAntForThread += numberOfAntsForOneThread;
+                    lastAntForThread += 1;
+                    --otherAntsToAdd;
                 }
 
+                int firstAnt = firstAntForThread;
+                int lastAnt = lastAntForThread;
+                // var newThread = new Thread(
+                //     () => DelegateToSolveProblemParallel(firstAnt, lastAnt)
+                // );
+                listOfThreads.Add(new int[] { firstAnt, lastAnt });
+
+                firstAntForThread = lastAntForThread + 1;
+                lastAntForThread += numberOfAntsForOneThread;
+            }
+
+            for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
+            {
                 timeWatch.Start();
-                listOfThreads.ForEach(thread => thread.Start());
-                listOfThreads.ForEach(thread => thread.Join());
+                // listOfThreads.ForEach(thread => thread.Start());
+                // listOfThreads.ForEach(thread => thread.Join());
+                // timeWatch.Stop();
+
+                using (CountdownEvent counter = new CountdownEvent(this._NumberOfThreads))
+                {
+                    listOfThreads.ForEach(
+                        thread =>
+                            ThreadPool.QueueUserWorkItem(
+                                _ =>
+                                    this.DelegateToSolveProblemParallel(
+                                        thread[0],
+                                        thread[1],
+                                        counter
+                                    )
+                            )
+                    );
+
+                    // for (int i = 0; i < this._NumberOfThreads; i++)
+                    // {
+                    //     ThreadPool.QueueUserWorkItem(
+                    //         _ => this.DelegateToSolveProblemParallel(firstAnt, lastAnt)
+                    //     );
+                    // }
+                    counter.Wait();
+                }
                 timeWatch.Stop();
 
                 timeWatch2.Start();
@@ -334,13 +359,18 @@ namespace AntColonyNamespace
             return this._BestFoundSolutionYet;
         }
 
-        private void DelegateToSolveProblemParallel(int firstAntForThread, int lastAntForThread)
+        private void DelegateToSolveProblemParallel(
+            int firstAntForThread,
+            int lastAntForThread,
+            CountdownEvent evt
+        )
         {
             var ant = firstAntForThread;
             for (; ant <= lastAntForThread; ++ant)
             {
                 this._Ants[ant].StartCreatingItinerary();
             }
+            evt.Signal();
         }
 
         private void EvaporateAllPathsAndUpdateBestFoundSolution()
