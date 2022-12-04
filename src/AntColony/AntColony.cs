@@ -81,7 +81,9 @@ namespace AntColonyNamespace
             this._StagnationCounter = 0;
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(
-                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\BenchmarkData\\" + pathToBenchmarkData
+                // "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\BenchmarkData\\" + pathToBenchmarkData
+                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/"
+                    + pathToBenchmarkData
             );
             var lineCounter = 0;
             foreach (var line in allBenchmarkLines)
@@ -262,23 +264,33 @@ namespace AntColonyNamespace
             int lastAntForThread = numberOfAntsForOneThread - 1;
             int otherAntsToAdd = moduloOfDivision;
 
-            for (int thread = 0; thread < this._NumberOfThreads; ++thread)
+            if (this._Ants.Count <= this._NumberOfThreads)
             {
-                if (otherAntsToAdd != 0)
+                for (int thread = 0; thread < this._NumberOfThreads; ++thread)
                 {
-                    lastAntForThread += 1;
-                    --otherAntsToAdd;
+                    listOfThreads.Add(new int[] { thread, thread });
                 }
+            }
+            else
+            {
+                for (int thread = 0; thread < this._NumberOfThreads; ++thread)
+                {
+                    if (otherAntsToAdd != 0)
+                    {
+                        lastAntForThread += 1;
+                        --otherAntsToAdd;
+                    }
 
-                int firstAnt = firstAntForThread;
-                int lastAnt = lastAntForThread;
-                // var newThread = new Thread(
-                //     () => DelegateToSolveProblemParallel(firstAnt, lastAnt)
-                // );
-                listOfThreads.Add(new int[] { firstAnt, lastAnt });
+                    int firstAnt = firstAntForThread;
+                    int lastAnt = lastAntForThread;
+                    // var newThread = new Thread(
+                    //     () => DelegateToSolveProblemParallel(firstAnt, lastAnt)
+                    // );
+                    listOfThreads.Add(new int[] { firstAnt, lastAnt });
 
-                firstAntForThread = lastAntForThread + 1;
-                lastAntForThread += numberOfAntsForOneThread;
+                    firstAntForThread = lastAntForThread + 1;
+                    lastAntForThread += numberOfAntsForOneThread;
+                }
             }
 
             for (int iteration = 0; iteration < this._NumberOfIterations; ++iteration)
@@ -368,6 +380,7 @@ namespace AntColonyNamespace
             var ant = firstAntForThread;
             for (; ant <= lastAntForThread; ++ant)
             {
+                //Console.WriteLine("M: " + ant);
                 this._Ants[ant].StartCreatingItinerary();
             }
             evt.Signal();

@@ -2,44 +2,112 @@ namespace AntColonyNamespace
 {
     internal class SolutionStatistics
     {
-        private string PythonSolutionPath;
+        private string _ImportantSolutionFileName;
 
-        private double Parameter;
+        private string _BenchmarkFileName;
 
-        private string ParameterName;
+        private AntParams _AntParams;
 
-        private List<double> FoundDistancesInSeries;
+        private double _OptimalSolutionDistance;
 
-        public SolutionStatistics(string pythonSolutionPath, double parameter, string parameterName)
+        private double _BestFoundDistance;
+
+        private double _AverageFoundDistance;
+
+        private double _AverageTimeElapsed;
+
+        private double _WorstFoundDistance;
+
+        private List<double> _ListOfFoundDistances;
+
+        private List<System.TimeSpan> _ListOfTimeElapsed;
+
+        public SolutionStatistics(
+            string pythonSolutionPath,
+            string benchmarkFileName,
+            AntParams antParams,
+            double optimalSOlutionDistance
+        )
         {
-            this.PythonSolutionPath =
-                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\Solutions\\" + pythonSolutionPath;
-            this.Parameter = parameter;
-            this.ParameterName = parameterName;
+            this._ImportantSolutionFileName =
+                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/Solutions/"
+                + pythonSolutionPath;
+            this._BenchmarkFileName = benchmarkFileName;
 
-            this.FoundDistancesInSeries = new List<double>();
+            this._ListOfFoundDistances = new List<double>();
+            this._ListOfTimeElapsed = new List<TimeSpan>();
+
+            this._BestFoundDistance = 0;
+            this._AverageFoundDistance = 0;
+            this._AverageTimeElapsed = 0;
+            this._WorstFoundDistance = 0;
+
+            this._OptimalSolutionDistance = optimalSOlutionDistance;
+
+            this._AntParams = antParams;
         }
 
-        public void ChangeExaminedParameter(double newParameter, string newParameterName)
+        public void AddSolution(double solutionDistance, System.TimeSpan timeElapsed)
         {
-            this.Parameter = newParameter;
-            this.ParameterName = newParameterName;
+            this._ListOfFoundDistances.Add(solutionDistance);
+            this._ListOfTimeElapsed.Add(timeElapsed);
+
+            if (_BestFoundDistance == 0 || solutionDistance < _BestFoundDistance)
+            {
+                _BestFoundDistance = solutionDistance;
+            }
+
+            if (_WorstFoundDistance == 0 || solutionDistance > _WorstFoundDistance)
+            {
+                _WorstFoundDistance = solutionDistance;
+            }
         }
 
-        public void AddDataToSolution(double newObjectiveFunction)
+        private void CountAverageTime()
         {
-            this.FoundDistancesInSeries.Add(newObjectiveFunction);
+            var averageValue = this._ListOfTimeElapsed.Average(
+                time =>
+                    time.Minutes * 60 + time.Seconds + Convert.ToDouble(time.Milliseconds) / 1000
+            );
+
+            this._AverageTimeElapsed = averageValue;
         }
 
-        public void CountAverage()
+        private void CountAverageSolutionsDistances()
         {
+            this._AverageFoundDistance = this._ListOfFoundDistances.Average();
+        }
+
+        private double CountRelativeError(double solutionDistances)
+        {
+            return 100
+                * (solutionDistances - this._OptimalSolutionDistance)
+                / this._OptimalSolutionDistance;
+        }
+
+        public void PerformMeasurements()
+        {
+            this.CountAverageSolutionsDistances();
+            this.CountAverageTime();
+
             File.AppendAllText(
-                this.PythonSolutionPath,
-                this.ParameterName
-                    + " "
-                    + this.Parameter
-                    + " "
-                    + this.FoundDistancesInSeries.Average()
+                this._ImportantSolutionFileName,
+                this._BenchmarkFileName
+                    + " | "
+                    + this._BestFoundDistance
+                    + "/"
+                    + this.CountRelativeError(this._BestFoundDistance)
+                    + " | "
+                    + this._AverageFoundDistance
+                    + "/"
+                    + this.CountRelativeError(this._AverageFoundDistance)
+                    + " | "
+                    + this._WorstFoundDistance
+                    + "/"
+                    + this.CountRelativeError(this._WorstFoundDistance)
+                    + " | "
+                    + this._AverageTimeElapsed
+                    + Environment.NewLine
                     + Environment.NewLine
             );
         }

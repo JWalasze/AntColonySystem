@@ -1,9 +1,28 @@
 ﻿using AntColonyNamespace;
 
-var coefsStruct = new AntParams(0.5, 2, 0.4, 0.01, 0.01, 1, 300, 30, 4000);
-var ACSForCVRP = new ACS("A-n48-k7.txt", 30, 4, "Solution.txt", "SolutionP.txt", coefsStruct);
+var benchamrkFIles = new List<string>()
+{
+    "A-n32-k5.txt",
+    "A-n39-k5.txt",
+    "A-n45-k5.txt",
+    // "A-n48-k7.txt",
+    // "B-n52-k7.txt",
+    // "A-n48-k7.txt",
+    // "A-n48-k7.txt",
+    // "A-n48-k7.txt",
+    // "A-n48-k7.txt",
+    // "A-n48-k7.txt",
+    // "A-n48-k7.txt",
+    // "A-n48-k7.txt"
+};
 
-ACSForCVRP.SolveCVRP();
+var coefsStruct = new AntParams(0.5, 2, 0.4, 0.01, 0.01, 1, 300, 30, 2000);
+
+foreach (var benchmarkFile in benchamrkFIles)
+{
+    var ACSForCVRP = new ACS(benchmarkFile, 3, 4, "Solution.txt", "SolutionP.txt", coefsStruct);
+    ACSForCVRP.SolveCVRP();
+}
 
 // foreach (var coef in coefBeta)
 // {

@@ -67,7 +67,12 @@ namespace AntColonyNamespace
                 this._params._iterations
             );
 
-            var pythonStatistics = new SolutionStatistics(_pythonSolutionFileName, 2, "Alpha");
+            var solutionStatistics = new SolutionStatistics(
+                _pythonSolutionFileName,
+                _benchmarkFileName,
+                _params,
+                antColony.GetOptimalDistanceFromBenchmarkFile()
+            );
 
             for (int j = 0; j < _numberOfProgramIterations; ++j)
             {
@@ -94,7 +99,11 @@ namespace AntColonyNamespace
                     }
 
                     statistics.AddAndPresentNewFoundSolution(timeWatch.Elapsed, solution);
-                    pythonStatistics.AddDataToSolution(solution.GetGiantTourDistance());
+
+                    solutionStatistics.AddSolution(
+                        solution.GetGiantTourDistance(),
+                        timeWatch.Elapsed
+                    );
 
                     antColony.ResetColonyForNextRun();
                 }
@@ -103,7 +112,7 @@ namespace AntColonyNamespace
                     Console.WriteLine("Złapano wyjątek w trakcie rozwiązywania problemu!");
                 }
             }
-            pythonStatistics.CountAverage();
+            solutionStatistics.PerformMeasurements();
         }
     }
 }
