@@ -81,9 +81,9 @@ namespace AntColonyNamespace
             this._StagnationCounter = 0;
 
             var allBenchmarkLines = System.IO.File.ReadAllLines(
-                // "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\BenchmarkData\\" + pathToBenchmarkData
-                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/"
-                    + pathToBenchmarkData
+                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\BenchmarkData\\" + pathToBenchmarkData
+            // "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/BenchmarkData/"
+            //     + pathToBenchmarkData
             );
             var lineCounter = 0;
             foreach (var line in allBenchmarkLines)

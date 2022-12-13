@@ -30,8 +30,9 @@ namespace AntColonyNamespace
         )
         {
             this._ImportantSolutionFileName =
-                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/Solutions/"
-                + pythonSolutionPath;
+                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\Solutions\\" + pythonSolutionPath;
+            // "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/Solutions/"
+            // + pythonSolutionPath;
             this._BenchmarkFileName = benchmarkFileName;
 
             this._ListOfFoundDistances = new List<double>();

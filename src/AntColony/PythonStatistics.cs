@@ -13,9 +13,9 @@ namespace AntColonyNamespace
         public PythonStatistics(string pythonSolutionPath, double parameter, string parameterName)
         {
             this.PythonSolutionPath =
-                //"C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\Solutions\\" + pythonSolutionPath;
-                "/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/Solutions/"
-                + pythonSolutionPath;
+                "C:\\Users\\Kuba Walaszek\\Desktop\\.NET_App\\Solutions\\" + pythonSolutionPath;
+            //"/home/kuba/Desktop/Praca_Inzynierska/Algorytm_Mrowkowy_App/AntColonySystem/Solutions/"
+            //+pythonSolutionPath;
             this.Parameter = parameter;
             this.ParameterName = parameterName;
 
